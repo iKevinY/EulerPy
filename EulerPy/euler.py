@@ -8,7 +8,7 @@ import linecache
 
 import click
 
-# Total number of problems stored in problems.txt
+# Number of problems present in problems.txt
 TOTAL_PROBLEMS = 202
 
 
