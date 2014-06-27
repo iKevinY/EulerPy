@@ -1,6 +1,6 @@
-***********************
-EulerPy |Travis| |PyPI|
-***********************
+****************
+EulerPy |Travis|
+****************
 
 EulerPy is a command line tool designed to streamline the process of solving
 Project Euler problems using Python. The package focuses on two main tasks:
@@ -228,7 +228,7 @@ License
 EulerPy is licensed under the `MIT License`_.
 
 
-.. |Travis| image:: http://img.shields.io/travis/iKevinY/EulerPy.svg?style=flat
+.. |Travis| image:: http://img.shields.io/travis/iKevinY/EulerPy/master.svg?style=flat
             :alt: Build Status
             :target: http://travis-ci.org/iKevinY/EulerPy
 
