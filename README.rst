@@ -1,6 +1,6 @@
-****************
-EulerPy |Travis|
-****************
+***********************
+EulerPy |Travis| |PyPI|
+***********************
 
 EulerPy is a command line tool designed to streamline the process of solving
 Project Euler problems using Python. The package focuses on two main tasks:
