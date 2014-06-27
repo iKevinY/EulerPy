@@ -11,12 +11,16 @@ def readme():
         return f.read()
 
 def requirements():
+    install_requires = []
     with open('requirements.txt') as f:
-        install_requires = f.read().splitlines()
+	for line in f:
+	    install_requires.append(line.strip())
 
     # Terminal colors for Windows
     if 'win32' in str(sys.platform).lower():
         install_requires.append('colorama>=0.2.4')
+
+    return install_requires
 
 setup(
     name='EulerPy',
