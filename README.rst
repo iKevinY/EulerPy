@@ -198,6 +198,9 @@ check the current problem.
     Project Euler Problem #1
     =========================
     ...
+    
+    
+    """
 
     $ euler 1
     Checking "001.py" against solution: <redacted>
