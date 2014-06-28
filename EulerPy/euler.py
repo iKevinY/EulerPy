@@ -2,6 +2,8 @@
 
 import sys
 import os
+import time
+import math
 import subprocess
 import linecache
 
@@ -9,6 +11,46 @@ import click
 
 # Number of problems present in problems.txt
 TOTAL_PROBLEMS = 202
+
+
+def format_time(timespan, precision=3):
+    """Formats the timespan in a human readable form"""
+
+    if timespan >= 60.0:
+        # we have more than a minute, format that in a human readable form
+        # Idea from http://snipplr.com/view/5713/
+        parts = [('d', 60*60*24),('h', 60*60),('min', 60), ('s', 1)]
+        time = []
+        leftover = timespan
+        for suffix, length in parts:
+            value = int(leftover / length)
+            if value > 0:
+                leftover = leftover % length
+                time.append('%s%s' % (str(value), suffix))
+            if leftover < 1:
+                break
+        return ' '.join(time)
+
+
+    # Unfortunately the unicode 'micro' symbol can cause problems in
+    # certain terminals.
+    # See bug: https://bugs.launchpad.net/ipython/+bug/348466
+    # Try to prevent crashes by being more secure than it needs to
+    # E.g. eclipse is able to print a µ, but has no sys.stdout.encoding set.
+    units = ['s', 'ms', 'us', 'ns'] # the save value
+    if hasattr(sys.stdout, 'encoding') and sys.stdout.encoding:
+        try:
+            micro = b'\xc2\xb5s'.decode('utf-8')
+            units = ['s', 'ms', micro, 'ns']
+        except:
+            pass
+    scaling = [1, 1e3, 1e6, 1e9]
+
+    if timespan > 0.0:
+        order = min(-int(math.floor(math.log10(timespan)) // 3), 3)
+    else:
+        order = 3
+    return '%.*g %s' % (precision, timespan * scaling[order], units[order])
 
 
 def get_filename(problem):
@@ -46,8 +88,14 @@ def verify_answer(problem):
         click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
         cmd = 'python {0}'.format(filename)
+        wall_start = time.time()
         proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         output, _ = proc.communicate()
+        wall_end = time.time()
+
+        # Calculate the wall time and format the output
+        wall_time = wall_end - wall_start
+        time_info = ' (time elapsed: {})'.format(format_time(wall_time))
 
         # Python 3 returns bytes; use a valid encoding like ASCII as the output
         # will fall in that range
@@ -71,10 +119,12 @@ def verify_answer(problem):
         except IndexError:
             output = "[no output]"
 
-        isCorrect = output == solution
-        click.secho(output, bold=True, fg=('green' if isCorrect else 'red'))
-
-        return isCorrect
+        is_correct = output == solution
+        click.secho(
+            output, bold=True, nl=False, fg=('green' if is_correct else 'red')
+        )
+        click.secho(time_info, fg='cyan')
+        return is_correct
 
 
 def get_problem(problem):
@@ -104,13 +154,15 @@ def get_problem(problem):
 
 
 def generate_file(problem, default=True):
-    click.confirm("Generate file for problem #{0}?".format(problem), default=default, abort=True)
+    click.confirm("Generate file for problem #{0}?".format(problem),
+                  default=default, abort=True)
     problemText = get_problem(problem)
 
     filename = get_filename(problem)
 
     if os.path.isfile(filename):
-        click.secho('"{0}" already exists. Overwrite?'.format(filename), fg='red', nl=False)
+        click.secho('"{0}" already exists. Overwrite?'.format(filename),
+                    fg='red', nl=False)
         click.confirm('', abort=True)
 
     problemHeader = 'Project Euler Problem #{0}\n'.format(problem)
@@ -143,7 +195,7 @@ def view_solution(problem):
 
 def preview_problem(problem):
     click.secho("Project Euler Problem #{0}".format(problem), bold=True)
-    click.echo(get_problem(problem)[:-1]) # strip trailing newline
+    click.echo(get_problem(problem)[:-1])  # strip trailing newline
 
 
 def determine_largest_problem():
@@ -155,12 +207,13 @@ def determine_largest_problem():
 
 
 help = {
-    'cheat': "View the answer to a problem.",
-    'generate': "Generates Python file for a problem.",
-    'skip': "Generates Python file for the next problem.",
-    'preview': "Prints the text of a problem.",
-    'verify': "Verifies the solution to a problem.",
+    'cheat': 'View the answer to a problem.',
+    'generate': 'Generates Python file for a problem.',
+    'skip': 'Generates Python file for the next problem.',
+    'preview': 'Prints the text of a problem.',
+    'verify': 'Verifies the solution to a problem.',
 }
+
 
 @click.command(name='EulerPy')
 @click.argument('problem', default=0, type=click.IntRange(0, TOTAL_PROBLEMS))

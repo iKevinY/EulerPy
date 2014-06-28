@@ -3,7 +3,7 @@
 import unittest
 import textwrap
 
-import euler
+from EulerPy import euler
 
 class Tests(unittest.TestCase):
     def setUp(self):
