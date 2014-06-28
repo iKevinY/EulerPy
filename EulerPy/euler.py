@@ -169,31 +169,31 @@ def main(option, problem):
                 generate_file(problem)
 
     else:
-	# Handle argument-less options
-	if option == 'skip':
-	    problem = determine_largest_problem()
-	    click.echo("Current problem is problem #{}.".format(problem))
-	    generate_file(problem + 1, default=False)
-	    sys.exit()
-
-        # Clean problem number
-        if problem == 0:
+        # Handle argument-less options
+        if option == 'skip':
             problem = determine_largest_problem()
+            click.echo("Current problem is problem #{}.".format(problem))
+            generate_file(problem + 1, default=False)
+            sys.exit()
 
-            if not problem:
-		if option == 'preview':
-                    problem = 1
-                else:
-                    generate_first_problem()
+            # Clean problem number
+            if problem == 0:
+                problem = determine_largest_problem()
+
+                if not problem:
+                    if option == 'preview':
+                        problem = 1
+                    else:
+                        generate_first_problem()
 
         # Handle options that can take a problem number as an argument
-	functions = {
-	    'cheat': view_solution,
-	    'generate': generate_file,
-	    'preview': preview_problem,
-	    'verify': verify_answer,
-	}
+        functions = {
+            'cheat': view_solution,
+            'generate': generate_file,
+            'preview': preview_problem,
+            'verify': verify_answer,
+        }
 
-	functions[option](problem)
+        functions[option](problem)
 
     sys.exit()
