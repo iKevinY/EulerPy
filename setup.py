@@ -13,8 +13,8 @@ def readme():
 def requirements():
     install_requires = []
     with open('requirements.txt') as f:
-	for line in f:
-	    install_requires.append(line.strip())
+        for line in f:
+            install_requires.append(line.strip())
 
     # Terminal colors for Windows
     if 'win32' in str(sys.platform).lower():
@@ -41,6 +41,7 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
     ],
     keywords=['EulerPy', 'euler', 'project-euler', 'projecteuler'],
     include_package_data=True,

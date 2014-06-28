@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys
@@ -14,7 +13,7 @@ TOTAL_PROBLEMS = 202
 
 def get_filename(problem):
     """Returns filename in the form `001.py`"""
-    return '{:03d}.py'.format(problem)
+    return '{0:03d}.py'.format(problem)
 
 
 def get_solution(problem):
@@ -29,16 +28,23 @@ def verify_answer(problem):
     filename = get_filename(problem)
 
     if not os.path.isfile(filename):
-        click.secho('Error: "{}" not found.'.format(filename), fg='red')
+        click.secho('Error: "{0}" not found.'.format(filename), fg='red')
         sys.exit(1)
 
-    click.echo('Checking "{}" against solution: '.format(filename), nl=False)
+    click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
-    try:
-        cmd = 'python {}'.format(filename)
-        output = subprocess.check_output(cmd, shell=True)
-    except subprocess.CalledProcessError:
-        click.secho('Error calling "{}".'.format(filename), fg='red')
+    cmd = 'python {0}'.format(filename)
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    output, _ = proc.communicate()
+
+    # python3 returns bytes, use a valid encoding like ascii as our output will
+    # fall in that range
+    if isinstance(output, bytes):
+      output = output.decode('ascii')
+
+    retval = proc.poll()
+    if retval:
+        click.secho('Error calling "{0}".'.format(filename), fg='red')
         sys.exit(1)
 
     # Strip newline from end of output if output is not a lone newline.
@@ -67,7 +73,7 @@ def get_problem(problem):
         sequentialBreaks = 0
 
         for line in file:
-            if line == 'Problem {}\n'.format(problem):
+            if line == 'Problem {0}\n'.format(problem):
                 isProblemText = True
 
             if isProblemText:
@@ -85,16 +91,16 @@ def get_problem(problem):
 
 
 def generate_file(problem, default=True):
-    click.confirm("Generate file for problem #{}?".format(problem), default=default, abort=True)
+    click.confirm("Generate file for problem #{0}?".format(problem), default=default, abort=True)
     problemText = get_problem(problem)
 
     filename = get_filename(problem)
 
     if os.path.isfile(filename):
-        click.secho('"{}" already exists. Overwrite?'.format(filename), fg='red', nl=False)
+        click.secho('"{0}" already exists. Overwrite?'.format(filename), fg='red', nl=False)
         click.confirm('', abort=True)
 
-    problemHeader = 'Project Euler Problem #{}\n'.format(problem)
+    problemHeader = 'Project Euler Problem #{0}\n'.format(problem)
     problemHeader += '=' * len(problemHeader) + '\n\n'
 
     with open(filename, 'w') as file:
@@ -103,7 +109,7 @@ def generate_file(problem, default=True):
         file.write(problemText)
         file.write('"""\n\n\n')
 
-    click.echo('Successfully created "{}".'.format(filename))
+    click.echo('Successfully created "{0}".'.format(filename))
 
 
 def generate_first_problem():
@@ -113,19 +119,19 @@ def generate_first_problem():
 
 
 def view_solution(problem):
-    click.confirm("View answer to problem #{}?".format(problem), abort=True)
-    click.echo("The answer to problem #{} is ".format(problem), nl=False)
+    click.confirm("View answer to problem #{0}?".format(problem), abort=True)
+    click.echo("The answer to problem #{0} is ".format(problem), nl=False)
     click.secho(get_solution(problem), bold=True, nl=False)
     click.echo(".")
 
 
 def preview_problem(problem):
-    click.secho("Project Euler Problem #{}".format(problem), bold=True)
+    click.secho("Project Euler Problem #{0}".format(problem), bold=True)
     click.echo(get_problem(problem)[:-1]) # strip trailing newline
 
 
 def determine_largest_problem():
-    for problem in reversed(xrange(1, TOTAL_PROBLEMS + 1)):
+    for problem in reversed(range(1, TOTAL_PROBLEMS + 1)):
         if os.path.isfile(get_filename(problem)):
             return problem
     else:
@@ -171,7 +177,7 @@ def main(option, problem):
         # Handle options that ignore a problem argument
         if option == 'skip':
             problem = determine_largest_problem()
-            click.echo("Current problem is problem #{}.".format(problem))
+            click.echo("Current problem is problem #{0}.".format(problem))
             generate_file(problem + 1, default=False)
 
         # Handle other options
