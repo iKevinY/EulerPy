@@ -88,7 +88,7 @@ option can be used to display a summary of all of the options.)
 ``--cheat / -c``
 ----------------
 
-The ``--cheat`` option will print the solution of a problem after prompting
+The ``--cheat`` option will print the answer to a problem after prompting
 the user to ensure that they want to see it. If no problem argument is given,
 it will print the answer to the problem that they are currently working on.
 
@@ -198,8 +198,8 @@ check the current problem.
     Project Euler Problem #1
     =========================
     ...
-    
-    
+
+
     """
 
     $ euler 1

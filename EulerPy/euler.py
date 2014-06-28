@@ -113,11 +113,10 @@ def generate_first_problem():
 
 
 def view_solution(problem):
-    click.confirm("View solution to problem #{}?".format(problem), abort=True)
-    click.echo("The solution to problem #{} is ".format(problem), nl=False)
+    click.confirm("View answer to problem #{}?".format(problem), abort=True)
+    click.echo("The answer to problem #{} is ".format(problem), nl=False)
     click.secho(get_solution(problem), bold=True, nl=False)
     click.echo(".")
-    sys.exit()
 
 
 def preview_problem(problem):
@@ -134,11 +133,11 @@ def determine_largest_problem():
 
 
 help = {
-    'cheat': "View the solution to a problem.",
+    'cheat': "View the answer to a problem.",
     'generate': "Generates Python file for a problem.",
     'skip': "Generates Python file for the next problem.",
     'preview': "Prints the text of a problem.",
-    'verify': "Verify the solution to a problem.",
+    'verify': "Verifies the solution to a problem.",
 }
 
 @click.command(name='EulerPy')
@@ -169,16 +168,16 @@ def main(option, problem):
                 generate_file(problem)
 
     else:
-        # Handle argument-less options
+        # Handle options that ignore a problem argument
         if option == 'skip':
             problem = determine_largest_problem()
             click.echo("Current problem is problem #{}.".format(problem))
             generate_file(problem + 1, default=False)
-            sys.exit()
 
-        # Clean problem number
-        if problem == 0:
-            problem = determine_largest_problem()
+        # Handle other options
+        else:
+            if problem == 0:
+                problem = determine_largest_problem()
 
             if not problem:
                 if option == 'preview':
@@ -186,15 +185,14 @@ def main(option, problem):
                 else:
                     generate_first_problem()
 
-        # Handle options that can take a problem number as an argument
-        funcs = {
-            'cheat': view_solution,
-            'generate': generate_file,
-            'preview': preview_problem,
-            'verify': verify_answer,
-        }
+            funcs = {
+                'cheat': view_solution,
+                'generate': generate_file,
+                'preview': preview_problem,
+                'verify': verify_answer,
+            }
 
-        # Execute function
-        funcs[option](problem)
+            # Execute function
+            funcs[option](problem)
 
     sys.exit()
