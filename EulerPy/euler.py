@@ -17,12 +17,20 @@ def get_filename(problem):
 
 
 def get_solution(problem):
-    """Returns the solution to a given problem"""
+    """Returns the answer to a given problem"""
     solutionsFile = os.path.join(os.path.dirname(__file__), 'solutions.txt')
     line = linecache.getline(solutionsFile, problem)
 
     # Isolate answer from the question number and trailing newline
-    return line.split(". ")[1].strip()
+    answer = line.split(". ")[1].strip()
+
+    if answer == '':
+        click.echo('No known answer for problem #{0}.'.format(problem))
+        click.echo('If you have an answer, consider submitting a pull ' +
+            'request at https://github.com/iKevinY/EulerPy.')
+        return None
+    else:
+        return answer
 
 
 def verify_answer(problem):
@@ -32,37 +40,41 @@ def verify_answer(problem):
         click.secho('Error: "{0}" not found.'.format(filename), fg='red')
         sys.exit(1)
 
-    click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
+    solution = get_solution(problem)
 
-    cmd = 'python {0}'.format(filename)
-    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    output, _ = proc.communicate()
+    if solution:
+        click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
-    # Python 3 returns bytes; use a valid encoding like ASCII as the output
-    # will fall in that range
-    if isinstance(output, bytes):
-      output = output.decode('ascii')
+        cmd = 'python {0}'.format(filename)
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        output, _ = proc.communicate()
 
-    retval = proc.poll()
-    if retval:
-        click.secho('Error calling "{0}".'.format(filename), fg='red')
-        sys.exit(1)
+        # Python 3 returns bytes; use a valid encoding like ASCII as the output
+        # will fall in that range
+        if isinstance(output, bytes):
+            output = output.decode('ascii')
 
-    # Strip newline from end of output if output is not a lone newline.
-    # This behaviour is favourable to stripping all whitespace with strip()
-    # as stripping all newlines from the output may inhib debugging done by
-    # the user (if they were to use multiple print statements in their code
-    # while in the process of atempting to solve the problem).
-    try:
-        if output[-1] == '\n':
-            output = output[:-1]
-    except IndexError:
-        output = "[no output]"
+        return_val = proc.poll()
 
-    isCorrect = output == get_solution(problem)
-    click.secho(output, bold=True, fg=('green' if isCorrect else 'red'))
+        if return_val:
+            click.secho('Error calling "{0}".'.format(filename), fg='red')
+            sys.exit(1)
 
-    return isCorrect
+        # Strip newline from end of output if output is not a lone newline.
+        # This behaviour is favourable to stripping all whitespace with strip()
+        # as stripping all newlines from the output may inhib debugging done by
+        # the user (if they were to use multiple print statements in their code
+        # while in the process of atempting to solve the problem).
+        try:
+            if output[-1] == '\n':
+                output = output[:-1]
+        except IndexError:
+            output = "[no output]"
+
+        isCorrect = output == solution
+        click.secho(output, bold=True, fg=('green' if isCorrect else 'red'))
+
+        return isCorrect
 
 
 def get_problem(problem):
@@ -120,10 +132,13 @@ def generate_first_problem():
 
 
 def view_solution(problem):
-    click.confirm("View answer to problem #{0}?".format(problem), abort=True)
-    click.echo("The answer to problem #{0} is ".format(problem), nl=False)
-    click.secho(get_solution(problem), bold=True, nl=False)
-    click.echo(".")
+    solution = get_solution(problem)
+
+    if solution:
+        click.confirm("View answer to problem #{0}?".format(problem), abort=True)
+        click.echo("The answer to problem #{0} is ".format(problem), nl=False)
+        click.secho(solution, bold=True, nl=False)
+        click.echo(".")
 
 
 def preview_problem(problem):
