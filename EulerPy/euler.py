@@ -21,7 +21,8 @@ def get_solution(problem):
     solutionsFile = os.path.join(os.path.dirname(__file__), 'solutions.txt')
     line = linecache.getline(solutionsFile, problem)
 
-    return line.split(".", 1)[1][1:-1] # strip space following "." and newline
+    # Isolate answer from the question number and trailing newline
+    return line.split(". ")[1].strip()
 
 
 def verify_answer(problem):
@@ -37,8 +38,8 @@ def verify_answer(problem):
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     output, _ = proc.communicate()
 
-    # python3 returns bytes, use a valid encoding like ascii as our output will
-    # fall in that range
+    # Python 3 returns bytes; use a valid encoding like ASCII as the output
+    # will fall in that range
     if isinstance(output, bytes):
       output = output.decode('ascii')
 
