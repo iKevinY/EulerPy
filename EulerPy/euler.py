@@ -176,24 +176,25 @@ def main(option, problem):
             generate_file(problem + 1, default=False)
             sys.exit()
 
-            # Clean problem number
-            if problem == 0:
-                problem = determine_largest_problem()
+        # Clean problem number
+        if problem == 0:
+            problem = determine_largest_problem()
 
-                if not problem:
-                    if option == 'preview':
-                        problem = 1
-                    else:
-                        generate_first_problem()
+            if not problem:
+                if option == 'preview':
+                    problem = 1
+                else:
+                    generate_first_problem()
 
         # Handle options that can take a problem number as an argument
-        functions = {
+        funcs = {
             'cheat': view_solution,
             'generate': generate_file,
             'preview': preview_problem,
             'verify': verify_answer,
         }
 
-        functions[option](problem)
+        # Execute function
+        funcs[option](problem)
 
     sys.exit()
