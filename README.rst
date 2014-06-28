@@ -95,12 +95,12 @@ it will print the answer to the problem that they are currently working on.
 .. code-block:: bash
 
     $ euler --cheat
-    View solution to problem #2? [y/N]: Y
-    The solution to problem #2 is <redacted>.
+    View answer to problem #2? [y/N]: Y
+    The answer to problem #2 is <redacted>.
 
     $ euler --cheat 100
-    View solution to problem #100? [y/N]: Y
-    The solution to problem #100 is <redacted>.
+    View answer to problem #100? [y/N]: Y
+    The answer to problem #100 is <redacted>.
 
 
 ``--generate / -g``
