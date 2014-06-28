@@ -143,26 +143,18 @@ help = {
 
 @click.command(name='EulerPy')
 @click.argument('problem', default=0, type=click.IntRange(0, TOTAL_PROBLEMS))
-@click.option('--cheat',    '-c', is_flag=True, help=help['cheat'])
-@click.option('--generate', '-g', is_flag=True, help=help['generate'])
-@click.option('--skip',     '-s', is_flag=True, help=help['skip'])
-@click.option('--preview',  '-p', is_flag=True, help=help['preview'])
-@click.option('--verify',   '-v', is_flag=True, help=help['verify'])
-def main(cheat, generate, skip, preview, verify, problem):
+@click.option('--cheat',    '-c', 'option', flag_value='cheat', help=help['cheat'])
+@click.option('--generate', '-g', 'option', flag_value='generate', help=help['generate'])
+@click.option('--skip',     '-s', 'option', flag_value='skip', help=help['skip'])
+@click.option('--preview',  '-p', 'option', flag_value='preview', help=help['preview'])
+@click.option('--verify',   '-v', 'option', flag_value='verify', help=help['verify'])
+def main(option, problem):
     """Python tool to streamline Project Euler."""
 
-    # Handle argument-less options
-    if skip:
-        problem = determine_largest_problem()
-        click.echo("Current problem is problem #{}.".format(problem))
-        generate_file(problem + 1, default=False)
-        sys.exit()
-
-    # Handle no arguments before determining problem number
-    if not (cheat or generate or skip or preview or verify):
+    # No option given
+    if option is None:
         if problem == 0:
             problem = determine_largest_problem()
-
             # No Project Euler files in current directory
             if not problem:
                 generate_first_problem()
@@ -177,26 +169,31 @@ def main(cheat, generate, skip, preview, verify, problem):
                 generate_file(problem)
 
     else:
+	# Handle argument-less options
+	if option == 'skip':
+	    problem = determine_largest_problem()
+	    click.echo("Current problem is problem #{}.".format(problem))
+	    generate_file(problem + 1, default=False)
+	    sys.exit()
+
         # Clean problem number
         if problem == 0:
             problem = determine_largest_problem()
 
             if not problem:
-                if preview:
+		if option == 'preview':
                     problem = 1
                 else:
                     generate_first_problem()
 
         # Handle options that can take a problem number as an argument
-        if cheat:
-            view_solution(problem)
-        elif generate:
-            generate_file(problem)
-        elif preview:
-            preview_problem(problem)
-        elif verify:
-            verify_answer(problem)
-        else:
-            sys.exit(1)
+	functions = {
+	    'cheat': view_solution,
+	    'generate': generate_file,
+	    'preview': preview_problem,
+	    'verify': verify_answer,
+	}
+
+	functions[option](problem)
 
     sys.exit()
