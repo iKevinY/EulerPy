@@ -241,7 +241,7 @@ EulerPy is licensed under the `MIT License`_.
 
 .. _pip: http://www.pip-installer.org/en/latest/index.html
 .. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/problems.txt
-.. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blog/master/CONTRIBUTING.rst
+.. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blob/master/CONTRIBUTING.rst
 .. _Local Euler: http://kmkeen.com/local-euler/
 .. _solutions.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/solutions.txt
 .. _projecteuler-solutions wiki: https://code.google.com/p/projecteuler-solutions/
