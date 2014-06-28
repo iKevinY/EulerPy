@@ -12,10 +12,10 @@ class Tests(unittest.TestCase):
     # Ensure each parsed problem only contains one problem (that one
     # problem does not "bleed" into another one)
     def test_problem_format(self):
-        for problem in xrange(1, euler.TOTAL_PROBLEMS + 1):
+        for problem in range(1, euler.TOTAL_PROBLEMS + 1):
             problemText = euler.get_problem(problem)
 
-            msg = "Error encountered when parsing problem {}.".format(problem)
+            msg = "Error encountered when parsing problem {0}.".format(problem)
 
             self.assertNotIn('=========', problemText, msg=msg)
             self.assertNotIn('\n\n\n', problemText, msg=msg)
