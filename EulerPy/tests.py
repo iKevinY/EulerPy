@@ -17,8 +17,8 @@ class Tests(unittest.TestCase):
 
             msg = "Error encountered when parsing problem {0}.".format(problem)
 
-            self.assertNotIn('=========', problemText, msg=msg)
-            self.assertNotIn('\n\n\n', problemText, msg=msg)
+            self.assertFalse('========='in problemText, msg=msg)
+            self.assertFalse('\n\n\n' in problemText, msg=msg)
 
     # Check that problem #1 returns the correct problem text
     def test_expected_problem(self):
@@ -38,8 +38,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(euler.get_filename(1), "001.py")
         self.assertEqual(euler.get_filename(100), "100.py")
 
-        with self.assertRaises(ValueError):
-            euler.get_filename("string")
+        self.assertRaises(ValueError, euler.get_filename, "string")
 
 
 if __name__ == '__main__':
