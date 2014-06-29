@@ -116,6 +116,13 @@ def verify_answer(problem):
         try:
             if output[-1] == '\n':
                 output = output[:-1]
+
+            # If there is still a newline, the output is multilined. Print the
+            # first line of the output on a separate line from the "checking
+            # against solution" message.
+            if '\n' in output:
+                output = '\n' + output
+
         except IndexError:
             output = "[no output]"
 
