@@ -10,7 +10,7 @@ import linecache
 import click
 
 # Number of problems present in problems.txt
-TOTAL_PROBLEMS = 202
+TOTAL_PROBLEMS = 256
 
 
 def format_time(timespan, precision=3):

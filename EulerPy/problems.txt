@@ -4504,9 +4504,1156 @@ Label the vertices A, B and C. There are 2 ways in which a laser beam may
 enter vertex C, bounce off 11 surfaces, then exit through the same vertex:
 one way is shown below; the other is the reverse of that.
 
+[Image: http://projecteuler.net/project/images/p_201_laserbeam.gif]
+
 There are 80840 ways in which a laser beam may enter vertex C, bounce off
 1000001 surfaces, then exit through the same vertex.
 
 In how many ways can a laser beam enter at vertex C, bounce off
 12017639147 surfaces, then exit through the same vertex?
 
+
+Problem 203
+===========
+
+The binomial coefficients ^nC[k] can be arranged in triangular form,
+Pascal's triangle, like this:
+
+                                   1
+                                1     1
+                             1     2     1
+                          1     3     3     1
+                        1    4     6     4     1
+                      1   5     10    10    5    1
+                    1   6    15    20    15    6   1
+                  1   7   21    35    35    21   7   1
+
+                               .........
+
+It can be seen that the first eight rows of Pascal's triangle contain
+twelve distinct numbers: 1, 2, 3, 4, 5, 6, 7, 10, 15, 20, 21 and 35.
+
+A positive integer n is called squarefree if no square of a prime divides
+n.Of the twelve distinct numbers in the first eight rows of Pascal's
+triangle, all except 4 and 20 are squarefree.The sum of the distinct
+squarefree numbers in the first eight rows is 105.
+
+Find the sum of the distinct squarefree numbers in the first 51 rows of
+Pascal's triangle.
+
+
+Problem 204
+===========
+
+A Hamming number is a positive number which has no prime factor larger
+than 5.
+So the first few Hamming numbers are 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15.
+There are 1105 Hamming numbers not exceeding 10^8.
+
+We will call a positive number a generalised Hamming number of type n, if
+it has no prime factor larger than n.
+Hence the Hamming numbers are the generalised Hamming numbers of type 5.
+
+How many generalised Hamming numbers of type 100 are there which don't
+exceed 10^9?
+
+
+Problem 205
+===========
+
+Peter has nine four-sided (pyramidal) dice, each with faces numbered 1, 2,
+3, 4.
+Colin has six six-sided (cubic) dice, each with faces numbered 1, 2, 3, 4,
+5, 6.
+
+Peter and Colin roll their dice and compare totals: the highest total
+wins. The result is a draw if the totals are equal.
+
+What is the probability that Pyramidal Pete beats Cubic Colin? Give your
+answer rounded to seven decimal places in the form 0.abcdefg
+
+
+Problem 206
+===========
+
+Find the unique positive integer whose square has the form
+1_2_3_4_5_6_7_8_9_0, where each “_” is a single digit.
+
+
+Problem 207
+===========
+
+For some positive integers k, there exists an integer partition of the
+form 4^t = 2^t + k, where 4^t, 2^t, and k are all positive integers and
+t is a real number.
+
+The first two such partitions are 4^1 = 2^1 + 2 and 4^1.5849625... =
+2^1.5849625... + 6.
+
+Partitions where t is also an integer are called perfect.
+For any m ≥ 1 let P(m) be the proportion of such partitions that are
+perfect with k ≤ m.
+Thus P(6) = 1/2.
+
+In the following table are listed some values of P(m)
+
+   P(5) = 1/1
+   P(10) = 1/2
+   P(15) = 2/3
+   P(20) = 1/2
+   P(25) = 1/2
+   P(30) = 2/5
+   ...
+   P(180) = 1/4
+   P(185) = 3/13
+
+Find the smallest m for which P(m) < 1/12345
+
+
+Problem 208
+===========
+
+A robot moves in a series of one-fifth circular arcs (72°), with a free
+choice of a clockwise or an anticlockwise arc for each step, but no
+turning on the spot.
+
+One of 70932 possible closed paths of 25 arcs starting northward is:
+
+[Image: http://projecteuler.net/project/images/p_208_robotwalk.gif]
+
+Given that the robot starts facing North, how many journeys of 70 arcs in
+length can it take that return it, after the final arc, to its starting
+position?
+(Any arc may be traversed multiple times.)
+
+
+Problem 209
+===========
+
+A k-input binary truth table is a map from k input bits(binary digits, 0
+[false] or 1 [true]) to 1 output bit. For example, the 2-input binary
+truth tables for the logical AND and XOR functions are:
+
+            ┌────┬────┬─────────┐        ┌────┬────┬─────────┐
+            │ x  │ y  │ x AND y │        │ x  │ y  │ x XOR y │
+            ├────┼────┼─────────┤        ├────┼────┼─────────┤
+            │ 0  │ 0  │    0    │        │ 0  │ 0  │    0    │
+            ├────┼────┼─────────┤        ├────┼────┼─────────┤
+            │ 0  │ 1  │    0    │        │ 0  │ 1  │    1    │
+            ├────┼────┼─────────┤        ├────┼────┼─────────┤
+            │ 1  │ 0  │    0    │        │ 1  │ 0  │    1    │
+            ├────┼────┼─────────┤        ├────┼────┼─────────┤
+            │ 1  │ 1  │    1    │        │ 1  │ 1  │    0    │
+            └────┴────┴─────────┘        └────┴────┴─────────┘
+
+How many 6-input binary truth tables, τ, satisfy the formula
+
+     τ(a, b, c, d, e, f) AND τ(b, c, d, e, f, a XOR (b AND c)) = 0
+
+
+Problem 210
+===========
+
+   Consider the set S(r) of points (x,y) with integer coordinates satisfying
+   |x| + |y| ≤ r.
+   Let O be the point (0,0) and C the point (r/4,r/4).
+   Let N(r) be the number of points B in S(r), so that the triangle OBC has
+   an obtuse angle, i.e. the largest angle α satisfies 90°<α<180°.
+   So, for example, N(4)=24 and N(8)=100.
+
+   What is N(1,000,000,000)?
+
+
+Problem 211
+===========
+
+For a positive integer n, let σ[2](n) be the sum of the squares of its
+divisors. For example,
+
+                   σ[2](10) = 1 + 4 + 25 + 100 = 130.
+
+Find the sum of all n, 0 < n < 64,000,000 such that σ[2](n) is a perfect
+square.
+
+
+Problem 212
+===========
+
+An axis-aligned cuboid, specified by parameters { (x[0],y[0],z[0]),
+(dx,dy,dz) }, consists of all points (X,Y,Z) such that x[0] ≤ X ≤ x[0]+dx,
+y[0] ≤ Y ≤ y[0]+dy and z[0] ≤ Z ≤ z[0]+dz. The volume of the cuboid is the
+product, dx × dy × dz. The combined volume of a collection of cuboids is
+the volume of their union and will be less than the sum of the individual
+volumes if any cuboids overlap.
+
+Let C[1],...,C[50000] be a collection of 50000 axis-aligned cuboids such
+that C[n] has parameters
+
+x[0] = S[6n-5] modulo 10000
+y[0] = S[6n-4] modulo 10000
+z[0] = S[6n-3] modulo 10000
+dx = 1 + (S[6n-2] modulo 399)
+dy = 1 + (S[6n-1] modulo 399)
+dz = 1 + (S[6n] modulo 399)
+
+where S[1],...,S[300000] come from the "Lagged Fibonacci Generator":
+
+For 1 ≤ k ≤ 55, S[k] = [100003 - 200003k + 300007k^3]   (modulo 1000000)
+For 56 ≤ k, S[k] = [S[k-24] + S[k-55]]   (modulo 1000000)
+
+Thus, C[1] has parameters {(7,53,183),(94,369,56)}, C[2] has parameters
+{(2383,3563,5079),(42,212,344)}, and so on.
+
+The combined volume of the first 100 cuboids, C[1],...,C[100], is
+723581599.
+
+What is the combined volume of all 50000 cuboids, C[1],...,C[50000]?
+
+
+Problem 213
+===========
+
+A 30×30 grid of squares contains 900 fleas, initially one flea per square.
+When a bell is rung, each flea jumps to an adjacent square at random
+(usually 4 possibilities, except for fleas on the edge of the grid or at
+the corners).
+
+What is the expected number of unoccupied squares after 50 rings of the
+bell? Give your answer rounded to six decimal places.
+
+
+Problem 214
+===========
+
+Let φ be Euler's totient function, i.e. for a natural number n,φ(n) is the
+number of k, 1 ≤ k ≤ n, for which gcd(k,n) = 1.
+
+By iterating φ, each positive integer generates a decreasing chain of
+numbers ending in 1.
+E.g. if we start with 5 the sequence 5,4,2,1 is generated.
+Here is a listing of all chains with length 4:
+
+                                                                  5,4,2,1
+                                                                  7,6,2,1
+                                                                  8,4,2,1
+                                                                  9,6,2,1
+                                                                 10,4,2,1
+                                                                 12,4,2,1
+                                                                 14,6,2,1
+                                                                 18,6,2,1
+
+Only two of these chains start with a prime, their sum is 12.
+
+What is the sum of all primes less than 40000000 which generate a chain of
+length 25?
+
+
+Problem 215
+===========
+
+Consider the problem of building a wall out of 2×1 and 3×1 bricks
+(horizontal×vertical dimensions) such that, for extra strength, the gaps
+between horizontally-adjacent bricks never line up in consecutive layers,
+i.e. never form a "running crack".
+
+For example, the following 9×3 wall is not acceptable due to the running
+crack shown in red:
+
+[Image: http://projecteuler.net/project/images/p_215_crackfree.gif]
+
+There are eight ways of forming a crack-free 9×3 wall, written W(9,3) = 8.
+
+Calculate W(32,10).
+
+
+Problem 216
+===========
+
+ Consider numbers t(n) of the form t(n) = 2n^2-1 with n > 1.
+ The first such numbers are 7, 17, 31, 49, 71, 97, 127 and 161.
+ It turns out that only 49 = 7*7 and 161 = 7*23 are not prime.
+ For n ≤ 10000 there are 2202 numbers t(n) that are prime.
+
+ How many numbers t(n) are prime for n ≤ 50,000,000?
+
+
+Problem 217
+===========
+
+A positive integer with k (decimal) digits is called balanced if its first
+⌈^k/[2]⌉ digits sum to the same value as its last ⌈^k/[2]⌉ digits, where
+⌈x⌉, pronounced ceiling of x, is the smallest integer ≥ x, thus ⌈π⌉ = 4
+and ⌈5⌉ = 5.
+
+So, for example, all palindromes are balanced, as is 13722.
+
+Let T(n) be the sum of all balanced numbers less than 10^n.
+Thus: T(1) = 45, T(2) = 540 and T(5) = 334795890.
+
+Find T(47) mod 3^15
+
+
+Problem 218
+===========
+
+Consider the right angled triangle with sides a=7, b=24 and c=25.The area
+of this triangle is 84, which is divisible by the perfect numbers 6 and
+28.
+Moreover it is a primitive right angled triangle as gcd(a,b)=1 and
+gcd(b,c)=1.
+Also c is a perfect square.
+
+We will call a right angled triangle perfect if
+-it is a primitive right angled triangle
+-its hypotenuse is a perfect square
+
+We will call a right angled triangle super-perfect if
+-it is a perfect right angled triangle and
+-its area is a multiple of the perfect numbers 6 and 28.
+
+How many perfect right-angled triangles with c≤10^16 exist that are not
+super-perfect?
+
+
+Problem 219
+===========
+
+Let A and B be bit strings (sequences of 0's and 1's).
+If A is equal to the leftmost length(A) bits of B, then A is said to be a
+prefix of B.
+For example, 00110 is a prefix of 001101001, but not of 00111 or 100110.
+
+A prefix-free code of size n is a collection of n distinct bit strings
+such that no string is a prefix of any other. For example, this is a
+prefix-free code of size 6:
+
+                      0000, 0001, 001, 01, 10, 11
+
+Now suppose that it costs one penny to transmit a '0' bit, but four pence
+to transmit a '1'.
+Then the total cost of the prefix-free code shown above is 35 pence, which
+happens to be the cheapest possible for the skewed pricing scheme in
+question.
+In short, we write Cost(6) = 35.
+
+What is Cost(10^9) ?
+
+
+Problem 220
+===========
+
+Let D[0] be the two-letter string "Fa". For n≥1, derive D[n] from D[n-1]
+by the string-rewriting rules:
+
+"a" → "aRbFR"
+"b" → "LFaLb"
+
+Thus, D[0] = "Fa", D[1] = "FaRbFR", D[2] = "FaRbFRRLFaLbFR", and so on.
+
+These strings can be interpreted as instructions to a computer graphics
+program, with "F" meaning "draw forward one unit", "L" meaning "turn left
+90 degrees", "R" meaning "turn right 90 degrees", and "a" and "b" being
+ignored. The initial position of the computer cursor is (0,0), pointing up
+towards (0,1).
+
+Then D[n] is an exotic drawing known as the Heighway Dragon of order n.
+For example, D[10] is shown below; counting each "F" as one step, the
+highlighted spot at (18,16) is the position reached after 500 steps.
+
+[Image: http://projecteuler.net/project/images/p_220.gif]
+
+What is the position of the cursor after 10^12 steps in D[50]?
+Give your answer in the form x,y with no spaces.
+
+
+Problem 221
+===========
+
+We shall call a positive integer A an "Alexandrian integer", if there
+exist integers p, q, r such that:
+
+A = p · q · r    and   1 = 1 + 1 + 1
+                      A   p   q   r
+
+For example, 630 is an Alexandrian integer (p = 5, q = −7, r = −18).In
+fact, 630 is the 6^th Alexandrian integer, the first 6 Alexandrian
+integers being: 6, 42, 120, 156, 420 and 630.
+
+Find the 150000^th Alexandrian integer.
+
+
+Problem 222
+===========
+
+What is the length of the shortest pipe, of internal radius 50mm, that can
+fully contain 21 balls of radii 30mm, 31mm, ..., 50mm?
+
+Give your answer in micrometres (10^-6 m) rounded to the nearest integer.
+
+
+Problem 223
+===========
+
+Let us call an integer sided triangle with sides a ≤ b ≤ c barely acute if
+the sides satisfy a^2 + b^2 = c^2 + 1.
+
+How many barely acute triangles are there with perimeter ≤ 25,000,000?
+
+
+Problem 224
+===========
+
+Let us call an integer sided triangle with sides a ≤ b ≤ c barely obtuse
+if the sides satisfy a^2 + b^2 = c^2 - 1.
+
+How many barely obtuse triangles are there with perimeter ≤ 75,000,000?
+
+
+Problem 225
+===========
+
+The sequence 1, 1, 1, 3, 5, 9, 17, 31, 57, 105, 193, 355, 653, 1201 ...
+is defined by T[1] = T[2] = T[3] = 1 and T[n] = T[n-1] + T[n-2] + T[n-3].
+
+It can be shown that 27 does not divide any terms of this sequence.
+In fact, 27 is the first odd number with this property.
+
+Find the 124^th odd number that does not divide any terms of the above
+sequence.
+
+
+Problem 226
+===========
+
+The blancmange curve is the set of points (x,y) such that 0 ≤ x ≤ 1 and
+
+[Image: http://projecteuler.net/project/images/p_226_formula.gif]
+
+where s(x) = the distance from x to the nearest integer.
+
+The area under the blancmange curve is equal to ½, shown in pink in the
+diagram below.
+
+[Image: http://projecteuler.net/project/images/p_226_scoop2.gif]
+
+Let C be the circle with centre (¼,½) and radius ¼, shown in black in the
+diagram.
+
+What area under the blancmange curve is enclosed by C?
+Give your answer rounded to eight decimal places in the form 0.abcdefgh
+
+
+Problem 227
+===========
+
+"The Chase" is a game played with two dice and an even number of players.
+
+The players sit around a table; the game begins with two opposite players
+having one die each. On each turn, the two players with a die roll it.
+If a player rolls a 1, he passes the die to his neighbour on the left; if
+he rolls a 6, he passes the die to his neighbour on the right; otherwise,
+he keeps the die for the next turn.
+The game ends when one player has both dice after they have been rolled
+and passed; that player has then lost.
+
+In a game with 100 players, what is the expected number of turns the game
+lasts?
+
+Give your answer rounded to ten significant digits.
+
+
+Problem 228
+===========
+
+Let S[n] be the regular n-sided polygon – or shape – whose vertices v[k]
+(k = 1,2,…,n) have coordinates:
+
+      x[k]   =   cos( ^2k-1/[n] × 180° )
+      y[k]   =   sin( ^2k-1/[n] × 180° )
+
+Each S[n] is to be interpreted as a filled shape consisting of all points
+on the perimeter and in the interior.
+
+The Minkowski sum, S+T, of two shapes S and T is the result of adding
+every point in S to every point in T, where point addition is performed
+coordinate-wise: (u, v) + (x, y) = (u+x, v+y).
+
+For example, the sum of S[3] and S[4] is the six-sided shape shown in pink
+below:
+
+[Image: http://projecteuler.net/project/images/p_228.png]
+
+How many sides does S[1864] + S[1865] + … + S[1909] have?
+
+
+Problem 229
+===========
+
+Consider the number 3600. It is very special, because
+
+3600 = 48^2 +   36^2
+
+3600 = 20^2 + 2×40^2
+
+3600 = 30^2 + 3×30^2
+
+3600 = 45^2 + 7×15^2
+
+Similarly, we find that 88201 = 99^2 + 280^2 = 287^2 + 2×54^2 = 283^2 +
+3×52^2 = 197^2 + 7×84^2.
+
+In 1747, Euler proved which numbers are representable as a sum of two
+squares.We are interested in the numbers n which admit representations of
+all of the following four types:
+
+n = a[1]^2 +   b[1]^2
+
+n = a[2]^2 + 2×b[2]^2
+
+n = a[3]^2 + 3×b[3]^2
+
+n = a[7]^2 + 7×b[7]^2,
+
+where the a[k] and b[k] are positive integers.
+
+There are 75373 such numbers that do not exceed 10^7.
+How many such numbers are there that do not exceed 2×10^9?
+
+
+Problem 230
+===========
+
+For any two strings of digits, A and B, we define F[A,B] to be the
+sequence (A,B,AB,BAB,ABBAB,...) in which each term is the concatenation of
+the previous two.
+
+Further, we define D[A,B](n) to be the n^th digit in the first term of
+F[A,B] that contains at least n digits.
+
+Example:
+
+Let A=1415926535, B=8979323846. We wish to find D[A,B](35), say.
+
+The first few terms of F[A,B] are:
+1415926535
+8979323846
+14159265358979323846
+897932384614159265358979323846
+14159265358979323846897932384614159265358979323846
+
+Then D[A,B](35) is the 35^th digit in the fifth term, which is 9.
+
+Now we use for A the first 100 digits of π behind the decimal point:
+
+14159265358979323846264338327950288419716939937510
+58209749445923078164062862089986280348253421170679
+
+and for B the next hundred digits:
+
+82148086513282306647093844609550582231725359408128
+48111745028410270193852110555964462294895493038196.
+
+Find ∑[n = 0,1,...,17]   10^n× D[A,B]((127+19n)×7^n).
+
+
+Problem 231
+===========
+
+The binomial coefficient ^10C[3] = 120.
+120 = 2^3 × 3 × 5 = 2 × 2 × 2 × 3 × 5, and 2 + 2 + 2 + 3 + 5 = 14.
+So the sum of the terms in the prime factorisation of ^10C[3] is 14.
+
+Find the sum of the terms in the prime factorisation of
+^20000000C[15000000].
+
+
+Problem 232
+===========
+
+Two players share an unbiased coin and take it in turns to play "The
+Race". On Player 1's turn, he tosses the coin once: if it comes up Heads,
+he scores one point; if it comes up Tails, he scores nothing. On Player
+2's turn, she chooses a positive integer T and tosses the coin T times: if
+it comes up all Heads, she scores 2^T-1 points; otherwise, she scores
+nothing. Player 1 goes first. The winner is the first to 100 or more
+points.
+
+On each turn Player 2 selects the number, T, of coin tosses that maximises
+the probability of her winning.
+
+What is the probability that Player 2 wins?
+
+Give your answer rounded to eight decimal places in the form 0.abcdefgh.
+
+
+Problem 233
+===========
+
+Let f(N) be the number of points with integer coordinates that are on a
+circle passing through (0,0), (N,0),(0,N), and (N,N).
+
+It can be shown that f(10000) = 36.
+
+What is the sum of all positive integers N ≤ 10^11 such that f(N) = 420?
+
+
+Problem 234
+===========
+
+For an integer n ≥ 4, we define the lower prime square root of n, denoted
+by lps(n), as the largest prime ≤ √n and the upper prime square root of n,
+ups(n), as the smallest prime ≥ √n.
+
+So, for example, lps(4) = 2 = ups(4), lps(1000) = 31, ups(1000) = 37.
+Let us call an integer n ≥ 4 semidivisible, if one of lps(n) and ups(n)
+divides n, but not both.
+
+The sum of the semidivisible numbers not exceeding 15 is 30, the numbers
+are 8, 10 and 12.
+15 is not semidivisible because it is a multiple of both lps(15) = 3 and
+ups(15) = 5.
+As a further example, the sum of the 92 semidivisible numbers up to 1000
+is 34825.
+
+What is the sum of all semidivisible numbers not exceeding 999966663333?
+
+
+Problem 235
+===========
+
+Given is the arithmetic-geometric sequence u(k) = (900-3k)r^k-1.
+Let s(n) = Σ[k=1...n]u(k).
+
+Find the value of r for which s(5000) = -600,000,000,000.
+
+Give your answer rounded to 12 places behind the decimal point.
+
+
+Problem 236
+===========
+
+Suppliers 'A' and 'B' provided the following numbers of products for the
+luxury hamper market:
+
+                         Product       'A'  'B'
+                    Beluga Caviar      5248 640
+                    Christmas Cake     1312 1888
+                    Gammon Joint       2624 3776
+                    Vintage Port       5760 3776
+                    Champagne Truffles 3936 5664
+
+Although the suppliers try very hard to ship their goods in perfect
+condition, there is inevitably some spoilage - i.e. products gone bad.
+
+The suppliers compare their performance using two types of statistic:
+
+ • The five per-product spoilage rates for each supplier are equal to the
+   number of products gone bad divided by the number of products
+   supplied, for each of the five products in turn.
+ • The overall spoilage rate for each supplier is equal to the total
+   number of products gone bad divided by the total number of products
+   provided by that supplier.
+
+To their surprise, the suppliers found that each of the five per-product
+spoilage rates was worse (higher) for 'B' than for 'A' by the same factor
+(ratio of spoilage rates), m>1; and yet, paradoxically, the overall
+spoilage rate was worse for 'A' than for 'B', also by a factor of m.
+
+There are thirty-five m>1 for which this surprising result could have
+occurred, the smallest of which is 1476/1475.
+
+What's the largest possible value of m?
+Give your answer as a fraction reduced to its lowest terms, in the form
+u/v.
+
+
+Problem 237
+===========
+
+Let T(n) be the number of tours over a 4 × n playing board such that:
+
+ • The tour starts in the top left corner.
+ • The tour consists of moves that are up, down, left, or right one
+   square.
+ • The tour visits each square exactly once.
+ • The tour ends in the bottom left corner.
+
+The diagram shows one tour over a 4 × 10 board:
+
+[Image: http://projecteuler.net/project/images/p_237.gif]
+
+T(10) is 2329. What is T(10^12) modulo 10^8?
+
+
+Problem 238
+===========
+
+Create a sequence of numbers using the "Blum Blum Shub" pseudo-random
+number generator:
+
+                      s[0]   = 14025256
+                      s[n+1] = s[n]^2 mod 20300713
+
+Concatenate these numbers  s[0]s[1]s[2]… to create a string w of infinite
+length.
+Then, w = 14025256741014958470038053646…
+
+For a positive integer k, if no substring of w exists with a sum of digits
+equal to k, p(k) is defined to be zero. If at least one substring of w
+exists with a sum of digits equal to k, we define p(k) = z, where z is the
+starting position of the earliest such substring.
+
+For instance:
+
+The substrings 1, 14, 1402, …
+with respective sums of digits equal to 1, 5, 7, …
+start at position 1, hence p(1) = p(5) = p(7) = … = 1.
+
+The substrings 4, 402, 4025, …
+with respective sums of digits equal to 4, 6, 11, …
+start at position 2, hence p(4) = p(6) = p(11) = … = 2.
+
+The substrings 02, 0252, …
+with respective sums of digits equal to 2, 9, …
+start at position 3, hence p(2) = p(9) = … = 3.
+
+Note that substring 025 starting at position 3, has a sum of digits equal
+to 7, but there was an earlier substring (starting at position 1) with a
+sum of digits equal to 7, so p(7) = 1, not 3.
+
+We can verify that, for 0 < k ≤ 10^3, ∑ p(k) = 4742.
+
+Find ∑ p(k), for 0 < k ≤ 2·10^15.
+
+
+Problem 239
+===========
+
+A set of disks numbered 1 through 100 are placed in a line in random
+order.
+
+What is the probability that we have a partial derangement such that
+exactly 22 prime number discs are found away from their natural positions?
+(Any number of non-prime disks may also be found in or out of their
+natural positions.)
+
+Give your answer rounded to 12 places behind the decimal point in the form
+0.abcdefghijkl.
+
+
+Problem 240
+===========
+
+There are 1111 ways in which five 6-sided dice (sides numbered 1 to 6) can
+be rolled so that the top three sum to 15. Some examples are:
+
+D[1],D[2],D[3],D[4],D[5] = 4,3,6,3,5
+D[1],D[2],D[3],D[4],D[5] = 4,3,3,5,6
+D[1],D[2],D[3],D[4],D[5] = 3,3,3,6,6
+D[1],D[2],D[3],D[4],D[5] = 6,6,3,3,3
+
+In how many ways can twenty 12-sided dice (sides numbered 1 to 12) be
+rolled so that the top ten sum to 70?
+
+
+Problem 241
+===========
+
+For a positive integer n, let σ(n) be the sum of all divisors of n, so
+e.g. σ(6) = 1 + 2 + 3 + 6 = 12.
+
+A perfect number, as you probably know, is a number with σ(n) = 2n.
+
+Let us define the perfection quotient of a positive integer as
+p(n) = σ(n) / n.
+
+Find the sum of all positive integers n ≤ 10^18 for which p(n) has the
+form k + ^1⁄[2], where k is an integer.
+
+
+Problem 242
+===========
+
+Given the set {1,2,...,n}, we define f(n,k) as the number of its k-element
+subsets with an odd sum of elements. For example, f(5,3) = 4, since the
+set {1,2,3,4,5} has four 3-element subsets having an odd sum of elements,
+i.e.: {1,2,4}, {1,3,5}, {2,3,4} and {2,4,5}.
+
+When all three values n, k and f(n,k) are odd, we say that they make
+an odd-triplet [n,k,f(n,k)].
+
+There are exactly five odd-triplets with n ≤ 10, namely:
+[1,1,f(1,1) = 1], [5,1,f(5,1) = 3], [5,5,f(5,5) = 1], [9,1,f(9,1) = 5] and
+[9,9,f(9,9) = 1].
+
+How many odd-triplets are there with n ≤ 10^12?
+
+
+Problem 243
+===========
+
+A positive fraction whose numerator is less than its denominator is called
+a proper fraction.
+For any denominator, d, there will be d−1 proper fractions; for example,
+with d = 12:
+1/12 , 2/12 , 3/12 , 4/12 , 5/12 , 6/12 , 7/12 ,
+8/12 , 9/12 , 10/12 , 11/12 .
+
+We shall call a fraction that cannot be cancelled down a resilient
+fraction.
+Furthermore we shall define the resilience of a denominator, R(d), to be
+the ratio of its proper fractions that are resilient; for example, R(12) =
+4/11.
+In fact, d = 12 is the smallest denominator having a resilience R(d) <
+4/10.
+
+Find the smallest denominator d, having a resilience R(d) < 15499/94744.
+
+
+Problem 244
+===========
+
+You probably know the game Fifteen Puzzle. Here, instead of numbered
+tiles, we have seven red tiles and eight blue tiles.
+
+A move is denoted by the uppercase initial of the direction (Left, Right,
+Up, Down) in which the tile is slid, e.g. starting from configuration (S),
+by the sequence LULUR we reach the configuration (E):
+
+(S): [Image: http://projecteuler.net/project/images/p_244_start.gif]
+(E): [Image: http://projecteuler.net/project/images/p_244_example.gif]
+
+For each path, its checksum is calculated by (pseudocode):
+checksum = 0
+checksum = (checksum × 243 + m[1]) mod 100 000 007
+checksum = (checksum × 243 + m[2]) mod 100 000 007
+   …
+checksum = (checksum × 243 + m[n]) mod 100 000 007
+where m[k] is the ASCII value of the k^th letter in the move sequence and
+                  the ASCII values for the moves are:
+
+                             ┌──────┬─────┐
+                             │L     │76   │
+                             ├──────┼─────┤
+                             │R     │82   │
+                             ├──────┼─────┤
+                             │U     │85   │
+                             ├──────┼─────┤
+                             │D     │68   │
+                             └──────┴─────┘
+
+For the sequence LULUR given above, the checksum would be 19761398.
+
+Now, starting from configuration (S),find all shortest ways to reach
+configuration (T).
+
+(S): [Image: http://projecteuler.net/project/images/p_244_start.gif]
+(T): [Image: http://projecteuler.net/project/images/p_244_target.gif]
+
+What is the sum of all checksums for the paths having the minimal length?
+
+
+Problem 245
+===========
+
+We shall call a fraction that cannot be cancelled down a resilient
+fraction.
+Furthermore we shall define the resilience of a denominator, R(d), to be
+the ratio of its proper fractions that are resilient; for example, R(12) =
+^4⁄[11].
+
+The resilience of a number d > 1 is then φ(d) / (d - 1), where φ is Euler's
+totient function.
+
+We further define the coresilience of a number n > 1 as
+C(n) = (n - φ(n)) / (n-1) .
+
+The coresilience of a prime p is C(p) = 1 / (p - 1).
+
+Find the sum of all composite integers 1 < n ≤ 2×10^11, for which C(n) is
+a unit fraction.
+
+
+Problem 246
+===========
+
+A definition for an ellipse is:
+Given a circle c with centre M and radius r and a point G such that
+d(G,M)<r, the locus of the points that are equidistant from c and G form
+an ellipse.
+
+The construction of the points of the ellipse is shown below.
+
+[Image: http://projecteuler.net/project/images/p_246_anim.gif]
+
+Given are the points M(-2000,1500) and G(8000,1500).
+Given is also the circle c with centre M and radius 15000.
+The locus of the points that are equidistant from G and c form an ellipse
+e.
+From a point P outside e the two tangents t[1] and t[2] to the ellipse are
+drawn.
+Let the points where t[1] and t[2] touch the ellipse be R and S.
+
+[Image: http://projecteuler.net/project/images/p_246_ellipse.gif]
+
+For how many lattice points P is angle RPS greater than 45 degrees?
+
+
+Problem 247
+===========
+
+Consider the region constrained by 1 ≤ x and 0 ≤ y ≤ 1/x.
+
+Let S[1] be the largest square that can fit under the curve.
+Let S[2] be the largest square that fits in the remaining area, and so on.
+Let the index of S[n] be the pair (left, below) indicating the number of
+squares to the left of S[n] and the number of squares below S[n].
+
+[Image: http://projecteuler.net/project/images/p_247_hypersquares.gif]
+
+The diagram shows some such squares labelled by number.
+S[2] has one square to its left and none below, so the index of S[2] is
+(1,0).
+It can be seen that the index of S[32] is (1,1) as is the index of S[50].
+50 is the largest n for which the index of S[n] is (1,1).
+
+What is the largest n for which the index of S[n] is (3,3)?
+
+
+Problem 248
+===========
+
+The first number n for which φ(n)=13! is 6227180929.
+
+Find the 150,000th such number.
+
+
+Problem 249
+===========
+
+Let S = {2, 3, 5, ..., 4999} be the set of prime numbers less than 5000.
+
+Find the number of subsets of S, the sum of whose elements is a prime
+number.
+Enter the rightmost 16 digits as your answer.
+
+
+Problem 250
+===========
+
+Find the number of non-empty subsets of {1^1, 2^2, 3^3, ...,
+250250^250250}, the sum of whose elements is divisible by 250. Enter the
+rightmost 16 digits as your answer.
+
+
+Problem 251
+===========
+
+A triplet of positive integers (a,b,c) is called a Cardano Triplet if it
+satisfies the condition:
+
+[Image http://projecteuler.net/project/images/p_251_cardano.gif]
+
+For example, (2,1,5) is a Cardano Triplet.
+
+There exist 149 Cardano Triplets for which a+b+c ≤ 1000.
+
+Find how many Cardano Triplets exist such that a+b+c ≤ 110,000,000.
+
+
+Problem 252
+===========
+
+Given a set of points on a plane, we define a convex hole to be a convex
+polygon having as vertices any of the given points and not containing any
+of the given points in its interior (in addition to the vertices, other
+given points may lie on the perimeter of the polygon).
+
+As an example, the image below shows a set of twenty points and a few such
+convex holes. The convex hole shown as a red heptagon has an area equal to
+1049694.5 square units, which is the highest possible area for a convex
+hole on the given set of points.
+
+[Image: http://projecteuler.net/project/images/p_252_convexhole.gif]
+
+For our example, we used the first 20 points (T[2k−1], T[2k]), for
+k = 1,2,…,20, produced with the pseudo-random number generator:
+
+                 S[0]   =    290797
+                 S[n+1] =    S[n]^2 mod 50515093
+                 T[n]   =    ( S[n] mod 2000 ) − 1000
+
+i.e. (527, 144), (−488, 732), (−454, −947), …
+
+What is the maximum area for a convex hole on the set containing the first
+500 points in the pseudo-random sequence?
+Specify your answer including one digit after the decimal point.
+
+
+Problem 253
+===========
+
+A small child has a “number caterpillar” consisting of forty jigsaw
+pieces, each with one number on it, which, when connected together in a
+line, reveal the numbers 1 to 40 in order.
+
+Every night, the child's father has to pick up the pieces of the
+caterpillar that have been scattered across the play room. He picks up the
+pieces at random and places them in the correct order.
+As the caterpillar is built up in this way, it forms distinct segments
+that gradually merge together.
+The number of segments starts at zero (no pieces placed), generally
+increases up to about eleven or twelve, then tends to drop again before
+finishing at a single segment (all pieces placed).
+
+For example:
+
+                     ┌────────────┬───────────────┐
+                     │Piece Placed│Segments So Far│
+                     ├────────────┼───────────────┤
+                     │     12     │       1       │
+                     ├────────────┼───────────────┤
+                     │     4      │       2       │
+                     ├────────────┼───────────────┤
+                     │     29     │       3       │
+                     ├────────────┼───────────────┤
+                     │     6      │       4       │
+                     ├────────────┼───────────────┤
+                     │     34     │       5       │
+                     ├────────────┼───────────────┤
+                     │     5      │       4       │
+                     ├────────────┼───────────────┤
+                     │     35     │       4       │
+                     ├────────────┼───────────────┤
+                     │     …      │       …       │
+                     └────────────┴───────────────┘
+
+Let M be the maximum number of segments encountered during a random
+tidy-up of the caterpillar.
+For a caterpillar of ten pieces, the number of possibilities for each M is
+
+                        ┌────────┬─────────────┐
+                        │   M    │Possibilities│
+                        ├────────┼─────────────┤
+                        │   1    │    512      │
+                        ├────────┼─────────────┤
+                        │   2    │ 250912      │
+                        ├────────┼─────────────┤
+                        │   3    │1815264      │
+                        ├────────┼─────────────┤
+                        │   4    │1418112      │
+                        ├────────┼─────────────┤
+                        │   5    │ 144000      │
+                        └────────┴─────────────┘
+
+so the most likely value of M is 3 and the average value is
+^385643⁄[113400] = 3.400732, rounded to six decimal places.
+
+The most likely value of M for a forty-piece caterpillar is 11; but what
+is the average value of M?
+
+Give your answer rounded to six decimal places.
+
+
+Problem 254
+===========
+
+Define f(n) as the sum of the factorials of the digits of n. For example,
+f(342) = 3! + 4! + 2! = 32.
+
+Define sf(n) as the sum of the digits of f(n). So sf(342) = 3 + 2 = 5.
+
+Define g(i) to be the smallest positive integer n such that sf(n) = i.
+Though sf(342) is 5, sf(25) is also 5, and it can be verified that g(5) is
+25.
+
+Define sg(i) as the sum of the digits of g(i). So sg(5) = 2 + 5 = 7.
+
+Further, it can be verified that g(20) is 267 and ∑ sg(i) for 1 ≤ i ≤ 20
+is 156.
+
+What is ∑ sg(i) for 1 ≤ i ≤ 150?
+
+
+Problem 255
+===========
+
+We define the rounded-square-root of a positive integer n as the square
+root of n rounded to the nearest integer.
+
+The following procedure (essentially Heron's method adapted to integer
+arithmetic) finds the rounded-square-root of n:
+
+Let d be the number of digits of the number n.
+If d is odd, set x[0] = 2×10^((d-1)⁄/2).
+If d is even, set x[0] = 7×10^((d-2)⁄/2).
+Repeat:
+
+[Image: http://projecteuler.net/project/images/p_255_Heron.gif]
+
+until x[k+1] = x[k].
+
+As an example, let us find the rounded-square-root of n = 4321.
+n has 4 digits, so x[0] = 7×10^(4-2)⁄2 = 70.
+
+[Image: http://projecteuler.net/project/images/p_255_Example.gif]
+[Image: http://projecteuler.net/project/images/p_255_Example.gif]
+
+Since x[2] = x[1], we stop here.
+So, after just two iterations, we have found that the rounded-square-root
+of 4321 is 66 (the actual square root is 65.7343137…).
+
+The number of iterations required when using this method is surprisingly
+low.
+For example, we can find the rounded-square-root of a 5-digit integer
+(10,000 ≤ n ≤ 99,999) with an average of 3.2102888889 iterations (the
+average value was rounded to 10 decimal places).
+
+Using the procedure described above, what is the average number of
+iterations required to find the rounded-square-root of a 14-digit number
+(10^13 ≤ n < 10^14)?
+Give your answer rounded to 10 decimal places.
+
+Note: The symbols ⌊x⌋ and ⌈x⌉ represent the floor function and ceiling
+function respectively.
+
+
+Problem 256
+===========
+
+Tatami are rectangular mats, used to completely cover the floor of a room,
+without overlap.
+
+Assuming that the only type of available tatami has dimensions 1×2, there
+are obviously some limitations for the shape and size of the rooms that
+can be covered.
+
+For this problem, we consider only rectangular rooms with integer
+dimensions a, b and even size s = a·b.
+We use the term 'size' to denote the floor surface area of the room, and —
+without loss of generality — we add the condition a ≤ b.
+
+There is one rule to follow when laying out tatami: there must be no
+points where corners of four different mats meet.
+For example, consider the two arrangements below for a 4×4 room:
+
+[Image: http://projecteuler.net/project/images/p_256_tatami3.gif]
+
+The arrangement on the left is acceptable, whereas the one on the right is
+not: a red "X" in the middle, marks the point where four tatami meet.
+
+Because of this rule, certain even-sized rooms cannot be covered with
+tatami: we call them tatami-free rooms.
+Further, we define T(s) as the number of tatami-free rooms of size s.
+
+The smallest tatami-free room has size s = 70 and dimensions 7×10.
+All the other rooms of size s = 70 can be covered with tatami; they are:
+1×70, 2×35 and 5×14.
+Hence, T(70) = 1.
+
+Similarly, we can verify that T(1320) = 5 because there are exactly 5
+tatami-free rooms of size s = 1320:
+20×66, 22×60, 24×55, 30×44 and 33×40.
+In fact, s = 1320 is the smallest room-size s for which T(s) = 5.
+
+Find the smallest room-size s for which T(s) = 200.
