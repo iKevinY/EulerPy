@@ -67,7 +67,8 @@ to the problem, making sure to ``print()`` the output. Once you feel that
 you've solved the problem, run the ``euler`` command again to verify your
 solution is correct. If the answer is correct, the solution will be printed
 in green and the script will ask to generate the next problem file. If
-incorrect, the solution will be printed in red instead.
+incorrect, the solution will be printed in red instead. Additionally, the
+time elapsed during the verification will also be printed.
 
 .. code-block:: bash
 
@@ -218,7 +219,7 @@ Miscellaneous
 =============
 
 The text for problems 1 through 202 were derived from Kyle Keen's
-`Local Euler`_ project, and the solutions found in `solutions.txt`_
+`Local Euler`_ project, and the solutions in `solutions.txt`_
 were derived from the `projecteuler-solutions wiki`_.
 
 See `this blog post`_ for insight into the development process.
@@ -240,7 +241,6 @@ EulerPy is licensed under the `MIT License`_.
           :target: https://pypi.python.org/pypi/EulerPy/
 
 .. _pip: http://www.pip-installer.org/en/latest/index.html
-.. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/problems.txt
 .. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blob/master/CONTRIBUTING.rst
 .. _Local Euler: http://kmkeen.com/local-euler/
 .. _solutions.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/solutions.txt
