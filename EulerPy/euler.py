@@ -3,54 +3,14 @@
 import sys
 import os
 import time
-import math
 import subprocess
 import linecache
 
 import click
+from EulerPy.timing import clock, format_time
 
 # Number of problems present in problems.txt
 TOTAL_PROBLEMS = 256
-
-
-def format_time(timespan, precision=3):
-    """Formats the timespan in a human readable form"""
-
-    if timespan >= 60.0:
-        # Format time greater than one minute in a human readable format
-        # Idea from http://snipplr.com/view/5713/
-        parts = [('d', 60*60*24), ('h', 60*60), ('min', 60), ('s', 1)]
-        time_parts = []
-        leftover = timespan
-        for suffix, length in parts:
-            value = int(leftover / length)
-            if value > 0:
-                leftover = leftover % length
-                time_parts.append('%s%s' % (str(value), suffix))
-            if leftover < 1:
-                break
-        return ' '.join(time_parts)
-
-
-    # Unfortunately, the Unicode 'micro' symbol can cause problems in
-    # certain terminals (see https://bugs.launchpad.net/ipython/+bug/348466)
-    # Try to prevent crashes by being more secure than it needs to be
-    # eg. Eclipse is able to print a µ, but has no sys.stdout.encoding set.
-    units = ['s', 'ms', 'us', 'ns'] # the save value
-    if hasattr(sys.stdout, 'encoding') and sys.stdout.encoding:
-        try:
-            micro = b'\xc2\xb5s'.decode('utf-8')
-            units = ['s', 'ms', micro, 'ns']
-        except:
-            pass
-    scaling = [1, 1e3, 1e6, 1e9]
-
-    if timespan > 0.0:
-        order = min(-int(math.floor(math.log10(timespan)) // 3), 3)
-    else:
-        order = 3
-
-    return '%.*g %s' % (precision, timespan * scaling[order], units[order])
 
 
 def get_filename(problem):
@@ -88,14 +48,11 @@ def verify_answer(problem):
         click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
         cmd = 'python {0}'.format(filename)
-        wall_start = time.time()
+        start = clock()
         proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         output, _ = proc.communicate()
-        wall_end = time.time()
-
-        # Calculate the wall time and format the output
-        wall_time = wall_end - wall_start
-        time_info = 'Time elapsed: {0}'.format(format_time(wall_time))
+        end = clock()
+        time_info = format_time(start, end)
 
         # Python 3 returns bytes; use a valid encoding like ASCII as the output
         # will fall in that range
@@ -106,6 +63,7 @@ def verify_answer(problem):
 
         if return_val:
             click.secho('Error calling "{0}".'.format(filename), fg='red')
+            click.secho(time_info, fg='cyan')
             sys.exit(1)
 
         # Strip newline from end of output if output is not a lone newline.
