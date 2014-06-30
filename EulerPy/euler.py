@@ -126,7 +126,7 @@ def verify_answer(problem):
         except IndexError:
             output = "[no output]"
 
-        is_correct = output == solution
+        is_correct = output.strip() == solution
         click.secho(
             output, bold=True, nl=False, fg=('green' if is_correct else 'red')
         )
