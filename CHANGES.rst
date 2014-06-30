@@ -2,6 +2,13 @@
 Changelog
 =========
 
+v1.0.5 (30-06-2014)
+-------------------
+
+- Changed multi-line outputs to print first line of output on a new line
+- Fixed solution checking on Windows
+
+
 v1.0.4 (29-06-2014)
 -------------------
 
