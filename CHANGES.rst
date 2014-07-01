@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v1.0.6 (30-06-2014)
+-------------------
+
+- Moved timing information to separate line from problem output
+
+
 v1.0.5 (30-06-2014)
 -------------------
 

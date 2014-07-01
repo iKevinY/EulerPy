@@ -95,7 +95,7 @@ def verify_answer(problem):
 
         # Calculate the wall time and format the output
         wall_time = wall_end - wall_start
-        time_info = ' (time elapsed: {0})'.format(format_time(wall_time))
+        time_info = 'Time elapsed: {0}'.format(format_time(wall_time))
 
         # Python 3 returns bytes; use a valid encoding like ASCII as the output
         # will fall in that range
@@ -116,20 +116,22 @@ def verify_answer(problem):
         try:
             if output[-1] == '\n':
                 output = output[:-1]
-
-            # If there is still a newline, the output is multilined. Print the
-            # first line of the output on a separate line from the "checking
-            # against solution" message.
-            if '\n' in output:
-                output = '\n' + output
-
         except IndexError:
             output = "[no output]"
 
-        is_correct = output.strip() == solution
-        click.secho(
-            output, bold=True, nl=False, fg=('green' if is_correct else 'red')
-        )
+        # If there is still a newline, the output is multilined. Print the
+        # first line of the output on a separate line from the "checking
+        # against solution" message. Additionally, a multi-line output is
+        # not going to be correct, so skip the solution check.
+        if '\n' in output:
+            # Multi-line output
+            is_correct = False
+            click.secho('\n' + output, bold=True, fg='red')
+        else:
+            is_correct = output.strip() == solution
+            fg_colour = 'green' if is_correct else 'red'
+            click.secho(output, bold=True, fg=fg_colour)
+
         click.secho(time_info, fg='cyan')
         return is_correct
 
