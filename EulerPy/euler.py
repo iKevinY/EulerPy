@@ -32,9 +32,8 @@ def format_time(timespan, precision=3):
         return ' '.join(time_parts)
 
 
-    # Unfortunately the unicode 'micro' symbol can cause problems in
-    # certain terminals.
-    # See bug: https://bugs.launchpad.net/ipython/+bug/348466
+    # Unfortunately, the Unicode 'micro' symbol can cause problems in
+    # certain terminals (see https://bugs.launchpad.net/ipython/+bug/348466)
     # Try to prevent crashes by being more secure than it needs to be
     # eg. Eclipse is able to print a µ, but has no sys.stdout.encoding set.
     units = ['s', 'ms', 'us', 'ns'] # the save value
@@ -50,6 +49,7 @@ def format_time(timespan, precision=3):
         order = min(-int(math.floor(math.log10(timespan)) // 3), 3)
     else:
         order = 3
+
     return '%.*g %s' % (precision, timespan * scaling[order], units[order])
 
 
@@ -119,12 +119,11 @@ def verify_answer(problem):
         except IndexError:
             output = "[no output]"
 
-        # If there is still a newline, the output is multilined. Print the
+        # If there is still a newline, the output is multi-lined. Print the
         # first line of the output on a separate line from the "checking
         # against solution" message. Additionally, a multi-line output is
         # not going to be correct, so skip the solution check.
         if '\n' in output:
-            # Multi-line output
             is_correct = False
             click.secho('\n' + output, bold=True, fg='red')
         else:
@@ -145,7 +144,7 @@ def get_problem(problem):
         sequentialBreaks = 0
 
         for line in file:
-            if line == 'Problem {0}\n'.format(problem):
+            if line.strip() == 'Problem {0}'.format(problem):
                 isProblemText = True
 
             if isProblemText:
@@ -154,6 +153,8 @@ def get_problem(problem):
                 else:
                     sequentialBreaks = 0
 
+                # Two subsequent empty lines indicates that the current
+                # problem text has ended, so stop iterating over file
                 if sequentialBreaks >= 2:
                     break
                 else:
