@@ -224,8 +224,7 @@ help = {
     'verify': 'Verifies the solution to a problem.',
 }
 
-
-@click.command(name='EulerPy')
+@click.command(name='euler', options_metavar='[OPTION]')
 @click.argument('problem', default=0, type=click.IntRange(0, TOTAL_PROBLEMS))
 @click.option('--cheat',    '-c', 'option', flag_value='cheat', help=help['cheat'])
 @click.option('--generate', '-g', 'option', flag_value='generate', help=help['generate'])
