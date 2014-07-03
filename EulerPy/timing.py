@@ -20,12 +20,12 @@ try:
         """
         return resource.getrusage(resource.RUSAGE_CHILDREN)[:2]
 except ImportError:
-    # There is no distinction of user/system time under windows, so we just use
+    # There is no distinction of user/system time under Windows, so we just use
     # time.clock() for everything...
     import time
 
     def clock():
-        """Under windows, system CPU time can't be measured.
+        """Under Windows, system CPU time can't be measured.
 
         This just returns clock() and zero.
         """
@@ -76,8 +76,8 @@ def format_time(start, end):
     cpu_sys = end[1] - start[1]
     cpu_tot = cpu_user + cpu_sys
     if HAS_RUSAGE:
-        return 'Time elapsed: user {}, sys: {}, total: {}'.format(
+        return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(
             human_time(cpu_user), human_time(cpu_sys), human_time(cpu_tot),
         )
     else:
-        return 'Time elapsed: {}'.format(human_time(cpu_user))
+        return 'Time elapsed: {0}'.format(human_time(cpu_user))

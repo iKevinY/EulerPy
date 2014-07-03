@@ -68,7 +68,7 @@ you've solved the problem, run the ``euler`` command again to verify your
 solution is correct. If the answer is correct, the solution will be printed
 in green and the script will ask to generate the next problem file. If
 incorrect, the solution will be printed in red instead. Additionally, the
-time elapsed during the verification will also be printed.
+time elapsed during the solution-checking process will also be printed.
 
 .. code-block:: bash
 
