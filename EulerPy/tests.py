@@ -24,7 +24,7 @@ class Tests(unittest.TestCase):
 
             # Test "Y" as file generation prompt input
             result = runner.invoke(euler.main, input='\n')
-            self.assertEqual(result.exit_code, None)
+            self.assertNotEqual(result.exit_code, 1)
             self.assertTrue(os.path.isfile('001.py'))
 
             # 001.py has been generated, so attempt to verify solution
