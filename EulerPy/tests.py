@@ -22,14 +22,6 @@ class Tests(unittest.TestCase):
             self.assertEqual(result.exit_code, 1)
             self.assertFalse(os.path.isfile('001.py'))
 
-            # Simulate generation of 001.py (due to strange unittest behaviour)
-            with open('001.py', 'w') as f:
-                f.write("print('foo')")
-
-            # 001.py has been generated, so attempt to verify invalid solution
-            result = runner.invoke(euler.main)
-            self.assertEqual(result.exit_code, 1)
-
 
     def test_problem_format(self):
         """
