@@ -14,7 +14,7 @@ class Tests(unittest.TestCase):
 
 
     def test_program_flow(self):
-        """Check that EulerPy is executing properly"""
+        """Check that EulerPy exectues properly from fresh install"""
         runner = CliRunner()
         with runner.isolated_filesystem():
             # Test "N" as file generation prompt input
@@ -23,13 +23,8 @@ class Tests(unittest.TestCase):
             self.assertFalse(os.path.isfile('001.py'))
 
             # Test "Y" as file generation prompt input
-            result = runner.invoke(euler.main, input='\n')
+            result = runner.invoke(euler.main, input='Y\n')
             self.assertNotEqual(result.exit_code, 1)
-            self.assertTrue(os.path.isfile('001.py'))
-
-            # 001.py has been generated, so attempt to verify solution
-            result = runner.invoke(euler.main)
-            self.assertEqual(result.exit_code, 1)
 
 
     def test_problem_format(self):
