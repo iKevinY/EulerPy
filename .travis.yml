@@ -4,5 +4,8 @@ python:
   - "2.7"
   - "3.2"
   - "3.3"
+branches:
+  only:
+    - master
 install: pip install -r requirements.txt
 script: python -m EulerPy.tests
