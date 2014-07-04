@@ -120,9 +120,9 @@ def get_problem(problem):
     return '\n'.join(problemLines[3:])
 
 
-def generate_file(problem, default=True):
+def generate_file(problem, prompt_default=True):
     click.confirm("Generate file for problem #{0}?".format(problem),
-                  default=default, abort=True)
+                  default=prompt_default, abort=True)
     problemText = get_problem(problem)
 
     filename = get_filename(problem)
@@ -202,9 +202,12 @@ def main(option, problem):
             # If correct answer was given, generate next problem file
             if verify_answer(problem):
                 generate_file(problem + 1)
+            else:
+                sys.exit(1)
         else:
             if os.path.isfile(get_filename(problem)):
-                verify_answer(problem)
+                if not verify_answer(problem):
+                    sys.exit(1)
             else:
                 generate_file(problem)
 
@@ -213,7 +216,7 @@ def main(option, problem):
         if option == 'skip':
             problem = determine_largest_problem()
             click.echo("Current problem is problem #{0}.".format(problem))
-            generate_file(problem + 1, default=False)
+            generate_file(problem + 1, prompt_default=False)
 
         # Handle other options
         else:
@@ -234,6 +237,10 @@ def main(option, problem):
             }
 
             # Execute function
-            funcs[option](problem)
+            result = funcs[option](problem)
+
+            # If solution was being verified, exit with appropriate code
+            if option == 'verify':
+                sys.exit(not result)
 
     sys.exit()
