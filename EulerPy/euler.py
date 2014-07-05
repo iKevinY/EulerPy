@@ -40,6 +40,7 @@ def get_problem(problem):
 
     with open(problemsFile, 'r') as file:
         isProblemText = False
+        lastLine = ''
 
         for line in file:
             if line.strip() == 'Problem {0}'.format(problem):
@@ -48,7 +49,7 @@ def get_problem(problem):
             if isProblemText:
                 # Two subsequent empty lines indicates that the current
                 # problem text has ended, so stop iterating over file
-                if line == '\n' and lastLine == '\n':
+                if line == lastLine == '\n':
                     break
                 else:
                     problemLines.append(line[:-1])
