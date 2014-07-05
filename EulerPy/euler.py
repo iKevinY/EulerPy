@@ -40,24 +40,19 @@ def get_problem(problem):
 
     with open(problemsFile, 'r') as file:
         isProblemText = False
-        sequentialBreaks = 0
 
         for line in file:
             if line.strip() == 'Problem {0}'.format(problem):
                 isProblemText = True
 
             if isProblemText:
-                if line == '\n':
-                    sequentialBreaks += 1
-                else:
-                    sequentialBreaks = 0
-
                 # Two subsequent empty lines indicates that the current
                 # problem text has ended, so stop iterating over file
-                if sequentialBreaks >= 2:
+                if line == '\n' and lastLine == '\n':
                     break
                 else:
                     problemLines.append(line[:-1])
+                    lastLine = line
 
     return '\n'.join(problemLines[3:])
 
