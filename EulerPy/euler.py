@@ -27,14 +27,105 @@ def get_solution(problem):
 
     if answer == '':
         click.echo('No known answer for problem #{0}.'.format(problem))
-        click.echo('If you have an answer, consider submitting a pull ' +
-            'request at https://github.com/iKevinY/EulerPy.')
+        click.echo('If you have an answer, consider submitting a pull '
+            'request to EulerPy at https://github.com/iKevinY/EulerPy.')
         return None
     else:
         return answer
 
 
+def get_problem(problem):
+    problemsFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
+    problemLines = []
+
+    with open(problemsFile, 'r') as file:
+        isProblemText = False
+        sequentialBreaks = 0
+
+        for line in file:
+            if line.strip() == 'Problem {0}'.format(problem):
+                isProblemText = True
+
+            if isProblemText:
+                if line == '\n':
+                    sequentialBreaks += 1
+                else:
+                    sequentialBreaks = 0
+
+                # Two subsequent empty lines indicates that the current
+                # problem text has ended, so stop iterating over file
+                if sequentialBreaks >= 2:
+                    break
+                else:
+                    problemLines.append(line[:-1])
+
+    return '\n'.join(problemLines[3:])
+
+
+def determine_largest_problem():
+    for problem in reversed(range(1, TOTAL_PROBLEMS + 1)):
+        if os.path.isfile(get_filename(problem)):
+            return problem
+    else:
+        return False
+
+
+def generate_first_problem():
+    click.echo("No Project Euler files found in the current directory.")
+    generate_file(1)
+    sys.exit()
+
+
+def view_solution(problem):
+    """View the answer to a problem."""
+    solution = get_solution(problem)
+
+    if solution:
+        click.confirm("View answer to problem #{0}?".format(problem), abort=True)
+        click.echo("The answer to problem #{0} is ".format(problem), nl=False)
+        click.secho(solution, bold=True, nl=False)
+        click.echo(".")
+
+
+def generate_file(problem, prompt_default=True):
+    """Generates Python file for a problem."""
+    click.confirm("Generate file for problem #{0}?".format(problem),
+                  default=prompt_default, abort=True)
+    problemText = get_problem(problem)
+
+    filename = get_filename(problem)
+
+    if os.path.isfile(filename):
+        click.secho('"{0}" already exists. Overwrite?'.format(filename),
+                    fg='red', nl=False)
+        click.confirm('', abort=True)
+
+    problemHeader = 'Project Euler Problem #{0}\n'.format(problem)
+    problemHeader += '=' * len(problemHeader) + '\n\n'
+
+    with open(filename, 'w') as file:
+        file.write('"""\n')
+        file.write(problemHeader)
+        file.write(problemText)
+        file.write('"""\n\n\n')
+
+    click.echo('Successfully created "{0}".'.format(filename))
+
+
+def preview_problem(problem):
+    """Prints the text of a problem."""
+    click.secho("Project Euler Problem #{0}".format(problem), bold=True)
+    click.echo(get_problem(problem)[:-1])  # strip trailing newline
+
+
+def skip_problem(problem):
+    """Generates Python file for the next problem."""
+    click.echo("Current problem is problem #{0}.".format(problem))
+    generate_file(problem + 1, prompt_default=False)
+
+
 def verify_answer(problem):
+    """Verifies the solution to a problem."""
     filename = get_filename(problem)
 
     if not os.path.isfile(filename):
@@ -92,106 +183,37 @@ def verify_answer(problem):
         return is_correct
 
 
-def get_problem(problem):
-    problemsFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
-    problemLines = []
+def euler_options(func):
+    """Decorator to set up EulerPy's CLI options"""
+    for option in reversed(sorted(EULER_FUNCTIONS.keys())):
+        longFlag = '--' + option
+        shortFlag = '-' + option[0]
+        kwargs = {
+            'flag_value': option,
+            'help': EULER_FUNCTIONS[option].__doc__
+        }
 
-    with open(problemsFile, 'r') as file:
-        isProblemText = False
-        sequentialBreaks = 0
+        func = click.option(longFlag, shortFlag, 'option', **kwargs)(func)
 
-        for line in file:
-            if line.strip() == 'Problem {0}'.format(problem):
-                isProblemText = True
-
-            if isProblemText:
-                if line == '\n':
-                    sequentialBreaks += 1
-                else:
-                    sequentialBreaks = 0
-
-                # Two subsequent empty lines indicates that the current
-                # problem text has ended, so stop iterating over file
-                if sequentialBreaks >= 2:
-                    break
-                else:
-                    problemLines.append(line[:-1])
-
-    return '\n'.join(problemLines[3:])
+    return func
 
 
-def generate_file(problem, prompt_default=True):
-    click.confirm("Generate file for problem #{0}?".format(problem),
-                  default=prompt_default, abort=True)
-    problemText = get_problem(problem)
-
-    filename = get_filename(problem)
-
-    if os.path.isfile(filename):
-        click.secho('"{0}" already exists. Overwrite?'.format(filename),
-                    fg='red', nl=False)
-        click.confirm('', abort=True)
-
-    problemHeader = 'Project Euler Problem #{0}\n'.format(problem)
-    problemHeader += '=' * len(problemHeader) + '\n\n'
-
-    with open(filename, 'w') as file:
-        file.write('"""\n')
-        file.write(problemHeader)
-        file.write(problemText)
-        file.write('"""\n\n\n')
-
-    click.echo('Successfully created "{0}".'.format(filename))
-
-
-def generate_first_problem():
-    click.echo("No Project Euler files found in the current directory.")
-    generate_file(1)
-    sys.exit()
-
-
-def view_solution(problem):
-    solution = get_solution(problem)
-
-    if solution:
-        click.confirm("View answer to problem #{0}?".format(problem), abort=True)
-        click.echo("The answer to problem #{0} is ".format(problem), nl=False)
-        click.secho(solution, bold=True, nl=False)
-        click.echo(".")
-
-
-def preview_problem(problem):
-    click.secho("Project Euler Problem #{0}".format(problem), bold=True)
-    click.echo(get_problem(problem)[:-1])  # strip trailing newline
-
-
-def determine_largest_problem():
-    for problem in reversed(range(1, TOTAL_PROBLEMS + 1)):
-        if os.path.isfile(get_filename(problem)):
-            return problem
-    else:
-        return False
-
-
-help = {
-    'cheat': 'View the answer to a problem.',
-    'generate': 'Generates Python file for a problem.',
-    'skip': 'Generates Python file for the next problem.',
-    'preview': 'Prints the text of a problem.',
-    'verify': 'Verifies the solution to a problem.',
+# Define all of EulerPy's options and their corresponding functions
+EULER_FUNCTIONS = {
+    'cheat': view_solution,
+    'generate': generate_file,
+    'preview': preview_problem,
+    'skip': skip_problem,
+    'verify': verify_answer,
 }
 
 @click.command(name='euler', options_metavar='[OPTION]')
 @click.argument('problem', default=0, type=click.IntRange(0, TOTAL_PROBLEMS))
-@click.option('--cheat',    '-c', 'option', flag_value='cheat', help=help['cheat'])
-@click.option('--generate', '-g', 'option', flag_value='generate', help=help['generate'])
-@click.option('--skip',     '-s', 'option', flag_value='skip', help=help['skip'])
-@click.option('--preview',  '-p', 'option', flag_value='preview', help=help['preview'])
-@click.option('--verify',   '-v', 'option', flag_value='verify', help=help['verify'])
+@euler_options
 def main(option, problem):
     """Python tool to streamline Project Euler."""
 
-    # No option given
+    # No option given, so programatically determine appropriate action
     if option is None:
         if problem == 0:
             problem = determine_largest_problem()
@@ -212,35 +234,21 @@ def main(option, problem):
                 generate_file(problem)
 
     else:
-        # Handle options that ignore a problem argument
-        if option == 'skip':
+        # Skip option ignores problem number argument
+        if problem == 0 or option == 'skip':
             problem = determine_largest_problem()
-            click.echo("Current problem is problem #{0}.".format(problem))
-            generate_file(problem + 1, prompt_default=False)
 
-        # Handle other options
-        else:
-            if problem == 0:
-                problem = determine_largest_problem()
+        if not problem:
+            if option == 'preview':
+                problem = 1
+            else:
+                generate_first_problem()
 
-            if not problem:
-                if option == 'preview':
-                    problem = 1
-                else:
-                    generate_first_problem()
+        # Execute function
+        result = EULER_FUNCTIONS[option](problem)
 
-            funcs = {
-                'cheat': view_solution,
-                'generate': generate_file,
-                'preview': preview_problem,
-                'verify': verify_answer,
-            }
-
-            # Execute function
-            result = funcs[option](problem)
-
-            # If solution was being verified, exit with appropriate code
-            if option == 'verify':
-                sys.exit(not result)
+        # If solution was being verified, exit with appropriate code
+        if option == 'verify':
+            sys.exit(not result)
 
     sys.exit()
