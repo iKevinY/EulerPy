@@ -104,8 +104,8 @@ def generate(problem, prompt_default=True):
                     fg='red', nl=False)
         click.confirm('', abort=True)
 
-    problemHeader = 'Project Euler Problem #{0}\n'.format(problem)
-    problemHeader += '=' * len(problemHeader) + '\n\n'
+    problemHeader = 'Project Euler Problem {0}\n'.format(problem)
+    problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
 
     with open(filename, 'w') as file:
         file.write('"""\n')
