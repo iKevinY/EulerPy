@@ -6,15 +6,16 @@ import subprocess
 import linecache
 
 import click
+
 from EulerPy.timing import clock, format_time
 
 # Number of problems present in problems.txt
 TOTAL_PROBLEMS = 256
 
 
-def get_filename(problem):
-    """Returns filename in the form `001.py`"""
-    return '{0:03d}.py'.format(problem)
+def get_filename(problem, width=3):
+    """Returns filename padded with leading zeros"""
+    return '{0:0{w}d}.py'.format(problem, w=width)
 
 
 def get_solution(problem):
@@ -35,10 +36,11 @@ def get_solution(problem):
 
 
 def get_problem(problem):
+    """Parses problems.txt and returns problem text"""
     problemsFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
     problemLines = []
 
-    with open(problemsFile, 'r') as file:
+    with open(problemsFile) as file:
         isProblemText = False
         lastLine = ''
 
@@ -55,10 +57,13 @@ def get_problem(problem):
                     problemLines.append(line[:-1])
                     lastLine = line
 
+    # First three lines are the problem number, the divider line,
+    # and a newline, so don't include them in the returned string
     return '\n'.join(problemLines[3:])
 
 
 def determine_largest_problem():
+    """Determines largest problem file in the current directory"""
     for problem in reversed(range(1, TOTAL_PROBLEMS + 1)):
         if os.path.isfile(get_filename(problem)):
             return problem
@@ -67,12 +72,14 @@ def determine_largest_problem():
 
 
 def generate_first_problem():
+    """Creates 001.py in current directory"""
     click.echo("No Project Euler files found in the current directory.")
-    generate_file(1)
+    generate(1)
     sys.exit()
 
 
-def view_solution(problem):
+# --cheat / -c
+def cheat(problem):
     """View the answer to a problem."""
     solution = get_solution(problem)
 
@@ -83,7 +90,8 @@ def view_solution(problem):
         click.echo(".")
 
 
-def generate_file(problem, prompt_default=True):
+# --generate / -g
+def generate(problem, prompt_default=True):
     """Generates Python file for a problem."""
     click.confirm("Generate file for problem #{0}?".format(problem),
                   default=prompt_default, abort=True)
@@ -108,19 +116,22 @@ def generate_file(problem, prompt_default=True):
     click.echo('Successfully created "{0}".'.format(filename))
 
 
-def preview_problem(problem):
+# --preview / -p
+def preview(problem):
     """Prints the text of a problem."""
     click.secho("Project Euler Problem #{0}".format(problem), bold=True)
     click.echo(get_problem(problem)[:-1])  # strip trailing newline
 
 
-def skip_problem(problem):
+# --skip / -s
+def skip(problem):
     """Generates Python file for the next problem."""
     click.echo("Current problem is problem #{0}.".format(problem))
-    generate_file(problem + 1, prompt_default=False)
+    generate(problem + 1, prompt_default=False)
 
 
-def verify_answer(problem):
+# --verify / -v
+def verify(problem):
     """Verifies the solution to a problem."""
     filename = get_filename(problem)
 
@@ -179,37 +190,36 @@ def verify_answer(problem):
         return is_correct
 
 
-def euler_options(func):
+# Define all of EulerPy's options and their corresponding functions
+EULER_FUNCTIONS = {
+    'cheat': cheat,
+    'generate': generate,
+    'preview': preview,
+    'skip': skip,
+    'verify': verify,
+}
+
+def euler_options(function):
     """Decorator to set up EulerPy's CLI options"""
-    for option in reversed(sorted(EULER_FUNCTIONS.keys())):
-        longFlag = '--' + option
-        shortFlag = '-' + option[0]
+    # Reversed to decorate functions in correct order (applied inversely)
+    for option in reversed(sorted(EULER_FUNCTIONS)):
+        flags = ['--%s' % option, '-%s' % option[0]]
         kwargs = {
             'flag_value': option,
             'help': EULER_FUNCTIONS[option].__doc__
         }
 
-        func = click.option(longFlag, shortFlag, 'option', **kwargs)(func)
+        function = click.option('option', *flags, **kwargs)(function)
 
-    return func
-
-
-# Define all of EulerPy's options and their corresponding functions
-EULER_FUNCTIONS = {
-    'cheat': view_solution,
-    'generate': generate_file,
-    'preview': preview_problem,
-    'skip': skip_problem,
-    'verify': verify_answer,
-}
+    return function
 
 @click.command(name='euler', options_metavar='[OPTION]')
 @click.argument('problem', default=0, type=click.IntRange(0, TOTAL_PROBLEMS))
 @euler_options
 def main(option, problem):
-    """Python tool to streamline Project Euler."""
+    """Python-based Project Euler command line tool."""
 
-    # No option given, so programatically determine appropriate action
+    # No option given; programatically determine appropriate action
     if option is None:
         if problem == 0:
             problem = determine_largest_problem()
@@ -218,19 +228,19 @@ def main(option, problem):
                 generate_first_problem()
 
             # If correct answer was given, generate next problem file
-            if verify_answer(problem):
-                generate_file(problem + 1)
+            if verify(problem):
+                generate(problem + 1)
             else:
                 sys.exit(1)
         else:
             if os.path.isfile(get_filename(problem)):
-                if not verify_answer(problem):
+                if not verify(problem):
                     sys.exit(1)
             else:
-                generate_file(problem)
+                generate(problem)
 
     else:
-        # Skip option ignores problem number argument
+        # The skip option ignores problem number argument
         if problem == 0 or option == 'skip':
             problem = determine_largest_problem()
 
@@ -240,7 +250,7 @@ def main(option, problem):
             else:
                 generate_first_problem()
 
-        # Execute function
+        # Execute function depending on option
         result = EULER_FUNCTIONS[option](problem)
 
         # If solution was being verified, exit with appropriate code
