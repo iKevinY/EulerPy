@@ -174,15 +174,14 @@ def verify(problem):
         except IndexError:
             output = "[no output]"
 
-        # If there is still a newline, the output is multi-lined. Print the
-        # first line of the output on a separate line from the "checking
-        # against solution" message. Additionally, a multi-line output is
-        # not going to be correct, so skip the solution check.
-        if '\n' in output:
+        # If output is multi-lined, print the first line of the output on a
+        # separate line from the "checking against solution" message, and
+        # skip the solution check (multi-line solution won't be correct)
+        if len(output.splitlines()) > 1:
             is_correct = False
             click.secho('\n' + output, bold=True, fg='red')
         else:
-            is_correct = output.strip() == solution
+            is_correct = output.splitlines()[0] == solution
             fg_colour = 'green' if is_correct else 'red'
             click.secho(output, bold=True, fg=fg_colour)
 
