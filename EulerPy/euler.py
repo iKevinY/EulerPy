@@ -144,21 +144,21 @@ def verify(problem):
     if solution:
         click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
-        cmd = 'python {0}'.format(filename)
+        cmd = [sys.executable or 'python', filename]
         start = clock()
-        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        output, _ = proc.communicate()
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        stdout, stderr = proc.communicate()
         end = clock()
         time_info = format_time(start, end)
 
         # Python 3 returns bytes; use a valid encoding like ASCII as the output
         # will fall in that range
-        if isinstance(output, bytes):
-            output = output.decode('ascii')
+        if isinstance(stdout, bytes):
+            output = stdout.decode('ascii')
 
         return_val = proc.poll()
 
-        if return_val:
+        if return_val != 0:
             click.secho('Error calling "{0}".'.format(filename), fg='red')
             click.secho(time_info, fg='cyan')
             sys.exit(1)
