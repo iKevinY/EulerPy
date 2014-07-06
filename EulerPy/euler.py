@@ -156,34 +156,27 @@ def verify(problem):
         if isinstance(stdout, bytes):
             output = stdout.decode('ascii')
 
-        return_val = proc.poll()
-
-        if return_val != 0:
-            click.secho('Error calling "{0}".'.format(filename), fg='red')
+        # Return value of anything other than 0 indicates an error
+        if proc.poll() != 0:
+            click.secho('[error]', fg='red', bold=True)
             click.secho(time_info, fg='cyan')
             sys.exit(1)
 
-        # Strip newline from end of output if output is not a lone newline.
-        # This behaviour is favourable to stripping all whitespace with strip()
-        # as stripping all newlines from the output may inhib debugging done by
-        # the user (if they were to use multiple print statements in their code
-        # while in the process of atempting to solve the problem).
-        try:
-            if output[-1] == '\n':
-                output = output[:-1]
-        except IndexError:
-            output = "[no output]"
+        # Split output lines into array; make empty output more readable
+        output_lines = output.splitlines() if output else ['[no output]']
 
         # If output is multi-lined, print the first line of the output on a
         # separate line from the "checking against solution" message, and
         # skip the solution check (multi-line solution won't be correct)
-        if len(output.splitlines()) > 1:
+        if len(output_lines) > 1:
             is_correct = False
-            click.secho('\n' + output, bold=True, fg='red')
+            click.echo('') # force output to start on next line
+            for line in output_lines:
+                click.secho(line, bold=True, fg='red')
         else:
-            is_correct = output.splitlines()[0] == solution
+            is_correct = output_lines[0] == solution
             fg_colour = 'green' if is_correct else 'red'
-            click.secho(output, bold=True, fg=fg_colour)
+            click.secho(output_lines[0], bold=True, fg=fg_colour)
 
         click.secho(time_info, fg='cyan')
         return is_correct
