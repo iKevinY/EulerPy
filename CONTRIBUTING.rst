@@ -24,12 +24,7 @@ guidelines for the format of the file:
   empty lines, as this indicates to the script that the the problem has
   finished being read.
 
-
-Also, remember to update the problem count (the ``TOTAL_PROBLEMS`` variable) in
-`euler.py`_ with the number of problems that have been added.
-
 I've probably made countless coding *faux pas* given my level of experience, so
 any improvements to the codebase are graciously welcomed as well.
 
 .. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/problems.txt
-.. _euler.py: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/euler.py
