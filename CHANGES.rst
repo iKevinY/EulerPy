@@ -2,6 +2,14 @@
 Changelog
 =========
 
+v1.0.8 (07-07-2014)
+-------------------
+
+- Made solution verification exit with appropriate exit code based on success
+- Changed solution verification to not execute script using shell
+- Fixed width of divider line in generated problem docstring
+
+
 v1.0.7 (03-07-2014)
 -------------------
 
