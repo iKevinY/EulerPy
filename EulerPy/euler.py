@@ -40,14 +40,14 @@ def get_problem(problem):
     problemLines = []
 
     with open(problemsFile) as file:
-        isProblemText = False
+        problemText = False
         lastLine = ''
 
         for line in file:
             if line.strip() == 'Problem {0}'.format(problem):
-                isProblemText = True
+                problemText = True
 
-            if isProblemText:
+            if problemText:
                 # Two subsequent empty lines indicates that the current
                 # problem text has ended, so stop iterating over file
                 if line == lastLine == '\n':
@@ -55,12 +55,14 @@ def get_problem(problem):
                 else:
                     problemLines.append(line[:-1])
                     lastLine = line
-        else:
+
+        if not problemText:
             msg = 'Problem {0} not found in problems.txt.'.format(problem)
             click.secho(msg, fg='red')
             click.echo('If this problem exists on Project Euler, consider '
                        'submitting a pull request.')
             sys.exit(1)
+
 
     # First three lines are the problem number, the divider line,
     # and a newline, so don't include them in the returned string
