@@ -20,18 +20,20 @@ def get_solution(problem):
     solutionsFile = os.path.join(os.path.dirname(__file__), 'solutions.txt')
     line = linecache.getline(solutionsFile, problem)
 
-    # Isolate answer from the question number and trailing newline
     try:
         answer = line.split('. ')[1].strip()
-        if answer:
-            return answer
     except IndexError:
-        pass
+        answer = None
 
-    msg = 'Answer for problem {0} not found in solutions.txt.'.format(problem)
-    click.secho(msg, fg='red')
-    click.echo('If you have an answer, consider submitting a pull request.')
-    sys.exit(1)
+    if answer:
+        return answer
+    else:
+        # Either entry is missing in solutions.txt or the line doesn't exist
+        msg = 'Answer for problem %i not found in solutions.txt.' % problem
+        click.secho(msg, fg='red')
+        click.echo('If you have an answer, consider submitting a pull request '
+                   'to EulerPy at https://github.com/iKevinY/EulerPy.')
+        sys.exit(1)
 
 
 def get_problem(problem):
@@ -56,17 +58,17 @@ def get_problem(problem):
                     problemLines.append(line[:-1])
                     lastLine = line
 
-        if not problemText:
-            msg = 'Problem {0} not found in problems.txt.'.format(problem)
-            click.secho(msg, fg='red')
-            click.echo('If this problem exists on Project Euler, consider '
-                       'submitting a pull request.')
-            sys.exit(1)
-
-
-    # First three lines are the problem number, the divider line,
-    # and a newline, so don't include them in the returned string
-    return '\n'.join(problemLines[3:])
+    if problemText:
+        # First three lines are the problem number, the divider line,
+        # and a newline, so don't include them in the returned string
+        return '\n'.join(problemLines[3:])
+    else:
+        msg = 'Problem {0} not found in problems.txt.'.format(problem)
+        click.secho(msg, fg='red')
+        click.echo('If this problem exists on Project Euler, consider '
+                   'submitting a pull request to EulerPy at '
+                   'https://github.com/iKevinY/EulerPy.')
+        sys.exit(1)
 
 
 def determine_largest_problem():
@@ -101,16 +103,15 @@ def cheat(problem):
 # --generate / -g
 def generate(problem, prompt_default=True):
     """Generates Python file for a problem."""
-    click.confirm("Generate file for problem {0}?".format(problem),
-                  default=prompt_default, abort=True)
+    msg = "Generate file for problem {0}?".format(problem)
+    click.confirm(msg, default=prompt_default, abort=True)
     problemText = get_problem(problem)
 
     filename = get_filename(problem)
 
     if os.path.isfile(filename):
-        click.secho('"{0}" already exists. Overwrite?'.format(filename),
-                    fg='red', nl=False)
-        click.confirm('', abort=True)
+        msg = '"{0}" already exists. Overwrite?'.format(filename)
+        click.confirm(click.style(msg, fg='red'), abort=True)
 
     problemHeader = 'Project Euler Problem {0}\n'.format(problem)
     problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
@@ -198,24 +199,16 @@ def verify(problem):
             sys.exit(1)
 
 
-# Define all of EulerPy's options and their corresponding functions
-EULER_FUNCTIONS = {
-    'cheat': cheat,
-    'generate': generate,
-    'preview': preview,
-    'skip': skip,
-    'verify': verify,
-}
-
 def euler_options(function):
     """Decorator to set up EulerPy's CLI options"""
+    # Define all of EulerPy's options and their corresponding functions
+    eulerFunctions = (cheat, generate, preview, skip, verify)
+
     # Reversed to decorate functions in correct order (applied inversely)
-    for option in reversed(sorted(EULER_FUNCTIONS)):
-        flags = ['--%s' % option, '-%s' % option[0]]
-        kwargs = {
-            'flag_value': option,
-            'help': EULER_FUNCTIONS[option].__doc__
-        }
+    for option in reversed(sorted(eulerFunctions)):
+        name, docstring = option.__name__, option.__doc__
+        flags = ['--%s' % name, '-%s' % name[0]]
+        kwargs = {'flag_value': option, 'help': docstring}
 
         function = click.option('option', *flags, **kwargs)(function)
 
@@ -246,16 +239,16 @@ def main(option, problem):
 
     else:
         # The skip option ignores problem number argument
-        if problem == 0 or option == 'skip':
+        if problem == 0 or option is skip:
             problem = determine_largest_problem()
 
         if not problem:
-            if option == 'preview':
+            if option is preview:
                 problem = 1
             else:
                 generate_first_problem()
 
         # Execute function based on option
-        EULER_FUNCTIONS[option](problem)
+        option(problem)
 
     sys.exit()
