@@ -205,7 +205,7 @@ def euler_options(function):
     eulerFunctions = (cheat, generate, preview, skip, verify)
 
     # Reversed to decorate functions in correct order (applied inversely)
-    for option in reversed(sorted(eulerFunctions)):
+    for option in reversed(eulerFunctions):
         name, docstring = option.__name__, option.__doc__
         flags = ['--%s' % name, '-%s' % name[0]]
         kwargs = {'flag_value': option, 'help': docstring}
