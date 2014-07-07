@@ -28,7 +28,18 @@ class Tests(unittest.TestCase):
         Ensure each parsed problem only contains one problem (that one problem
         does not "bleed" into the next one due to an issue with line breaks)
         """
-        for problem in range(1, euler.TOTAL_PROBLEMS + 1):
+
+        # Determine largest problem in problems.txt
+        problemsFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
+        with open(problemsFile) as file:
+            largest = ''
+            for line in file:
+                if 'Problem' in line:
+                    largest = line.strip()
+
+            largestProblem = int(largest.split(' ')[1])
+
+        for problem in range(1, largestProblem + 1):
             problemText = euler.get_problem(problem)
 
             msg = "Error encountered when parsing problem {0}.".format(problem)
