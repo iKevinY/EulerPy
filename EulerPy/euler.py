@@ -91,7 +91,7 @@ def generate_first_problem():
 # --cheat / -c
 def cheat(problem):
     """View the answer to a problem."""
-    # get_solution() handles cases where the solution does not exist
+    # get_solution() will exit here if the solution does not exist
     solution = click.style(get_solution(problem), bold=True)
     click.confirm("View answer to problem %i?" % problem, abort=True)
     click.echo("The answer to problem %i is {0}.".format(solution) % problem)
@@ -148,58 +148,57 @@ def verify(problem):
         click.secho('Error: "{0}" not found.'.format(filename), fg='red')
         sys.exit(1)
 
+    # get_solution() will exit here if the solution does not exist
     solution = get_solution(problem)
 
-    if solution:
-        click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
+    click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
-        cmd = [sys.executable or 'python', filename]
-        start = clock()
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        stdout, stderr = proc.communicate()
-        end = clock()
-        time_info = format_time(start, end)
+    cmd = [sys.executable or 'python', filename]
+    start = clock()
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
+    end = clock()
+    time_info = format_time(start, end)
 
-        # Python 3 returns bytes; use a valid encoding like ASCII as the output
-        # will fall in that range
-        if isinstance(stdout, bytes):
-            output = stdout.decode('ascii')
+    # Python 3 returns bytes; use a valid encoding like ASCII as the output
+    # will fall in that range
+    if isinstance(stdout, bytes):
+        output = stdout.decode('ascii')
 
-        # Return value of anything other than 0 indicates an error
-        if proc.poll() != 0:
-            click.secho('[error]', fg='red', bold=True)
-            click.secho(time_info, fg='cyan')
-            sys.exit(1)
-
-        # Split output lines into array; make empty output more readable
-        output_lines = output.splitlines() if output else ['[no output]']
-
-        # If output is multi-lined, print the first line of the output on a
-        # separate line from the "checking against solution" message, and
-        # skip the solution check (multi-line solution won't be correct)
-        if len(output_lines) > 1:
-            is_correct = False
-            click.echo('') # force output to start on next line
-            for line in output_lines:
-                click.secho(line, bold=True, fg='red')
-        else:
-            is_correct = output_lines[0] == solution
-            fg_colour = 'green' if is_correct else 'red'
-            click.secho(output_lines[0], bold=True, fg=fg_colour)
-
+    # Return value of anything other than 0 indicates an error
+    if proc.poll() != 0:
+        click.secho('Error calling "{0}".'.format(filename), fg='red')
         click.secho(time_info, fg='cyan')
+        sys.exit(1)
 
-        # Exit here if answer was incorrect
-        if is_correct:
-            return True
-        else:
-            sys.exit(1)
+    # Split output lines into array; make empty output more readable
+    output_lines = output.splitlines() if output else ['[no output]']
+
+    # If output is multi-lined, print the first line of the output on a
+    # separate line from the "checking against solution" message, and
+    # skip the solution check (multi-line solution won't be correct)
+    if len(output_lines) > 1:
+        is_correct = False
+        click.echo('') # force output to start on next line
+        for line in output_lines:
+            click.secho(line, bold=True, fg='red')
+    else:
+        is_correct = output_lines[0] == solution
+        fg_colour = 'green' if is_correct else 'red'
+        click.secho(output_lines[0], bold=True, fg=fg_colour)
+
+    click.secho(time_info, fg='cyan')
+
+    # Exit here if answer was incorrect
+    if is_correct:
+        return True
+    else:
+        sys.exit(1)
 
 
 def euler_options(function):
-    """Decorator to set up EulerPy's CLI options"""
-    # Define all of EulerPy's options and their corresponding functions
-    eulerFunctions = (cheat, generate, preview, skip, verify)
+    """Decorator to link CLI options with their appropriate functions"""
+    eulerFunctions = cheat, generate, preview, skip, verify
 
     # Reversed to decorate functions in correct order (applied inversely)
     for option in reversed(eulerFunctions):
@@ -216,7 +215,6 @@ def euler_options(function):
 @euler_options
 def main(option, problem):
     """Python-based Project Euler command line tool."""
-
     # No option given; programatically determine appropriate action
     if option is None:
         if problem == 0:
