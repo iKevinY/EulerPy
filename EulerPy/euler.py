@@ -46,7 +46,7 @@ def get_problem(problem):
         lastLine = ''
 
         for line in file:
-            if line.strip() == 'Problem {0}'.format(problem):
+            if line.strip() == 'Problem %i' % problem:
                 problemText = True
 
             if problemText:
@@ -63,7 +63,7 @@ def get_problem(problem):
         # and a newline, so don't include them in the returned string
         return '\n'.join(problemLines[3:])
     else:
-        msg = 'Problem {0} not found in problems.txt.'.format(problem)
+        msg = 'Problem %i not found in problems.txt.' % problem
         click.secho(msg, fg='red')
         click.echo('If this problem exists on Project Euler, consider '
                    'submitting a pull request to EulerPy at '
@@ -91,19 +91,16 @@ def generate_first_problem():
 # --cheat / -c
 def cheat(problem):
     """View the answer to a problem."""
-    solution = get_solution(problem)
-
-    if solution:
-        click.confirm("View answer to problem {0}?".format(problem), abort=True)
-        click.echo("The answer to problem {0} is ".format(problem), nl=False)
-        click.secho(solution, bold=True, nl=False)
-        click.echo(".")
+    # get_solution() handles cases where the solution does not exist
+    solution = click.style(get_solution(problem), bold=True)
+    click.confirm("View answer to problem %i?" % problem, abort=True)
+    click.echo("The answer to problem %i is {0}.".format(solution) % problem)
 
 
 # --generate / -g
 def generate(problem, prompt_default=True):
     """Generates Python file for a problem."""
-    msg = "Generate file for problem {0}?".format(problem)
+    msg = "Generate file for problem %i?" % problem
     click.confirm(msg, default=prompt_default, abort=True)
     problemText = get_problem(problem)
 
@@ -113,7 +110,7 @@ def generate(problem, prompt_default=True):
         msg = '"{0}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
 
-    problemHeader = 'Project Euler Problem {0}\n'.format(problem)
+    problemHeader = 'Project Euler Problem %i\n' % problem
     problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
 
     with open(filename, 'w') as file:
@@ -128,17 +125,17 @@ def generate(problem, prompt_default=True):
 # --preview / -p
 def preview(problem):
     """Prints the text of a problem."""
-    # Attempt to declare problemText instead of echoing it directly in the
-    # event that the problem does not exist in problems.txt
+    # Declare problemText first instead of echoing it right away in case the
+    # problem does not exist in problems.txt; strip newline from end of text
     problemText = get_problem(problem)[:-1]
-    click.secho("Project Euler Problem {0}".format(problem), bold=True)
+    click.secho("Project Euler Problem %i" % problem, bold=True)
     click.echo(problemText)
 
 
 # --skip / -s
 def skip(problem):
     """Generates Python file for the next problem."""
-    click.echo("Current problem is problem {0}.".format(problem))
+    click.echo("Current problem is problem %i." % problem)
     generate(problem + 1, prompt_default=False)
 
 
