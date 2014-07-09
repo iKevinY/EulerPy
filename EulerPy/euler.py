@@ -100,6 +100,7 @@ def cheat(problem):
 # --generate / -g
 def generate(problem, prompt_default=True):
     """Generates Python file for a problem."""
+
     msg = "Generate file for problem %i?" % problem
     click.confirm(msg, default=prompt_default, abort=True)
     problemText = get_problem(problem)
@@ -215,35 +216,32 @@ def euler_options(function):
 @euler_options
 def main(option, problem):
     """Python-based Project Euler command line tool."""
-    # No option given; programatically determine appropriate action
-    if option is None:
-        if problem == 0:
-            problem = determine_largest_problem()
-            # No Project Euler files in current directory
-            if not problem:
-                generate_first_problem()
+    # No problem given (or --skip, which ignores the problem argument)
+    if problem == 0 or option is skip:
+        problem = determine_largest_problem()
 
-            # If correct answer was given, generate next problem file
-            if verify(problem):
-                generate(problem + 1)
-        else:
-            if os.path.isfile(get_filename(problem)):
-                verify(problem)
-            else:
-                generate(problem)
-
-    else:
-        # The skip option ignores problem number argument
-        if problem == 0 or option is skip:
-            problem = determine_largest_problem()
-
+        # No Project Euler files in current directory
         if not problem:
             if option is preview:
                 problem = 1
             else:
                 generate_first_problem()
 
-        # Execute function based on option
-        option(problem)
+        # --preview and no problem; preview the next problem
+        elif option is preview:
+            problem += 1
 
+        # No option and no problem; generate next file if answer is correct
+        if not option:
+            if verify(problem):
+                problem += 1
+                option = generate
+
+    # Problem given but no option; decide between generate and verify
+    elif not option:
+        problemFile = get_filename(problem)
+        option = verify if os.path.isfile(problemFile) else generate
+
+    # Execute function based on option
+    option(problem)
     sys.exit()
