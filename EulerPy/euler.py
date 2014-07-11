@@ -188,7 +188,7 @@ def verify(problem):
     click.secho(time_info, fg='cyan')
 
     # Exit here if answer was incorrect
-    if not is_correct
+    if not is_correct:
         sys.exit(1)
 
 
