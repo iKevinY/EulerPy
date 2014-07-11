@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import os
-import subprocess
+import sys
 import linecache
+import subprocess
 
 import click
 
 from EulerPy.timing import clock, format_time
-
 
 def get_filename(problem, width=3):
     """Returns filename padded with leading zeros"""
@@ -28,7 +27,6 @@ def get_solution(problem):
     if answer:
         return answer
     else:
-        # Either entry is missing in solutions.txt or the line doesn't exist
         msg = 'Answer for problem %i not found in solutions.txt.' % problem
         click.secho(msg, fg='red')
         click.echo('If you have an answer, consider submitting a pull request '
@@ -38,27 +36,26 @@ def get_solution(problem):
 
 def get_problem(problem):
     """Parses problems.txt and returns problem text"""
-    problemsFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
-    problemLines = []
+    def problem_iter(problem, problemFile):
+        with open(problemFile) as file:
+            problemText = False
+            lastLine = ''
 
-    with open(problemsFile) as file:
-        problemText = False
-        lastLine = ''
+            for line in file:
+                if line.strip() == 'Problem %i' % problem:
+                    problemText = True
 
-        for line in file:
-            if line.strip() == 'Problem %i' % problem:
-                problemText = True
+                if problemText:
+                    if line == lastLine == '\n':
+                        break
+                    else:
+                        yield line[:-1]
+                        lastLine = line
 
-            if problemText:
-                # Two subsequent empty lines indicates that the current
-                # problem text has ended, so stop iterating over file
-                if line == lastLine == '\n':
-                    break
-                else:
-                    problemLines.append(line[:-1])
-                    lastLine = line
+    problemFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
+    problemLines = [line for line in problem_iter(problem, problemFile)]
 
-    if problemText:
+    if problemLines:
         # First three lines are the problem number, the divider line,
         # and a newline, so don't include them in the returned string
         return '\n'.join(problemLines[3:])
@@ -82,7 +79,7 @@ def determine_largest_problem():
 
 
 def generate_first_problem():
-    """Creates 001.py in current directory"""
+    """Creates 001.py in the current directory"""
     click.echo("No Project Euler files found in the current directory.")
     generate(1)
     sys.exit()
@@ -126,9 +123,9 @@ def generate(problem, prompt_default=True):
 # --preview / -p
 def preview(problem):
     """Prints the text of a problem."""
-    # Declare problemText first instead of echoing it right away in case the
-    # problem does not exist in problems.txt; strip newline from end of text
-    problemText = get_problem(problem)[:-1]
+    # Define problemText instead of echoing it right away
+    # in case the problem does not exist in problems.txt
+    problemText = get_problem(problem)[:-1] # strip newline from text
     click.secho("Project Euler Problem %i" % problem, bold=True)
     click.echo(problemText)
 
@@ -191,9 +188,7 @@ def verify(problem):
     click.secho(time_info, fg='cyan')
 
     # Exit here if answer was incorrect
-    if is_correct:
-        return True
-    else:
+    if not is_correct
         sys.exit(1)
 
 
@@ -231,11 +226,12 @@ def main(option, problem):
         elif option is preview:
             problem += 1
 
-        # No option and no problem; generate next file if answer is correct
+        # No option and no problem; generate next file if answer is
+        # correct (verify() exits if the solution is incorrect)
         if not option:
-            if verify(problem):
-                problem += 1
-                option = generate
+            verify(problem)
+            problem += 1
+            option = generate
 
     # Problem given but no option; decide between generate and verify
     elif not option:
