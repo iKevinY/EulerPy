@@ -216,11 +216,13 @@ See `CONTRIBUTING.rst`_.
 Miscellaneous
 =============
 
-The text for problems 1 through 202 were derived from Kyle Keen's
-`Local Euler`_ project, and the solutions in `solutions.txt`_
-were derived from the `projecteuler-solutions wiki`_.
+The text for the problems in `problems.txt`_ were derived from Kyle Keen's
+`Local Euler`_ project, and the solutions in `solutions.txt`_ were derived
+from the `projecteuler-solutions wiki`_.
 
 See `this blog post`_ for insight into the development process.
+
+EulerPy uses `click`_ as a dependency for its CLI functionality.
 
 
 =======
@@ -241,8 +243,10 @@ EulerPy is licensed under the `MIT License`_.
 .. _pip: http://www.pip-installer.org/en/latest/index.html
 .. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blob/master/CONTRIBUTING.rst
 .. _Local Euler: http://kmkeen.com/local-euler/
+.. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/problems.txt
 .. _solutions.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/solutions.txt
 .. _projecteuler-solutions wiki: https://code.google.com/p/projecteuler-solutions/
 .. _this blog post: http://kevinyap.ca/2014/06/eulerpy-streamlining-project-euler/
+.. _click: https://github.com/mitsuhiko/click
 .. _MIT License: https://github.com/iKevinY/EulerPy/blob/master/LICENSE
 
