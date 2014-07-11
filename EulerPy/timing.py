@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import sys
 import math
 
@@ -78,8 +80,8 @@ def format_time(start, end):
     cpu_tot = cpu_usr + cpu_sys
 
     if HAS_RUSAGE:
-        return u'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(
+        return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(
             human_time(cpu_usr), human_time(cpu_sys), human_time(cpu_tot),
         )
     else:
-        return u'Time elapsed: {0}'.format(human_time(cpu_usr))
+        return 'Time elapsed: {0}'.format(human_time(cpu_usr))
