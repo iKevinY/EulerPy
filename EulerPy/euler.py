@@ -192,7 +192,12 @@ def euler_options(function):
     # Reversed to decorate functions in correct order (applied inversely)
     for option in reversed(eulerFunctions):
         name, docstring = option.__name__, option.__doc__
-        flags = ['--%s' % name, '-%s' % name[0]]
+        flags = ['--%s' % name.replace('_', '-')]
+
+        # Add short flag if function name is a single word
+        if not '_' in name:
+            flags.append('-%s' % name[0])
+
         kwargs = {'flag_value': option, 'help': docstring}
 
         function = click.option('option', *flags, **kwargs)(function)
