@@ -78,13 +78,6 @@ def determine_largest_problem():
         return False
 
 
-def generate_first_problem():
-    """Creates 001.py in the current directory"""
-    click.echo("No Project Euler files found in the current directory.")
-    generate(1)
-    sys.exit()
-
-
 # --cheat / -c
 def cheat(problem):
     """View the answer to a problem."""
@@ -217,10 +210,13 @@ def main(option, problem):
 
         # No Project Euler files in current directory
         if not problem:
-            if option is preview:
-                problem = 1
-            else:
-                generate_first_problem()
+            problem = 1
+
+            # Generate problem 1 if the option was not --preview
+            if option is not preview:
+                msg = "No Project Euler files found in the current directory."
+                click.echo(msg)
+                option = generate
 
         # --preview and no problem; preview the next problem
         elif option is preview:
