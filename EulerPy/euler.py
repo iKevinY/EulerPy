@@ -78,6 +78,12 @@ def determine_largest_problem():
         return False
 
 
+def rename_file(old, new):
+    """Renames a file"""
+    os.rename(old, new)
+    click.secho('Renamed "{0}" to "{1}".'.format(old, new), fg='yellow')
+
+
 # --cheat / -c
 def cheat(problem):
     """View the answer to a problem."""
@@ -128,6 +134,11 @@ def skip(problem):
     """Generates Python file for the next problem."""
     click.echo("Current problem is problem %i." % problem)
     generate(problem + 1, prompt_default=False)
+
+    # Rename the skipped file
+    filename = get_filename(problem)
+    skipped_name = get_filename(problem, suffix='-skipped')
+    rename_file(filename, skipped_name)
 
 
 # --verify / -v
