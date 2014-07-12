@@ -232,6 +232,7 @@ def euler_options(function):
 
     return function
 
+
 @click.command(name='euler', options_metavar='[OPTION]')
 @click.argument('problem', default=0, type=click.IntRange(0, None))
 @euler_options
@@ -242,11 +243,11 @@ def main(option, problem):
 
         # Determine the highest problem number in the current directory
         for filename in glob.glob('[0-9][0-9][0-9]*.py'):
-            num = int(''.join(s for s in filename if s.isdigit()))
+            num = int(filename[:3])
             problem = num if num > problem else problem
 
         # No Project Euler files in current directory (no glob results)
-        if not problem:
+        if problem == 0:
             problem = 1
 
             # Generate problem 1 if option deals with problem files
