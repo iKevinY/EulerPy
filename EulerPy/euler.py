@@ -9,9 +9,9 @@ import click
 
 from EulerPy.timing import clock, format_time
 
-def get_filename(problem, width=3):
+def get_filename(problem, width=3, suffix=''):
     """Returns filename padded with leading zeros"""
-    return '{0:0{w}d}.py'.format(problem, w=width)
+    return '{0:0{w}d}{1}.py'.format(problem, suffix, w=width)
 
 
 def get_solution(problem):
