@@ -2,12 +2,14 @@
 
 import os
 import sys
+import glob
 import linecache
 import subprocess
 
 import click
 
 from EulerPy.timing import clock, format_time
+
 
 def get_filename(problem, width=3, suffix=''):
     """Returns filename padded with leading zeros"""
@@ -66,16 +68,6 @@ def get_problem(problem):
                    'submitting a pull request to EulerPy at '
                    'https://github.com/iKevinY/EulerPy.')
         sys.exit(1)
-
-
-def determine_largest_problem():
-    """Determines largest problem file in the current directory"""
-    # Arbitrary value that is larger than all Project Euler problems
-    for problem in reversed(range(600)):
-        if os.path.isfile(get_filename(problem)):
-            return problem
-    else:
-        return False
 
 
 def rename_file(old, new):
@@ -142,13 +134,22 @@ def skip(problem):
 
 
 # --verify / -v
-def verify(problem):
+def verify(problem, filename=None, incorrect_exit=True):
     """Verifies the solution to a problem."""
     filename = filename or get_filename(problem)
 
     if not os.path.isfile(filename):
-        click.secho('Error: "{0}" not found.'.format(filename), fg='red')
-        sys.exit(1)
+        click.secho('"{0}" not found.'.format(filename), fg='red')
+        click.echo("Attempting fuzzy search for problem file.")
+
+        # Do a fuzzy search for problem files using the glob module
+        for fuzzy_file in glob.glob('{0:03d}*.py'.format(problem)):
+            if os.path.isfile(fuzzy_file):
+                filename = fuzzy_file
+                break
+        else:
+            click.secho('No file found for problem %i.' % problem, fg='red')
+            sys.exit(1)
 
     # get_solution() will exit here if the solution does not exist
     solution = get_solution(problem)
@@ -192,13 +193,29 @@ def verify(problem):
     click.secho(time_info, fg='cyan')
 
     # Exit here if answer was incorrect
-    if not is_correct:
+    if incorrect_exit and not is_correct:
         sys.exit(1)
+    else:
+        # Strip the filename of any suffix if the solution is now correct
+        if is_correct and filename != get_filename(problem):
+            rename_file(filename, get_filename(problem))
+
+        return is_correct
+
+
+# --verify-all
+def verify_all(largest_problem):
+    """
+    Verifies all problem files in the current directory and
+    prints an overview of the status of each problem.
+    """
+
+    pass
 
 
 def euler_options(function):
     """Decorator to link CLI options with their appropriate functions"""
-    eulerFunctions = cheat, generate, preview, skip, verify
+    eulerFunctions = cheat, generate, preview, skip, verify, verify_all
 
     # Reversed to decorate functions in correct order (applied inversely)
     for option in reversed(eulerFunctions):
@@ -220,16 +237,20 @@ def euler_options(function):
 @euler_options
 def main(option, problem):
     """Python-based Project Euler command line tool."""
-    # No problem given (or --skip, which ignores the problem argument)
-    if problem == 0 or option is skip:
-        problem = determine_largest_problem()
+    # No problem given (or given option ignores the problem argument)
+    if problem == 0 or option in (skip, verify_all):
 
-        # No Project Euler files in current directory
+        # Determine the highest problem number in the current directory
+        for filename in glob.glob('[0-9][0-9][0-9]*.py'):
+            num = int(''.join(s for s in filename if s.isdigit()))
+            problem = num if num > problem else problem
+
+        # No Project Euler files in current directory (no glob results)
         if not problem:
             problem = 1
 
-            # Generate problem 1 if the option was not --preview
-            if option is not preview:
+            # Generate problem 1 if option deals with problem files
+            if option not in (cheat, preview):
                 msg = "No Project Euler files found in the current directory."
                 click.echo(msg)
                 option = generate
