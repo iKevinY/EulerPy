@@ -96,10 +96,9 @@ def generate(problem, prompt_default=True):
     problemText = get_problem(problem)
 
     filename = get_filename(problem)
-    boldname = click.style(filename, bold=True)
 
     if os.path.isfile(filename):
-        msg = '{0} already exists. Overwrite?'.format(boldname)
+        msg = '"{0}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
 
     problemHeader = 'Project Euler Problem %i\n' % problem
@@ -111,7 +110,7 @@ def generate(problem, prompt_default=True):
         file.write(problemText)
         file.write('"""\n\n\n')
 
-    click.secho('Successfully created {0}.'.format(boldname), fg='green')
+    click.secho('Successfully created "{0}".'.format(filename), fg='green')
 
 
 # --preview / -p
@@ -135,16 +134,15 @@ def skip(problem):
 def verify(problem):
     """Verifies the solution to a problem."""
     filename = filename or get_filename(problem)
-    boldname = click.style(filename, bold=True)
 
     if not os.path.isfile(filename):
-        click.secho('Error: {0} not found.'.format(boldname), fg='red')
+        click.secho('Error: "{0}" not found.'.format(filename), fg='red')
         sys.exit(1)
 
     # get_solution() will exit here if the solution does not exist
     solution = get_solution(problem)
 
-    click.echo('Checking {0} against solution: '.format(boldname), nl=False)
+    click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
     cmd = [sys.executable or 'python', filename]
     start = clock()
@@ -160,7 +158,7 @@ def verify(problem):
 
     # Return value of anything other than 0 indicates an error
     if proc.poll() != 0:
-        click.secho('Error calling {0}.'.format(boldname), fg='red')
+        click.secho('Error calling "{0}".'.format(filename), fg='red')
         click.secho(time_info, fg='cyan')
         sys.exit(1)
 
