@@ -134,15 +134,15 @@ def skip(problem):
 
 
 # --verify / -v
-def verify(problem, filename=None, incorrect_exit=True):
+def verify(problem, filename=None, exit=True):
     """Verifies the solution to a problem."""
     filename = filename or get_filename(problem)
 
     if not os.path.isfile(filename):
-        click.secho('"{0}" not found.'.format(filename), fg='red')
-        click.echo("Attempting fuzzy search for problem file.")
-
         # Do a fuzzy search for problem files using the glob module
+        msg = "Attempting fuzzy search for problem {0} file.".format(problem)
+        click.echo(msg)
+
         for fuzzy_file in glob.glob('{0:03d}*.py'.format(problem)):
             if os.path.isfile(fuzzy_file):
                 filename = fuzzy_file
@@ -182,7 +182,7 @@ def verify(problem, filename=None, incorrect_exit=True):
     # skip the solution check (multi-line solution won't be correct)
     if len(output_lines) > 1:
         is_correct = False
-        click.echo('') # force output to start on next line
+        click.echo() # force output to start on next line
         for line in output_lines:
             click.secho(line, bold=True, fg='red')
     else:
@@ -193,7 +193,7 @@ def verify(problem, filename=None, incorrect_exit=True):
     click.secho(time_info, fg='cyan')
 
     # Exit here if answer was incorrect
-    if incorrect_exit and not is_correct:
+    if exit and not is_correct:
         sys.exit(1)
     else:
         # Strip the filename of any suffix if the solution is now correct
