@@ -139,7 +139,7 @@ def verify(problem, filename=None, exit=True):
     filename = filename or get_filename(problem)
 
     if not os.path.isfile(filename):
-        # Do a fuzzy search for problem files using the glob module
+        # Attempt a fuzzy search for problem files using the glob module
         msg = "Attempting fuzzy search for problem {0} file.".format(problem)
         click.echo(msg)
 
@@ -172,7 +172,12 @@ def verify(problem, filename=None, exit=True):
     if proc.poll() != 0:
         click.secho('Error calling "{0}".'.format(filename), fg='red')
         click.secho(time_info, fg='cyan')
-        sys.exit(1)
+
+        # Exit here if appropriate, otherwise return None (for --verify-all)
+        if exit:
+            sys.exit(1)
+        else:
+            return None
 
     # Split output lines into array; make empty output more readable
     output_lines = output.splitlines() if output else ['[no output]']
@@ -196,7 +201,7 @@ def verify(problem, filename=None, exit=True):
     if exit and not is_correct:
         sys.exit(1)
     else:
-        # Strip the filename of any suffix if the solution is now correct
+        # Remove any suffix from the filename if its solution is correct
         if is_correct and filename != get_filename(problem):
             rename_file(filename, get_filename(problem))
 
@@ -240,21 +245,22 @@ def main(option, problem):
     """Python-based Project Euler command line tool."""
     # No problem given (or given option ignores the problem argument)
     if problem == 0 or option in (skip, verify_all):
-
         # Determine the highest problem number in the current directory
         for filename in glob.glob('[0-9][0-9][0-9]*.py'):
             num = int(filename[:3])
-            problem = num if num > problem else problem
+            if num > problem:
+                problem = num
 
         # No Project Euler files in current directory (no glob results)
         if problem == 0:
-            problem = 1
-
-            # Generate problem 1 if option deals with problem files
-            if option not in (cheat, preview):
+            # Generate the first problem file if option is appropriate
+            if option not in (cheat, preview, verify_all):
                 msg = "No Project Euler files found in the current directory."
                 click.echo(msg)
                 option = generate
+
+            # Set problem number to 1
+            problem = 1
 
         # --preview and no problem; preview the next problem
         elif option is preview:
