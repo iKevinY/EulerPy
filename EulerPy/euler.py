@@ -11,8 +11,9 @@ import click
 from EulerPy.timing import clock, format_time
 
 
-def get_filename(problem, width=3, suffix=''):
+def get_filename(problem, width=3, suffix=None):
     """Returns filename padded with leading zeros"""
+    suffix = '-' + suffix if suffix else ''
     return '{0:0{w}d}{1}.py'.format(problem, suffix, w=width)
 
 
@@ -129,7 +130,7 @@ def skip(problem):
 
     # Rename the skipped file
     filename = get_filename(problem)
-    skipped_name = get_filename(problem, suffix='-skipped')
+    skipped_name = get_filename(problem, suffix='skipped')
     rename_file(filename, skipped_name)
 
 
@@ -267,7 +268,7 @@ def main(option, problem):
             problem += 1
 
         # No option and no problem; generate next file if answer is
-        # correct (verify() exits if the solution is incorrect)
+        # correct (verify() will exit if the solution is incorrect)
         if not option:
             verify(problem)
             problem += 1
