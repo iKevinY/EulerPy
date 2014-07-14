@@ -32,14 +32,16 @@ def get_solution(problem):
     else:
         msg = 'Answer for problem %i not found in solutions.txt.' % problem
         click.secho(msg, fg='red')
-        click.echo('If you have an answer, consider submitting a pull request '
-                   'to EulerPy at https://github.com/iKevinY/EulerPy.')
+        click.echo('If you have an answer, consider submitting a pull request'
+                   ' to EulerPy at https://github.com/iKevinY/EulerPy.')
         sys.exit(1)
 
 
 def get_problem(problem):
     """Parses problems.txt and returns problem text"""
-    def problem_iter(problem, problemFile):
+    def problem_iter(problem):
+        problemFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
+
         with open(problemFile) as file:
             problemText = False
             lastLine = ''
@@ -55,8 +57,7 @@ def get_problem(problem):
                         yield line[:-1]
                         lastLine = line
 
-    problemFile = os.path.join(os.path.dirname(__file__), 'problems.txt')
-    problemLines = [line for line in problem_iter(problem, problemFile)]
+    problemLines = [line for line in problem_iter(problem)]
 
     if problemLines:
         # First three lines are the problem number, the divider line,
@@ -210,13 +211,83 @@ def verify(problem, filename=None, exit=True):
 
 
 # --verify-all
-def verify_all(largest_problem):
+def verify_all(current_problem):
     """
     Verifies all problem files in the current directory and
     prints an overview of the status of each problem.
     """
 
-    pass
+    overview = {}
+
+    # Search for problem files using glob module
+    for filename in glob.glob('[0-9][0-9][0-9]*.py'):
+        problem = int(filename[:3])
+
+        # Catch KeyboardInterrupt during verification to allow the user
+        # to skip the verification of a problem if it takes too long
+        try:
+            is_correct = verify(problem, filename=filename, exit=False)
+        except KeyboardInterrupt:
+            overview[problem] = click.style('S', fg='cyan')
+        else:
+            if is_correct is None: # error was returned by problem file
+                overview[problem] = click.style('E', fg='yellow')
+            elif is_correct:
+                overview[problem] = click.style('C', fg='green')
+            elif not is_correct:
+                overview[problem] = click.style('I', fg='red')
+
+                # Attempt to add "skipped" suffix to the filename if the
+                # problem file is not the current problem. This is useful
+                # when the --verify-all is used in a directory containing
+                # files generated pre-v1.1 (before suffixed files)
+                if problem != current_problem:
+                    skipped_name = get_filename(problem, suffix='skipped')
+                    rename_file(filename, skipped_name)
+
+        # Separate each verification with a newline
+        click.echo()
+
+    # No Project Euler files in the current directory
+    if not overview:
+        click.echo("No Project Euler files found in the current directory.")
+        sys.exit(1)
+
+    # Print overview of the status of each problem
+    click.echo('-' * 63)
+
+    legend = ', '.join(
+        '{0} = {1}'.format(click.style(symbol, bold=True, fg=colour), name)
+        for symbol, name, colour in (
+            ('C', 'correct', 'green'),
+            ('I', 'incorrect', 'red'),
+            ('E', 'error', 'yellow'),
+            ('S', 'skipped', 'cyan'),
+            ('.', 'missing', 'white'),
+        )
+    )
+
+    click.echo(legend + '\n')
+
+    # Calculate number of rows needed for problem overview
+    num_of_rows = (current_problem + 19) // 20
+
+    for row in range(1, num_of_rows + 1):
+        low, high = (row * 20) - 19, (row * 20)
+        click.echo("Problems {0:03d}-{1:03d}: ".format(low, high), nl=False)
+
+        for problem in range(low, high + 1):
+            # Add missing status to problems with no problem file
+            status = overview[problem] if problem in overview else '.'
+            click.secho(status, bold=True, nl=False)
+
+            # Separate problem indicators into groups of 5
+            click.echo('   ' if problem % 5 == 0 else ' ', nl=False)
+
+        # Start a new line at the end of each row
+        click.echo()
+
+    click.echo()
 
 
 def euler_options(function):
