@@ -2,23 +2,22 @@
 
 from __future__ import unicode_literals
 
+import os
 import sys
 import math
 
+import click
 
-# If possible (Unix), use the resource module instead of time.clock()
+
+def rename_file(old, new):
+    if old != new:
+        os.rename(old, new)
+        click.secho('Renamed "{0}" to "{1}".'.format(old, new), fg='yellow')
+
+
+# Use the resource module instead of time.clock() if possible (on Unix)
 try:
     import resource
-
-    HAS_RUSAGE = True
-
-    def clock():
-        """
-        Returns a tuple (t_user, t_system) since the start of the process.
-        This is done via a call to resource.getrusage, so it avoids the
-        wraparound problems in time.clock().
-        """
-        return resource.getrusage(resource.RUSAGE_CHILDREN)[:2]
 
 except ImportError:
     import time
@@ -31,6 +30,17 @@ except ImportError:
         user time and zero as system time.
         """
         return time.clock(), 0.0
+
+else:
+    HAS_RUSAGE = True
+
+    def clock():
+        """
+        Returns a tuple (t_user, t_system) since the start of the process.
+        This is done via a call to resource.getrusage, so it avoids the
+        wraparound problems in time.clock().
+        """
+        return resource.getrusage(resource.RUSAGE_CHILDREN)[:2]
 
 
 def human_time(timespan, precision=3):
@@ -86,7 +96,10 @@ def format_time(start, end):
 
     if HAS_RUSAGE:
         return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(
-            human_time(cpu_usr), human_time(cpu_sys), human_time(cpu_tot),
+            human_time(cpu_usr),
+            human_time(cpu_sys),
+            human_time(cpu_tot)
         )
+
     else:
         return 'Time elapsed: {0}'.format(human_time(cpu_usr))

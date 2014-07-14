@@ -7,12 +7,9 @@ import textwrap
 from click.testing import CliRunner
 
 from EulerPy import euler
+from EulerPy.problem import Problem
 
 class Tests(unittest.TestCase):
-    def setUp(self):
-        pass
-
-
     def test_program_flow(self):
         """Check that EulerPy executes properly from fresh install"""
         runner = CliRunner()
@@ -34,13 +31,13 @@ class Tests(unittest.TestCase):
         with open(problemsFile) as file:
             largest = ''
             for line in file:
-                if 'Problem' in line:
+                if line.startswith('Problem'):
                     largest = line.strip()
 
             largestProblem = int(largest.split(' ')[1])
 
         for problem in range(1, largestProblem + 1):
-            problemText = euler.get_problem(problem)
+            problemText = Problem(problem).text
 
             msg = "Error encountered when parsing problem {0}.".format(problem)
 
@@ -59,16 +56,14 @@ class Tests(unittest.TestCase):
             """
         )
 
-        self.assertEqual(problemOne[1:], euler.get_problem(1))
+        self.assertEqual(problemOne[1:], Problem(1).text)
 
 
     def test_filename_format(self):
         """Check that filenames are being formatted correctly"""
-        self.assertEqual(euler.get_filename(1), "001.py")
-        self.assertEqual(euler.get_filename(10), "010.py")
-        self.assertEqual(euler.get_filename(100), "100.py")
-
-        self.assertRaises(ValueError, euler.get_filename, "foo")
+        self.assertEqual(Problem(1).filename, "001.py")
+        self.assertEqual(Problem(10).filename, "010.py")
+        self.assertEqual(Problem(100).filename, "100.py")
 
 
 if __name__ == '__main__':
