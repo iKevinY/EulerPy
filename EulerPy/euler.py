@@ -111,8 +111,7 @@ def verify(p, filename=None, exit=True):
     if len(output_lines) > 1:
         is_correct = False
         click.echo() # force output to start on next line
-        for line in output_lines:
-            click.secho(line, bold=True, fg='red')
+        click.secho('\n'.join(output_lines), bold=True, fg='red')
     else:
         is_correct = output_lines[0] == solution
         fg_colour = 'green' if is_correct else 'red'
@@ -239,10 +238,8 @@ def main(option, problem):
     # No problem given (or given option ignores the problem argument)
     if problem == 0 or option in (skip, verify_all):
         # Determine the highest problem number in the current directory
-        for filename in glob.glob('[0-9][0-9][0-9]*.py'):
-            num = int(filename[:3])
-            if num > problem:
-                problem = num
+        files = glob.glob('[0-9][0-9][0-9]*.py')
+        problem = max(int(file[:3]) for file in files) if files else 0
 
         # No Project Euler files in current directory (no glob results)
         if problem == 0:
