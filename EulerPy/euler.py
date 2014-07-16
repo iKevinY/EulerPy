@@ -68,12 +68,10 @@ def verify(p, filename=None, exit=True):
     filename = filename or p.filename
 
     if not os.path.isfile(filename):
-        # Attempt a fuzzy search for problem files using the glob module
-        for fuzzy_file in glob.glob('{0:03d}*.py'.format(p.num)):
-            if os.path.isfile(fuzzy_file):
-                filename = fuzzy_file
-                break
-        else:
+        # Attempt to verify the first file matched by glob
+        try:
+            filename = next(glob.iglob('{0:03d}*.py'.format(p.num)))
+        except StopIteration:
             click.secho('No file found for problem %i.' % p.num, fg='red')
             sys.exit(1)
 
@@ -197,15 +195,14 @@ def verify_all(current_p):
         click.echo("Problems {0:03d}-{1:03d}: ".format(low, high), nl=False)
 
         for problem in range(low, high + 1):
-            # Add missing status to problems with no problem file
+            # Add missing status to problems with no corresponding file
             status = overview[problem] if problem in overview else '.'
-            click.secho(status, bold=True, nl=False)
 
             # Separate problem indicators into groups of 5
-            click.echo('   ' if problem % 5 == 0 else ' ', nl=False)
+            spacer = '   ' if (problem % 5 == 0) else ' '
 
-        # Start a new line at the end of each row
-        click.echo()
+            # Start a new line at the end of each row
+            click.secho(status + spacer, bold=True, nl=(problem % 20 == 0))
 
     click.echo()
 
