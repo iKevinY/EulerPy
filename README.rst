@@ -162,7 +162,9 @@ if no problem number is given, it will print the next problem instead.
 ``--skip / -s``
 ---------------
 
-The ``--skip`` option will prompt the user to "skip" to the next problem.
+The ``--skip`` option will prompt the user to "skip" to the next problem. As
+of EulerPy v1.1, it will also append a "skipped" suffix to the skipped problem
+file.
 
 .. code-block:: bash
 
@@ -170,6 +172,7 @@ The ``--skip`` option will prompt the user to "skip" to the next problem.
     Current problem is problem 2.
     Generate file for problem 3? [y/N]: Y
     Successfully created "003.py".
+    Renamed "002.py" to "002-skipped.py".
 
 
 ``--verify / -v``
@@ -187,22 +190,55 @@ check the current problem.
     $ euler --verify 1
     Checking "001.py" against solution: <redacted> # (output in green)
 
+As of EulerPy v1.1, verifying a skipped problem file will remove the "skipped"
+suffix from its filename.
+
+.. code-block:: bash
+
+    $ euler --verify 1
+    Checking "001-skipped.py" against solution: <redcated>
+    Renamed "001-skipped.py" to "001.py".
+
 ``euler <problem>`` is equivalent to ``euler --verify <problem>`` if the file
 **does** exist.
 
 .. code-block:: bash
 
-    $ cat 001.py
+    $ head -n 4 001.py
     """
     Project Euler Problem 1
     =======================
-    ...
-
-
-    """
 
     $ euler 1
     Checking "001.py" against solution: <redacted>
+
+
+``--verify-all``
+----------------
+
+The ``--verify-all`` option was added in EulerPy v1.1. It essentially runs
+``--verify`` on all the problem files it can find in the current directory,
+but also prints an overview of all of the problems in the directory. Note
+that if the verification encounters a `KeyboardInterrupt` exception, it will
+skip the verification of that specific file. This allows for the ability to
+skip verifying some files but not others, in the case that some solutions are
+taking too long to compute.
+
+.. code-block:: bash
+
+    $ euler --verify-all
+    Checking "001.py" against solution: <redacted>
+
+    Checking "002.py" against solution: [no output]
+
+    ---------------------------------------------------------------
+    C = correct, I = incorrect, E = error, S = skipped, . = missing
+
+    Problems 001-020: C I . . .   . . . . .   . . . . .   . . . . .
+
+This option should be run after upgrading to v1.1 from EulerPy v1.0, as it will
+automatically rename any problems that have been skipped using ``--skip``,
+making them easy to distinguish from those that have been correctly solved.
 
 
 ============
