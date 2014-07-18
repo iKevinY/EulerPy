@@ -14,6 +14,7 @@ from EulerPy.utils import clock, format_time, rename_file
 # --cheat / -c
 def cheat(p):
     """View the answer to a problem."""
+    # Define first instead of echoing in case the solution does not exist
     solution = click.style(p.solution, bold=True)
     click.confirm("View answer to problem %i?" % p.num, abort=True)
     click.echo("The answer to problem %i is {0}.".format(solution) % p.num)
@@ -46,11 +47,10 @@ def generate(p, prompt_default=True):
 # --preview / -p
 def preview(p):
     """Prints the text of a problem."""
-    # Define problemText instead of echoing it right away
-    # in case the problem does not exist in problems.txt
-    problemText = p.text[:-1] # strip newline from text
+    # Define first instead of echoing in case the problem does not exist
+    problem_text = p.text[:-1] # strip newline from text
     click.secho("Project Euler Problem %i" % p.num, bold=True)
-    click.echo(problemText)
+    click.echo(problem_text)
 
 
 # --skip / -s
@@ -68,9 +68,9 @@ def verify(p, filename=None, exit=True):
     filename = filename or p.filename
 
     if not os.path.isfile(filename):
-        # Attempt to verify the first file matched by glob
+        # Attempt to verify the first problem file matched by glob
         try:
-            filename = next(glob.iglob('{0:03d}*.py'.format(p.num)))
+            filename = next(p.iglob)
         except StopIteration:
             click.secho('No file found for problem %i.' % p.num, fg='red')
             sys.exit(1)
@@ -160,8 +160,7 @@ def verify_all(current_p):
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
                 if p.num != current_p.num:
-                    skipped_name = p.suf_name('skipped')
-                    rename_file(filename, skipped_name)
+                    rename_file(filename, p.suf_name('skipped'))
 
         # Separate each verification with a newline
         click.echo()
@@ -262,8 +261,7 @@ def main(option, problem):
 
     # Problem given but no option; decide between generate and verify
     elif not option:
-        match_found = any(glob.iglob('{0:03d}*.py'.format(problem)))
-        option = verify if match_found else generate
+        option = verify if any(Problem(problem).iglob) else generate
 
     # Execute function based on option (pass Problem object as argument)
     option(Problem(problem))

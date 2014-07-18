@@ -2,6 +2,7 @@
 
 import os
 import sys
+import glob
 import linecache
 
 import click
@@ -20,6 +21,12 @@ class Problem(object):
     def suf_name(self, suffix, width=3):
         """Returns filename with a suffix padded with leading zeros"""
         return '{0:0{w}d}{1}.py'.format(self.num, '-' + suffix, w=width)
+
+
+    @property
+    def iglob(self):
+        """Returns a glob iterator for files belonging to a given problem"""
+        return glob.iglob('{0:03d}*.py'.format(self.num))
 
 
     @property
