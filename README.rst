@@ -1,5 +1,5 @@
 ***********************
-EulerPy |Travis| |PyPI|
+EulerPy |Travis| |PyPI| |Terminal|
 ***********************
 
 EulerPy is a command line tool designed to streamline the process of solving
@@ -282,6 +282,10 @@ EulerPy is licensed under the `MIT License`_.
 .. |PyPI| image:: http://img.shields.io/pypi/v/EulerPy.svg?style=flat
           :alt: PyPI Version
           :target: https://pypi.python.org/pypi/EulerPy/
+
+.. |Terminal| image:: http://www.terminal.com/images/run-on-terminal.png
+          :alt: Try it on Terminal!
+          :target: http://www.terminal.com/snapshot/e00f24f38d98e01bf403c73b336855c9817c71c30236ff057f2e7167def9b7e3
 
 .. _pip: http://www.pip-installer.org/en/latest/index.html
 .. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blob/master/CONTRIBUTING.rst
