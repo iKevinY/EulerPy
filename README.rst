@@ -82,8 +82,8 @@ time elapsed during the solution-checking process will also be printed.
     Successfully created "002.py".
 
 
-EulerPy also comes with five options that act as commands. (The ``--help``
-option can be used to display a summary of all of the options.)
+EulerPy also has a few command line options that act as different commands
+(use ``euler --help`` to see a summary of all the options).
 
 
 ``--cheat / -c``
