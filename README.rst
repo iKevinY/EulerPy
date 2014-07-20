@@ -226,7 +226,7 @@ suffix from its filename.
 The ``--verify-all`` option was added in EulerPy v1.1. It essentially runs
 ``--verify`` on all the problem files it can find in the current directory,
 but also prints an overview of all of the problems in the directory. Note
-that if the verification encounters a `KeyboardInterrupt` exception, it will
+that if the verification encounters a ``KeyboardInterrupt`` exception, it will
 skip the verification of that specific file. This allows for the ability to
 skip verifying some files but not others, in the case that some solutions are
 taking too long to compute.
