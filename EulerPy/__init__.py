@@ -3,5 +3,5 @@ Python-based Project Euler command line tool.
 """
 
 __author__ = 'Kevin Yap'
-__version__ = '1.0.8'
+__version__ = '1.1.0'
 __license__ = 'MIT License'
