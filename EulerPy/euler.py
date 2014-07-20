@@ -90,13 +90,10 @@ def verify(p, filename=None, exit=True):
         click.secho('Error calling "{0}".'.format(filename), fg='red')
         click.secho(time_info, fg='cyan')
 
-        # Exit here if appropriate, otherwise return None (for --verify-all)
-        if exit:
-            sys.exit(1)
-        else:
-            return None
+        # Return None if option is not --verify-all, otherwise exit
+        return sys.exit(1) if exit else None
 
-    # Python 3 returns bytes; use a valid encoding like ASCII
+    # Decode output if returned as bytes (Python 3)
     if isinstance(stdout, bytes):
         output = stdout.decode('ascii')
 
@@ -117,15 +114,12 @@ def verify(p, filename=None, exit=True):
 
     click.secho(time_info, fg='cyan')
 
-    # Exit here if answer was incorrect
-    if exit and not is_correct:
-        sys.exit(1)
-    else:
-        # Remove any suffix from the filename if its solution is correct
-        if is_correct and filename != p.filename:
-            rename_file(filename, p.filename)
+    # Remove any suffix from the filename if its solution is correct
+    if is_correct and filename != p.filename:
+        rename_file(filename, p.filename)
 
-        return is_correct
+    # Exit here if answer was incorrect, otherwise return is_correct value
+    return sys.exit(1) if exit and not is_correct else is_correct
 
 
 # --verify-all
@@ -134,6 +128,15 @@ def verify_all(current_p):
     Verifies all problem files in the current directory and
     prints an overview of the status of each problem.
     """
+
+    # Define various problem statuses
+    status = {
+        'correct': click.style('C', fg='green', bold=True),
+        'incorrect': click.style('I', fg='red', bold=True),
+        'error': click.style('E', fg='yellow', bold=True),
+        'skipped': click.style('S', fg='cyan', bold=True),
+        'missing': click.style('.', fg='white', bold=True),
+    }
 
     overview = {}
 
@@ -146,14 +149,14 @@ def verify_all(current_p):
         try:
             is_correct = verify(p, filename=filename, exit=False)
         except KeyboardInterrupt:
-            overview[p.num] = click.style('S', fg='cyan')
+            overview[p.num] = status['skipped']
         else:
             if is_correct is None: # error was returned by problem file
-                overview[p.num] = click.style('E', fg='yellow')
+                overview[p.num] = status['error']
             elif is_correct:
-                overview[p.num] = click.style('C', fg='green')
+                overview[p.num] = status['correct']
             elif not is_correct:
-                overview[p.num] = click.style('I', fg='red')
+                overview[p.num] = status['incorrect']
 
                 # Attempt to add "skipped" suffix to the filename if the
                 # problem file is not the current problem. This is useful
@@ -171,19 +174,11 @@ def verify_all(current_p):
         sys.exit(1)
 
     # Print overview of the status of each problem
-    click.echo('-' * 63)
-
-    legend = ', '.join(
-        '{0} = {1}'.format(click.style(symbol, bold=True, fg=colour), name)
-        for symbol, name, colour in (
-            ('C', 'correct', 'green'),
-            ('I', 'incorrect', 'red'),
-            ('E', 'error', 'yellow'),
-            ('S', 'skipped', 'cyan'),
-            ('.', 'missing', 'white'),
-        )
+    legend = ', '.join('{0} = {1}'.format(status[key], key) for key in
+        ('correct', 'incorrect', 'error', 'skipped', 'missing')
     )
 
+    click.echo('-' * 63)
     click.echo(legend + '\n')
 
     # Rows needed for overview is based on the current problem number
@@ -201,7 +196,7 @@ def verify_all(current_p):
             spacer = '   ' if (problem % 5 == 0) else ' '
 
             # Start a new line at the end of each row
-            click.secho(status + spacer, bold=True, nl=(problem % 20 == 0))
+            click.secho(status + spacer, nl=(problem % 20 == 0))
 
     click.echo()
 
