@@ -5663,3 +5663,139 @@ In fact, s = 1320 is the smallest room-size s for which T(s) = 5.
 
 Find the smallest room-size s for which T(s) = 200.
 
+
+Problem 257
+===========
+
+Given is an integer sided triangle ABC with sides a ≤ b ≤ c. (AB = c, BC =
+a and AC = b).
+The angular bisectors of the triangle intersect the sides at points E, F
+and G (see picture below).
+
+[Image: http://projecteuler.net/project/images/p_257_bisector.gif]
+
+The segments EF, EG and FG partition the triangle ABC into four smaller
+triangles: AEG, BFE, CGF and EFG.
+It can be proven that for each of these four triangles the ratio
+area(ABC)/area(subtriangle) is rational.
+However, there exist triangles for which some or all of these ratios are
+integral.
+
+How many triangles ABC with perimeter ≤ 100,000,000 exist so that the ratio
+area(ABC)/area(AEG) is integral?
+
+
+Problem 258
+===========
+
+A sequence is defined as:
+
+ • g[k] = 1, for 0 ≤ k ≤ 1999
+ • g[k] = g[k-2000] + g[k-1999], for k ≥ 2000.
+
+Find g[k] mod 20092010 for k = 10^18.
+
+
+Problem 259
+===========
+
+A positive integer will be called reachable if it can result from an
+arithmetic expression obeying the following rules:
+
+ • Uses the digits 1 through 9, in that order and exactly once each.
+ • Any successive digits can be concatenated (for example, using the
+   digits 2, 3 and 4 we obtain the number 234).
+ • Only the four usual binary arithmetic operations (addition,
+   subtraction, multiplication and division) are allowed.
+ • Each operation can be used any number of times, or not at all.
+ • Unary minus is not allowed.
+ • Any number of (possibly nested) parentheses may be used to define the
+   order of operations.
+
+For example, 42 is reachable, since (1/23) * ((4*5)-6) * (78-9) = 42.
+
+What is the sum of all positive reachable integers?
+
+
+Problem 260
+===========
+
+A game is played with three piles of stones and two players.
+At her turn, a player removes one or more stones from the piles. However,
+if she takes stones from more than one pile, she must remove the same
+number of stones from each of the selected piles.
+
+In other words, the player chooses some N>0 and removes:
+
+ • N stones from any single pile; or
+ • N stones from each of any two piles (2N total); or
+ • N stones from each of the three piles (3N total).
+
+The player taking the last stone(s) wins the game.
+
+A winning configuration is one where the first player can force a win.
+For example, (0,0,13), (0,11,11) and (5,5,5) are winning configurations
+because the first player can immediately remove all stones.
+
+A losing configuration is one where the second player can force a win, no
+matter what the first player does.
+For example, (0,1,2) and (1,3,3) are losing configurations: any legal move
+leaves a winning configuration for the second player.
+
+Consider all losing configurations (x[i],y[i],z[i]) where x[i] ≤ y[i] ≤
+z[i] ≤ 100. We can verify that Σ(x[i]+y[i]+z[i]) = 173895 for these.
+
+Find Σ(x[i]+y[i]+z[i]) where (x[i],y[i],z[i]) ranges over the losing
+configurations with x[i] ≤ y[i] ≤ z[i] ≤ 1000.
+
+
+Problem 261
+===========
+
+Let us call a positive integer k a square-pivot, if there is a pair of
+integers m > 0 and n ≥ k, such that the sum of the (m+1) consecutive
+squares up to k equals the sum of the m consecutive squares from (n+1) on:
+
+             (k-m)^2 + ... + k^2 = (n+1)^2 + ... + (n+m)^2.
+
+Some small square-pivots are
+
+ • 4: 3^2 + 4^2 = 5^2
+ • 21: 20^2 + 21^2 = 29^2
+ • 24: 21^2 + 22^2 + 23^2 + 24^2 = 25^2 + 26^2 + 27^2
+ • 110: 108^2 + 109^2 + 110^2 = 133^2 + 134^2
+
+Find the sum of all distinct square-pivots ≤ 10^10.
+
+
+Problem 262
+===========
+
+The following equation represents the continuous topography of a
+mountainous region, giving the elevation h at any point (x,y):
+
+[Image: http://projecteuler.net/project/images/p_262_formula1.gif]
+
+A mosquito intends to fly from A(200,200) to B(1400,1400), without leaving
+the area given by 0 ≤ x, y ≤ 1600.
+
+Because of the intervening mountains, it first rises straight up to a
+point A', having elevation f. Then, while remaining at the same elevation
+f, it flies around any obstacles until it arrives at a point B' directly
+above B.
+
+First, determine f[min] which is the minimum constant elevation allowing
+such a trip from A to B, while remaining in the specified area.
+Then, find the length of the shortest path between A' and B', while flying
+at that constant elevation f[min].
+
+Give that length as your answer, rounded to three decimal places.
+
+Note: For convenience, the elevation function in the image above can be
+written as the following in Python (the math module must be imported):
+
+def elevation(x, y):
+    first = 5000.0 - ((x**2 + y**2 + x*y)/200.0) + (12.5*(x+y))
+    second = (0.000001 * (x**2 + y**2)) - (0.0015*(x+y)) + 0.7
+    return first * math.exp(-abs(second))
+
