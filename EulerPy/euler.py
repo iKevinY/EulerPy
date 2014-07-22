@@ -4,6 +4,7 @@ import os
 import sys
 import glob
 import subprocess
+from collections import OrderedDict
 
 import click
 
@@ -130,13 +131,18 @@ def verify_all(current_p):
     """
 
     # Define various problem statuses
-    status = {
-        'correct': click.style('C', fg='green', bold=True),
-        'incorrect': click.style('I', fg='red', bold=True),
-        'error': click.style('E', fg='yellow', bold=True),
-        'skipped': click.style('S', fg='cyan', bold=True),
-        'missing': click.style('.', fg='white', bold=True),
-    }
+    statuses = (
+        ('correct', 'C', 'green'),
+        ('incorrect', 'I', 'red'),
+        ('error', 'E', 'yellow'),
+        ('skipped', 'S', 'cyan'),
+        ('missing', '.', 'white'),
+    )
+
+    status = OrderedDict(
+        (key, click.style(symbol, fg=colour, bold=True))
+        for key, symbol, colour in statuses
+    )
 
     overview = {}
 
@@ -174,9 +180,7 @@ def verify_all(current_p):
         sys.exit(1)
 
     # Print overview of the status of each problem
-    legend = ', '.join('{0} = {1}'.format(status[key], key) for key in
-        ('correct', 'incorrect', 'error', 'skipped', 'missing')
-    )
+    legend = ', '.join('{0} = {1}'.format(v, k) for k, v in status.items())
 
     click.echo('-' * 63)
     click.echo(legend + '\n')
