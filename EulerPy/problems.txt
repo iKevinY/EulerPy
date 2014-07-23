@@ -5799,3 +5799,102 @@ def elevation(x, y):
     second = (0.000001 * (x**2 + y**2)) - (0.0015*(x+y)) + 0.7
     return first * math.exp(-abs(second))
 
+
+Problem 263
+===========
+
+Consider the number 6. The divisors of 6 are: 1,2,3 and 6.
+Every number from 1 up to and including 6 can be written as a sum of
+distinct divisors of 6: 1=1, 2=2, 3=1+2, 4=1+3, 5=2+3, 6=6.
+A number n is called a practical number if every number from 1 up to and
+including n can be expressed as a sum of distinct divisors of n.
+
+A pair of consecutive prime numbers with a difference of six is called a
+sexy pair (since "sex" is the Latin word for "six"). The first sexy pair
+is (23, 29).
+
+We may occasionally find a triple-pair, which means three consecutive sexy
+prime pairs, such that the second member of each pair is the first member
+of the next pair.
+
+We shall call a number n such that:
+
+ • (n-9, n-3), (n-3,n+3), (n+3, n+9) form a triple-pair, and
+ • the numbers n-8, n-4, n, n+4 and n+8 are all practical,
+
+an engineers’ paradise.
+
+Find the sum of the first four engineers’ paradises.
+
+
+Problem 264
+===========
+
+Consider all the triangles having:
+
+ • All their vertices on lattice points.
+ • Circumcentre at the origin O.
+ • Orthocentre at the point H(5, 0).
+
+There are nine such triangles having a perimeter ≤ 50.
+Listed and shown in ascending order of their perimeter, they are:
+
+A(-4, 3), B(5, 0), C(4, -3)
+A(4, 3),  B(5, 0), C(-4, -3)
+A(-3, 4), B(5, 0), C(3, -4)
+
+A(3, 4),  B(5, 0),  C(-3, -4)
+A(0, 5),  B(5, 0),  C(0, -5)
+A(1, 8),  B(8, -1), C(-4, -7)
+
+A(8, 1),  B(1, -8), C(-4, 7)
+A(2, 9),  B(9, -2), C(-6, -7)
+A(9, 2),  B(2, -9), C(-6, 7)
+
+[Image: http://projecteuler.net/project/images/p_264_TriangleCentres.gif]
+
+The sum of their perimeters, rounded to four decimal places, is 291.0089.
+
+Find all such triangles with a perimeter ≤ 10^5.
+Enter as your answer the sum of their perimeters rounded to four decimal
+places.
+
+
+Problem 265
+===========
+
+2^N binary digits can be placed in a circle so that all the N-digit
+clockwise subsequences are distinct.
+
+For N=3, two such circular arrangements are possible, ignoring rotations:
+
+[Image: http://projecteuler.net/project/images/p_265_BinaryCircles.gif]
+
+For the first arrangement, the 3-digit subsequences, in clockwise order,
+are: 000, 001, 010, 101, 011, 111, 110 and 100.
+
+Each circular arrangement can be encoded as a number by concatenating the
+binary digits starting with the subsequence of all zeros as the most
+significant bits and proceeding clockwise. The two arrangements for N=3
+are thus represented as 23 and 29:
+
+                           00010111 [2] = 23
+                           00011101 [2] = 29
+
+Calling S(N) the sum of the unique numeric representations, we can see
+that S(3) = 23 + 29 = 52.
+
+Find S(5).
+
+
+Problem 266
+===========
+
+The divisors of 12 are: 1, 2, 3, 4, 6, and 12.
+The largest divisor of 12 that does not exceed the square root of 12 is 3.
+We shall call the largest divisor of an integer n that does not exceed the
+square root of n the pseudo square root (PSR) of n.
+It can be seen that PSR(3102)=47.
+
+Let p be the product of the primes below 190. Find PSR(p) mod 10^16.
+
