@@ -294,7 +294,7 @@ The following iterative sequence is defined for the set of positive
 integers:
 
 n->n/2 (n is even)
-n->3n + 1 (n is odd)
+n->3n+1 (n is odd)
 
 Using the rule above and starting with 13, we generate the following
 sequence:
@@ -5601,7 +5601,6 @@ until x[k+1] = x[k].
 As an example, let us find the rounded-square-root of n = 4321.
 n has 4 digits, so x[0] = 7×10^(4-2)⁄2 = 70.
 
-[Image: http://projecteuler.net/project/images/p_255_Example.gif]
 [Image: http://projecteuler.net/project/images/p_255_Example.gif]
 
 Since x[2] = x[1], we stop here.
