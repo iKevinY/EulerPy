@@ -253,7 +253,7 @@ def main(option, problem):
 
         # No option and no problem; generate next file if answer is
         # correct (verify() will exit if the solution is incorrect)
-        if not option:
+        if option is None:
             verify(Problem(problem))
             problem += 1
             option = generate
@@ -264,4 +264,4 @@ def main(option, problem):
 
     # Execute function based on option (pass Problem object as argument)
     option(Problem(problem))
-    sys.exit()
+    sys.exit(0)
