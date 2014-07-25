@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import functools
 import shutil
 import tempfile
 import textwrap
@@ -11,85 +12,134 @@ from click.testing import CliRunner
 from EulerPy import euler
 from EulerPy.problem import Problem
 
-class Tests(unittest.TestCase):
-    def setUp(self):
-        os.chdir(tempfile.mkdtemp())
 
+def CliRun(*commands, **kwargs):
+    """Convenience function to simplify running tests using CliRunner()"""
+    return CliRunner().invoke(euler.main, commands, **kwargs)
+
+def touchFile(filename):
+    open(filename, 'a').close()
+
+
+class EulerTests(unittest.TestCase):
+    def setUp(self):
         # Copy problem and solution files to temporary directory
+        os.chdir(tempfile.mkdtemp())
         eulerDir = os.path.dirname(os.path.realpath(__file__))
         tempEuler = os.path.join(os.getcwd(), 'EulerPy')
         shutil.copytree(eulerDir, tempEuler)
 
-
     def tearDown(self):
+        # Delete the temporary directory
         shutil.rmtree(os.getcwd())
 
 
-    def test_fresh_install(self):
-        """Check that EulerPy executes properly from fresh install"""
-        # Test "N" as file generation prompt input
-        result = CliRunner().invoke(euler.main, input='N\n')
+    # Empty directory with no option
+    def test_empty_directory_install_neutral(self):
+        result = CliRun(input='\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('001.py'))
+
+    def test_empty_directory_negative(self):
+        result = CliRun(input='N\n')
         self.assertEqual(result.exit_code, 1)
         self.assertFalse(os.path.isfile('001.py'))
 
-        # Test "Y" as file generation prompt input
-        result = CliRunner().invoke(euler.main, input='Y\n')
-        self.assertEqual(result.exit_code, None)
-        self.assertTrue(os.path.isfile('001.py'))
-        os.remove('001.py')
 
-        # Test "\n" as file generation prompt input
-        result = CliRunner().invoke(euler.main, input='\n')
-        self.assertEqual(result.exit_code, None)
-        self.assertTrue(os.path.isfile('001.py'))
-
-
-    def test_cheat_option(self):
-        result = CliRunner().invoke(euler.main, ['-c'], input='\n')
+    # --cheat / -c
+    def test_cheat_neutral(self):
+        result = CliRun('-c', input='\n')
         self.assertEqual(result.exit_code, 1)
 
-        result = CliRunner().invoke(euler.main, ['-c'], input='Y\n')
-        self.assertEqual(result.exit_code, None)
-
-        result = CliRunner().invoke(euler.main, ['--cheat'], input='Y\n')
-        self.assertEqual(result.exit_code, None)
-
-        result = CliRunner().invoke(euler.main, ['-c', '2'], input='Y\n')
-        self.assertTrue('problem 2' in result.output)
-
-
-    def test_generate_option(self):
-        result = CliRunner().invoke(euler.main, ['-g'], input='\n')
-        self.assertEqual(result.exit_code, None)
-        self.assertTrue(os.path.isfile('001.py'))
-        os.remove('001.py')
-
-        result = CliRunner().invoke(euler.main, ['--generate'], input='\n')
-        self.assertEqual(result.exit_code, None)
-        self.assertTrue(os.path.isfile('001.py'))
-        os.remove('001.py')
-
-        result = CliRunner().invoke(euler.main, ['-g', '2'], input='\n')
-        self.assertEqual(result.exit_code, None)
-        self.assertTrue(os.path.isfile('002.py'))
-        os.remove('002.py')
-
-
-    def test_generate_overwrite(self):
-        """Ensure that --generate will overwrite a file appropriately"""
-        # Default behaviour should be to not overwrite the file
-        open('001.py', 'a').close()
-        result = CliRunner().invoke(euler.main, ['-g', '1'], input='\n\n')
+    def test_cheat_long_flag(self):
+        result = CliRun('--cheat', input='\n')
         self.assertEqual(result.exit_code, 1)
+
+    def test_cheat_positive(self):
+        result = CliRun('-c', input='Y\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue('The answer to problem 1' in result.output)
+
+    def test_chest_specific(self):
+        result = CliRun('-c', '2', input='Y\n')
+        self.assertTrue('The answer to problem 2' in result.output)
+
+
+    # --generate / -g
+    def test_generate_neutral(self):
+        result = CliRun('-g', input='\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('001.py'))
+
+    def test_generate_negative(self):
+        result = CliRun('-g', input='N\n')
+        self.assertEqual(result.exit_code, 1)
+        self.assertFalse(os.path.isfile('001.py'))
+
+    def test_generate_specific(self):
+        result = CliRun('-g', '5', input='\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('005.py'))
+
+    def test_generate_overwrite_positive(self):
+        touchFile('001.py')
+
+        result = CliRun('-g', '1', input='\nY\n')
+        self.assertEqual(result.exit_code, 0)
+
+        with open('001.py') as file:
+            self.assertFalse(file.readlines() == [])
+
+    def test_generate_overwrite_neutral(self):
+        touchFile('001.py')
+
+        result = CliRun('-g', '1', input='\n\n')
+        self.assertEqual(result.exit_code, 1)
+
         with open('001.py') as file:
             self.assertTrue(file.readlines() == [])
 
-        # This should overwrite the file ("001.py" will not be empty anymore)
-        open('001.py', 'a').close()
-        result = CliRunner().invoke(euler.main, ['-g', '1'], input='\nY\n')
-        self.assertEqual(result.exit_code, None)
-        with open('001.py') as file:
-            self.assertFalse(file.readlines() == [])
+
+    # --preview / -p
+    def test_preview(self):
+        result = CliRun('-p')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue('Project Euler Problem 1' in result.output)
+
+    def test_preview_specific(self):
+        result = CliRun('-p', '5')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue('Project Euler Problem 5' in result.output)
+
+    def test_preview_next_behaviour(self):
+        touchFile('001.py')
+
+        result = CliRun('-p')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue('Project Euler Problem 2' in result.output)
+
+
+    # --skip / -s
+    def test_skip_neutral(self):
+        touchFile('001.py')
+
+        result = CliRun('-s', input='\n')
+        self.assertEqual(result.exit_code, 1)
+        self.assertTrue(os.path.isfile('001.py'))
+
+    def test_skip_positive(self):
+        touchFile('001.py')
+
+        result = CliRun('-s', input='Y\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertFalse(os.path.isfile('001.py'))
+        self.assertTrue(os.path.isfile('001-skipped.py'))
+
+
+    # --help
+    def test_help_option(self):
+        result = CliRun('--help')
+        self.assertEqual(result.exit_code, 0)
 
 
     def test_problem_format(self):
