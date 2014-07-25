@@ -5,7 +5,6 @@ import shutil
 import tempfile
 import textwrap
 import unittest
-from base64 import b64decode
 
 from click.testing import CliRunner
 
@@ -14,11 +13,20 @@ from EulerPy.problem import Problem
 
 
 def CliRun(*commands, **kwargs):
-    """Convenience function to simplify running tests using CliRunner()"""
+    """Simplifies running tests using CliRunner()"""
     return CliRunner().invoke(euler.main, commands, **kwargs)
 
-def touchFile(filename):
-    open(filename, 'a').close()
+def generateFile(problem, filename=None, correct=False):
+    """
+    Uses Problem().solution to generate a problem file. The correct
+    argument controls whether the generated file is correct or not.
+    """
+    p = Problem(problem)
+    filename = filename or p.filename
+
+    with open(filename, 'a') as file:
+        if correct:
+            file.write('print({0})\n'.format(p.solution))
 
 
 class EulerTests(unittest.TestCase):
@@ -82,7 +90,7 @@ class EulerTests(unittest.TestCase):
         self.assertTrue(os.path.isfile('005.py'))
 
     def test_generate_overwrite_positive(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-g', '1', input='\nY\n')
         self.assertEqual(result.exit_code, 0)
@@ -91,7 +99,7 @@ class EulerTests(unittest.TestCase):
             self.assertFalse(file.readlines() == [])
 
     def test_generate_overwrite_neutral(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-g', '1', input='\n\n')
         self.assertEqual(result.exit_code, 1)
@@ -112,7 +120,7 @@ class EulerTests(unittest.TestCase):
         self.assertTrue('Project Euler Problem 5' in result.output)
 
     def test_preview_next_behaviour(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-p')
         self.assertEqual(result.exit_code, 0)
@@ -121,14 +129,14 @@ class EulerTests(unittest.TestCase):
 
     # --skip / -s
     def test_skip_neutral(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-s', input='\n')
         self.assertEqual(result.exit_code, 1)
         self.assertTrue(os.path.isfile('001.py'))
 
     def test_skip_positive(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-s', input='Y\n')
         self.assertEqual(result.exit_code, 0)
@@ -138,36 +146,50 @@ class EulerTests(unittest.TestCase):
 
     # --verify / -v
     def test_verify(self):
-        touchFile('001.py')
+        generateFile(1)
 
         result = CliRun('-v')
         self.assertEqual(result.exit_code, 1)
         self.assertTrue('Checking "001.py"' in result.output)
 
     def test_verify_specific(self):
-        touchFile('005.py')
+        generateFile(5)
 
         result = CliRun('-v', '5')
         self.assertEqual(result.exit_code, 1)
         self.assertTrue('Checking "005.py"' in result.output)
 
     def test_verify_glob(self):
-        touchFile('001-skipped.py')
+        generateFile(1, '001-skipped.py')
 
         result = CliRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
         self.assertTrue('Checking "001-skipped.py"' in result.output)
 
     def test_verify_correct(self):
-        # Encoded in Base64 to prevent problem 1 spoilers
-        solution = b64decode('MjMzMTY4'.encode('UTF-8')).decode('UTF-8')
-        problem_solution = 'print ({0})'.format(solution)
-
-        with open('001.py', 'w') as file:
-            file.write(problem_solution)
+        generateFile(1, correct=True)
 
         result = CliRun('-v')
         self.assertEqual(result.exit_code, 0)
+
+
+    # --verify-all
+    def test_verify_all(self):
+        generateFile(1, correct=True)
+        generateFile(2, filename='002-skipped.py', correct=True)
+        generateFile(4)
+        generateFile(5, correct=True)
+
+        result = CliRun('--verify-all')
+        self.assertTrue('Problems 001-020: C C . I C' in result.output)
+
+        # "002-skipped.py" should have been renamed to "002.py"
+        self.assertTrue(os.path.isfile('002.py'))
+        self.assertFalse(os.path.isfile('002-skipped.py'))
+
+        # "004.py" should have been renamed to "004-skipped.py"
+        self.assertFalse(os.path.isfile('004.py'))
+        self.assertTrue(os.path.isfile('004-skipped.py'))
 
 
     # --help
