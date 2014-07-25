@@ -160,7 +160,7 @@ class EulerTests(unittest.TestCase):
 
     def test_verify_correct(self):
         # Encoded in Base64 to prevent problem 1 spoilers
-        solution = b64decode('MjMzMTY4').decode(encoding='UTF-8')
+        solution = b64decode('MjMzMTY4'.encode('UTF-8')).decode('UTF-8')
         problem_solution = 'print ({0})'.format(solution)
 
         with open('001.py', 'w') as file:
