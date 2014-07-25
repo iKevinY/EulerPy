@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
-import functools
 import shutil
 import tempfile
 import textwrap
 import unittest
+from base64 import b64decode
 
 from click.testing import CliRunner
 
@@ -134,6 +134,38 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 0)
         self.assertFalse(os.path.isfile('001.py'))
         self.assertTrue(os.path.isfile('001-skipped.py'))
+
+
+    # --verify / -v
+    def test_verify(self):
+        touchFile('001.py')
+
+        result = CliRun('-v')
+        self.assertEqual(result.exit_code, 1)
+        self.assertTrue('Checking "001.py"' in result.output)
+
+    def test_verify_specific(self):
+        touchFile('005.py')
+
+        result = CliRun('-v', '5')
+        self.assertEqual(result.exit_code, 1)
+        self.assertTrue('Checking "005.py"' in result.output)
+
+    def test_verify_glob(self):
+        touchFile('001-skipped.py')
+
+        result = CliRun('-v', '1')
+        self.assertEqual(result.exit_code, 1)
+        self.assertTrue('Checking "001-skipped.py"' in result.output)
+
+    def test_verify_correct(self):
+        # Encoded in Base64 to prevent problem 1 spoilers
+        problem_solution = 'print ({0})'.format(b64decode('MjMzMTY4'))
+        with open('001.py', 'w') as file:
+            file.write(problem_solution)
+
+        result = CliRun('-v')
+        self.assertEqual(result.exit_code, 0)
 
 
     # --help
