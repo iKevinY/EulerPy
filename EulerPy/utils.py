@@ -4,15 +4,23 @@ from __future__ import unicode_literals
 
 import os
 import sys
+import glob
 import math
 
 import click
+
+
+def problem_glob(extension='py'):
+    """Searches through current directory for valid problem files"""
+    return glob.glob('[0-9][0-9][0-9]*.{ext}'.format(ext=extension))
 
 
 def rename_file(old, new):
     if old != new:
         os.rename(old, new)
         click.secho('Renamed "{0}" to "{1}".'.format(old, new), fg='yellow')
+
+    return old != new
 
 
 # Use the resource module instead of time.clock() if possible (on Unix)

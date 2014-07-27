@@ -2,14 +2,13 @@
 
 import os
 import sys
-import glob
 import subprocess
 from collections import OrderedDict
 
 import click
 
 from EulerPy.problem import Problem
-from EulerPy.utils import clock, format_time, rename_file
+from EulerPy.utils import clock, format_time, problem_glob, rename_file
 
 
 # --cheat / -c
@@ -147,7 +146,7 @@ def verify_all(current_p):
     overview = {}
 
     # Search through problem files using glob module
-    for filename in glob.glob('[0-9][0-9][0-9]*.py'):
+    for filename in problem_glob():
         p = Problem(int(filename[:3]))
 
         # Catch KeyboardInterrupt during verification to allow the user
@@ -233,7 +232,7 @@ def main(option, problem):
     # No problem given (or given option ignores the problem argument)
     if problem == 0 or option in (skip, verify_all):
         # Determine the highest problem number in the current directory
-        files = glob.glob('[0-9][0-9][0-9]*.py')
+        files = problem_glob()
         problem = max(int(file[:3]) for file in files) if files else 0
 
         # No Project Euler files in current directory (no glob results)
