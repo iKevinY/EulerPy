@@ -130,17 +130,13 @@ def verify_all(current_p):
     """
 
     # Define various problem statuses
-    statuses = (
-        ('correct', 'C', 'green'),
-        ('incorrect', 'I', 'red'),
-        ('error', 'E', 'yellow'),
-        ('skipped', 'S', 'cyan'),
-        ('missing', '.', 'white'),
-    )
+    keys = ('correct', 'incorrect', 'error', 'skipped', 'missing')
+    symbols = ('C', 'I', 'E', 'S', '.')
+    colours = ('green', 'red', 'yellow', 'cyan', 'white')
 
     status = OrderedDict(
         (key, click.style(symbol, fg=colour, bold=True))
-        for key, symbol, colour in statuses
+        for key, symbol, colour in zip(keys, symbols, colours)
     )
 
     overview = {}

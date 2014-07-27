@@ -53,18 +53,21 @@ def human_time(timespan, precision=3):
     if timespan >= 60.0:
         # Format time greater than one minute in a human-readable format
         # Idea from http://snipplr.com/view/5713/
-        parts = [('d', 60*60*24), ('h', 60*60), ('min', 60), ('s', 1)]
-        times = []
-        leftover = timespan
-        for suffix, length in parts:
-            value = int(leftover / length)
-            if value > 0:
-                leftover %= length
-                times.append('%s%s' % (str(value), suffix))
-            if leftover < 1:
-                break
+        def format_long_time(time):
+            suffixes = ('d', 'h', 'm', 's')
+            lengths = (24*60*60, 60*60, 60, 1)
 
-        return ' '.join(times)
+            for suffix, length in zip(suffixes, lengths):
+                value = int(time / length)
+
+                if value > 0:
+                    time %= length
+                    yield '%i%s' % (value, suffix)
+
+                if time < 1:
+                    break
+
+        return ' '.join(format_long_time(timespan))
 
     else:
         # Unfortunately, the Unicode symbol for mu can cause problems.
