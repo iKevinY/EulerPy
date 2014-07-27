@@ -8,19 +8,23 @@ import linecache
 import click
 
 
+base_name = '{0:0{w}d}{1}.{ext}'
+
+
 class Problem(object):
     def __init__(self, problem_number):
         self.num = problem_number
 
     @property
-    def filename(self, width=3):
+    def filename(self, width=3, extension='py'):
         """Returns filename padded with leading zeros"""
-        return '{0:0{w}d}.py'.format(self.num, w=width)
+        return base_name.format(self.num, '', w=width, ext=extension)
 
 
-    def suf_name(self, suffix, width=3):
-        """Returns filename with a suffix padded with leading zeros"""
-        return '{0:0{w}d}{1}.py'.format(self.num, '-' + suffix, w=width)
+    def suf_name(self, suffix, width=3, extension='py'):
+        """Similar to filename property but takes a suffix argument"""
+        suffix = '-' + suffix
+        return base_name.format(self.num, suffix, w=width, ext=extension)
 
 
     @property
