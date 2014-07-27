@@ -22,18 +22,14 @@ try:
 except ImportError:
     import time
 
-    HAS_RUSAGE = False
-
     def clock():
         """
-        Under Windows, system CPU time can't be measured. Return clock() as
-        user time and zero as system time.
+        Under Windows, system CPU time can't be measured. Return time.clock()
+        as user time and None as system time.
         """
-        return time.clock(), 0.0
+        return time.clock(), None
 
 else:
-    HAS_RUSAGE = True
-
     def clock():
         """
         Returns a tuple (t_user, t_system) since the start of the process.
@@ -77,7 +73,7 @@ def human_time(timespan, precision=3):
             except:
                 pass
 
-        scale = [1, 1e3, 1e6, 1e9]
+        scale = [1.0, 1e3, 1e6, 1e9]
 
         if timespan > 0.0:
             # Determine scale of timespan (s = 0, ms = 1, µs = 2, ns = 3)
@@ -90,16 +86,14 @@ def human_time(timespan, precision=3):
 
 def format_time(start, end):
     """Returns string with relevant time information formatted properly"""
-    cpu_usr = end[0] - start[0]
-    cpu_sys = end[1] - start[1]
-    cpu_tot = cpu_usr + cpu_sys
+    try:
+        cpu_usr = end[0] - start[0]
+        cpu_sys = end[1] - start[1]
 
-    if HAS_RUSAGE:
-        return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(
-            human_time(cpu_usr),
-            human_time(cpu_sys),
-            human_time(cpu_tot)
-        )
+    except TypeError:
+        # clock()[1] == None so subtraction results in a TypeError
+        return 'Time elapsed: {0}'.format(human_time(cpu_usr))
 
     else:
-        return 'Time elapsed: {0}'.format(human_time(cpu_usr))
+        times = (human_time(x) for x in (cpu_usr, cpu_sys, cpu_usr + cpu_sys))
+        return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(*times)
