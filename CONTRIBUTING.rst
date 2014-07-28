@@ -27,4 +27,4 @@ guidelines for the format of the file:
 I've probably made countless coding *faux pas* given my level of experience, so
 any improvements to the codebase are graciously welcomed as well.
 
-.. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/problems.txt
+.. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/problems.txt
