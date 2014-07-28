@@ -9,6 +9,7 @@ import click
 
 
 base_name = '{0:0{w}d}{1}.{ext}'
+dataDir = os.path.join(os.path.dirname(__file__), 'data')
 
 
 class Problem(object):
@@ -37,12 +38,12 @@ class Problem(object):
     def solution(self):
         """Returns the answer to a given problem"""
         num = self.num
-        eulerDir = os.path.dirname(__file__)
-        solutionsFile = os.path.join(eulerDir, 'solutions.txt')
-        line = linecache.getline(solutionsFile, num)
+
+        solutionFile = os.path.join(dataDir, 'solutions.txt')
+        solutionLine = linecache.getline(solutionFile, num)
 
         try:
-            answer = line.split('. ')[1].strip()
+            answer = solutionLine.split('. ')[1].strip()
         except IndexError:
             answer = None
 
@@ -60,8 +61,7 @@ class Problem(object):
     def text(self):
         """Parses problems.txt and returns problem text"""
         def problem_iter(problem_num):
-            eulerDir = os.path.dirname(__file__)
-            problemFile = os.path.join(eulerDir, 'problems.txt')
+            problemFile = os.path.join(dataDir, 'problems.txt')
 
             with open(problemFile) as file:
                 problemText = False
