@@ -424,11 +424,10 @@ Evaluate the sum of all the amicable numbers under 10000.
 Problem 22
 ==========
 
-Using names.txt [http://projecteuler.net/project/names.txt], a 46K text
-file containing over five-thousand first names, begin by sorting it into
-alphabetical order. Then working out the alphabetical value for each name,
-multiply this value by its alphabetical position in the list to obtain a
-name score.
+Using names.txt, a 46K text file containing over five-thousand first names,
+begin by sorting it into alphabetical order. Then working out the
+alphabetical value for each name, multiply this value by its alphabetical
+position in the list to obtain a name score.
 
 For example, when the list is sorted into alphabetical order, COLIN, which
 is worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list. So,
@@ -778,9 +777,8 @@ alphabetical position and adding these values we form a word value. For
 example, the word value for SKY is 19 + 11 + 25 = 55 = t[10]. If the word
 value is a triangle number then we shall call the word a triangle word.
 
-Using words.txt [http://projecteuler.net/project/words.txt], a 16K text
-file containing nearly two-thousand common English words, how many are
-triangle words?
+Using words.txt, a 16K text file containing nearly two-thousand common
+English words, how many are triangle words?
 
 
 Problem 43
@@ -1004,12 +1002,12 @@ Consider the following five hands dealt to two players:
         5      Full House          Full House            Player 1
                With Three Fours    with Three Threes
 
-The file poker.txt [http://projecteuler.net/project/poker.txt] contains
-one-thousand random hands dealt to two players. Each line of the file contains
-ten cards (separated by a single space): the first five are Player 1's cards and
-the last five are Player 2's cards. You can assume that all hands are valid (no
-invalid characters or repeated cards), each player's hand is in no specific order,
-and in each hand there is a clear winner.
+The file poker.txt contains one-thousand random hands dealt to two players.
+Each line of the file contains ten cards (separated by a single space): the
+first five are Player 1's cards and the last five are Player 2's cards. You
+can assume that all hands are valid (no invalid characters or repeated
+cards), each player's hand is in no specific order, and in each hand there
+is a clear winner.
 
 How many hands does Player 1 win?
 
@@ -1131,10 +1129,10 @@ message. The balance for this method is using a sufficiently long password
 key for security, but short enough to be memorable.
 
 Your task has been made easy, as the encryption key consists of three
-lower case characters. Using cipher1.txt [http://projecteuler.net/project/cipher1.txt],
-a file containing the encrypted ASCII codes, and the knowledge that the plain
-text must contain common English words, decrypt the message and find the sum
-of the ASCII values in the original text.
+lower case characters. Using cipher1.txt, a file containing the encrypted
+ASCII codes, and the knowledge that the plain text must contain common
+English words, decrypt the message and find the sum of the ASCII values
+in the original text.
 
 
 Problem 60
@@ -1362,11 +1360,10 @@ numbers on the row below, the maximum total from top to bottom is 23.
 
 That is, 3 + 7 + 4 + 9 = 23.
 
-Find the maximum total from top to bottom in triangle.txt
-[http://projecteuler.net/project/triangle.txt], a 15K text file
+Find the maximum total from top to bottom in triangle.txt, a 15K text file
 containing a triangle with one-hundred rows.
 
-   NOTE: This is a much more difficult version of Problem 18. It is not
+NOTE: This is a much more difficult version of Problem 18. It is not
 possible to try every route to solve this problem, as there are 2^99
 altogether! If you could check one trillion (10^12) routes every second it
 would take over twenty billion years to check them all. There is an
@@ -1632,8 +1629,7 @@ three random characters from a passcode. For example, if the passcode was
 531278, they may asked for the 2nd, 3rd, and 5th characters; the expected
 reply would be: 317.
 
-The text file, keylog.txt [http://projecteuler.net/project/keylog.txt],
-contains fifty successful login attempts.
+The text file keylog.txt contains fifty successful login attempts.
 
 Given that the three characters are always asked for in order, analyse the
 file so as to determine the shortest possible secret passcode of unknown
@@ -1668,9 +1664,8 @@ and is equal to 2427.
                            537 699 497 121 956
                            805 732 524 37  331
 
-Find the minimal path sum, in matrix.txt [http://projecteuler.net/project/matrix.txt],
-a 31K text file containing a 80 by 80 matrix, from the top left to the bottom
-right by only moving right and down.
+Find the minimal path sum, in matrix.txt, a 31K text file containing a 80 by
+80 matrix, from the top left to the bottom right by only moving right and down.
 
 
 Problem 82
@@ -1688,9 +1683,8 @@ moving up, down, and right, is indicated in red; the sum is equal to 994.
                            537 699 497 121 956
                            805 732 524 37  331
 
-Find the minimal path sum, in matrix.txt [http://projecteuler.net/project/matrix.txt],
-a 31K text file containing a 80 by 80 matrix, from the left column to the
-right column.
+Find the minimal path sum, in matrix.txt, a 31K text file containing a 80 by
+80 matrix, from the left column to the right column.
 
 
 Problem 83
@@ -1709,9 +1703,9 @@ is equal to 2297.
                            537 699 497 121 956
                            805 732 524 37  331
 
-Find the minimal path sum, in matrix.txt [http://projecteuler.net/project/matrix.txt],
-a 31K text file containing a 80 by 80 matrix, from the top left to the bottom
-right by moving left, right, up, and down.
+Find the minimal path sum, in matrix.txt, a 31K text file containing a 80 by
+80 matrix, from the top left to the bottom right by moving left, right, up,
+and down.
 
 
 Problem 84
@@ -1886,9 +1880,8 @@ XVI
 The last example being considered the most efficient, as it uses the least
 number of numerals.
 
-The 11K text file, roman.txt [http://projecteuler.net/project/roman.txt],
-contains one thousand numbers written in valid, but not
-necessarily minimal, Roman numerals; that is, they are arranged in
+The 11K text file roman.txt contains one thousand numbers written in valid,
+but not necessarily minimal, Roman numerals; that is, they are arranged in
 descending units and obey the subtractive pair rule (see FAQ for the
 definitive rules for this problem).
 
@@ -2062,10 +2055,9 @@ The complexity of the search determines the difficulty of the puzzle; the
 example above is considered easy because it can be solved by straight
 forward direct deduction.
 
-The 6K text file, sudoku.txt [http://projecteuler.net/project/sudoku.txt],
-contains fifty different Su Doku puzzles ranging in difficulty,
-but all with unique solutions (the first puzzle in the file is the example
-above).
+The 6K text file sudoku.txt contains fifty different Su Doku puzzles ranging
+in difficulty, but all with unique solutions (the first puzzle in the file is
+the example above).
 
 By solving all fifty puzzles find the sum of the 3-digit numbers found in
 the top left corner of each solution grid; for example, 483 is the 3-digit
@@ -2097,10 +2089,9 @@ anagram word pair and specify further that leading zeroes are not
 permitted, neither may a different letter have the same digital value as
 another letter.
 
-Using words.txt [http://projecteuler.net/project/words.txt], a 16K text
-file containing nearly two-thousand common English words, find all the
-square anagram word pairs (a palindromic word is NOT considered to be an
-anagram of itself).
+Using words.txt, a 16K text file containing nearly two-thousand common English
+words, find all the square anagram word pairs (a palindromic word is NOT
+considered to be an anagram of itself).
 
 What is the largest square number formed by any member of such a pair?
 
@@ -2116,9 +2107,9 @@ difficult, as any calculator would confirm that 2^11 = 2048 < 3^7 = 2187.
 However, confirming that 632382^518061 > 519432^525806 would be much more
 difficult, as both numbers contain over three million digits.
 
-Using base_exp.txt [http://projecteuler.net/project/base_exp.txt], a 22K
-text file containing one thousand lines with a base/exponent pair on each
-line, determine which line number has the greatest numerical value.
+Using base_exp.txt, a 22K text file containing one thousand lines with a
+base/exponent pair on each line, determine which line number has the
+greatest numerical value.
 
 NOTE: The first two lines in the file represent the numbers in the example
 given above.
@@ -2201,9 +2192,9 @@ Consider the following two triangles:
 It can be verified that triangle ABC contains the origin, whereas triangle
 XYZ does not.
 
-Using triangles.txt [http://projecteuler.net/project/triangles.txt], a 27K
-text file containing the co-ordinates of one thousand "random" triangles,
-find the number of triangles for which the interior contains the origin.
+Using triangles.txt, a 27K text file containing the co-ordinates of one
+thousand "random" triangles, find the number of triangles for which the
+interior contains the origin.
 
 NOTE: The first two examples in the file represent the triangles in the
 example given above.
@@ -2275,11 +2266,10 @@ because 65 + 87 + 88 = 75 + 81 + 84, whereas {157, 150, 164, 119, 79, 159,
 161, 139, 158} satisfies both rules for all possible subset pair
 combinations and S(A) = 1286.
 
-Using sets.txt [http://projecteuler.net/project/sets.txt], a 4K text
-file with one-hundred sets containing seven to twelve elements (the two
-examples given above are the first two sets in the file), identify all the
-special sum sets, A[1], A[2], ..., A[k], and find the value of S(A[1]) +
-S(A[2]) + ... + S(A[k]).
+Using sets.txt, a 4K text file with one-hundred sets containing seven to
+twelve elements (the two examples given above are the first two sets in the
+file), identify all the special sum sets, A[1], A[2], ..., A[k], and find the
+value of S(A[1]) + S(A[2]) + ... + S(A[k]).
 
 NOTE: This problem is related to problems 103 and 106.
 
@@ -2339,10 +2329,9 @@ still ensure that all points on the network remain connected. The network
 which achieves the maximum saving is shown below. It has a weight of 93,
 representing a saving of 243 93 = 150 from the original network.
 
-Using network.txt [http://projecteuler.net/project/network.txt], a 6K text
-file containing a network with forty vertices, and given in matrix form,
-find the maximum saving which can be achieved by removing redundant edges
-whilst ensuring that the network remains connected.
+Using network.txt, a 6K text file containing a network with forty vertices,
+and given in matrix form, find the maximum saving which can be achieved by
+removing redundant edges whilst ensuring that the network remains connected.
 
 
 Problem 108
@@ -4509,7 +4498,7 @@ Label the vertices A, B and C. There are 2 ways in which a laser beam may
 enter vertex C, bounce off 11 surfaces, then exit through the same vertex:
 one way is shown below; the other is the reverse of that.
 
-[Image: http://projecteuler.net/project/images/p_201_laserbeam.gif]
+[Image: 202_laserbeam.gif]
 
 There are 80840 ways in which a laser beam may enter vertex C, bounce off
 1000001 surfaces, then exit through the same vertex.
@@ -4624,7 +4613,7 @@ turning on the spot.
 
 One of 70932 possible closed paths of 25 arcs starting northward is:
 
-[Image: http://projecteuler.net/project/images/p_208_robotwalk.gif]
+[Image: 208_robotwalk.gif]
 
 Given that the robot starts facing North, how many journeys of 70 arcs in
 length can it take that return it, after the final arc, to its starting
@@ -4764,7 +4753,7 @@ i.e. never form a "running crack".
 For example, the following 9×3 wall is not acceptable due to the running
 crack shown in red:
 
-[Image: http://projecteuler.net/project/images/p_215_crackfree.gif]
+[Image: 215_crackfree.gif]
 
 There are eight ways of forming a crack-free 9×3 wall, written W(9,3) = 8.
 
@@ -4865,7 +4854,7 @@ Then D[n] is an exotic drawing known as the Heighway Dragon of order n.
 For example, D[10] is shown below; counting each "F" as one step, the
 highlighted spot at (18,16) is the position reached after 500 steps.
 
-[Image: http://projecteuler.net/project/images/p_220.gif]
+[Image: 220.gif]
 
 What is the position of the cursor after 10^12 steps in D[50]?
 Give your answer in the form x,y with no spaces.
@@ -4932,14 +4921,14 @@ Problem 226
 
 The blancmange curve is the set of points (x,y) such that 0 ≤ x ≤ 1 and
 
-[Image: http://projecteuler.net/project/images/p_226_formula.gif]
+[Image: 226_formula.gif]
 
 where s(x) = the distance from x to the nearest integer.
 
 The area under the blancmange curve is equal to ½, shown in pink in the
 diagram below.
 
-[Image: http://projecteuler.net/project/images/p_226_scoop2.gif]
+[Image: 226_scoop2.gif]
 
 Let C be the circle with centre (¼,½) and radius ¼, shown in black in the
 diagram.
@@ -4986,7 +4975,7 @@ coordinate-wise: (u, v) + (x, y) = (u+x, v+y).
 For example, the sum of S[3] and S[4] is the six-sided shape shown in pink
 below:
 
-[Image: http://projecteuler.net/project/images/p_228.png]
+[Image: 228.png]
 
 How many sides does S[1864] + S[1865] + … + S[1909] have?
 
@@ -5185,7 +5174,7 @@ Let T(n) be the number of tours over a 4 × n playing board such that:
 
 The diagram shows one tour over a 4 × 10 board:
 
-[Image: http://projecteuler.net/project/images/p_237.gif]
+[Image: 237.gif]
 
 T(10) is 2329. What is T(10^12) modulo 10^8?
 
@@ -5325,8 +5314,8 @@ A move is denoted by the uppercase initial of the direction (Left, Right,
 Up, Down) in which the tile is slid, e.g. starting from configuration (S),
 by the sequence LULUR we reach the configuration (E):
 
-(S): [Image: http://projecteuler.net/project/images/p_244_start.gif]
-(E): [Image: http://projecteuler.net/project/images/p_244_example.gif]
+(S): [Image: 244_start.gif]
+(E): [Image: 244_example.gif]
 
 For each path, its checksum is calculated by (pseudocode):
 checksum = 0
@@ -5352,8 +5341,8 @@ For the sequence LULUR given above, the checksum would be 19761398.
 Now, starting from configuration (S), find all shortest ways to reach
 configuration (T).
 
-(S): [Image: http://projecteuler.net/project/images/p_244_start.gif]
-(T): [Image: http://projecteuler.net/project/images/p_244_target.gif]
+(S): [Image: 244_start.gif]
+(T): [Image: 244_target.gif]
 
 What is the sum of all checksums for the paths having the minimal length?
 
@@ -5388,7 +5377,7 @@ an ellipse.
 
 The construction of the points of the ellipse is shown below.
 
-[Image: http://projecteuler.net/project/images/p_246_anim.gif]
+[Image: 246_anim.gif]
 
 Given are the points M(-2000,1500) and G(8000,1500).
 Given is also the circle c with centre M and radius 15000.
@@ -5398,7 +5387,7 @@ From a point P outside e the two tangents t[1] and t[2] to the ellipse are
 drawn.
 Let the points where t[1] and t[2] touch the ellipse be R and S.
 
-[Image: http://projecteuler.net/project/images/p_246_ellipse.gif]
+[Image: 246_ellipse.gif]
 
 For how many lattice points P is angle RPS greater than 45 degrees?
 
@@ -5413,7 +5402,7 @@ Let S[2] be the largest square that fits in the remaining area, and so on.
 Let the index of S[n] be the pair (left, below) indicating the number of
 squares to the left of S[n] and the number of squares below S[n].
 
-[Image: http://projecteuler.net/project/images/p_247_hypersquares.gif]
+[Image: 247_hypersquares.gif]
 
 The diagram shows some such squares labelled by number.
 S[2] has one square to its left and none below, so the index of S[2] is
@@ -5456,7 +5445,7 @@ Problem 251
 A triplet of positive integers (a,b,c) is called a Cardano Triplet if it
 satisfies the condition:
 
-[Image: http://projecteuler.net/project/images/p_251_cardano.gif]
+[Image: 251_cardano.gif]
 
 For example, (2,1,5) is a Cardano Triplet.
 
@@ -5478,7 +5467,7 @@ convex holes. The convex hole shown as a red heptagon has an area equal to
 1049694.5 square units, which is the highest possible area for a convex
 hole on the given set of points.
 
-[Image: http://projecteuler.net/project/images/p_252_convexhole.gif]
+[Image: 252_convexhole.gif]
 
 For our example, we used the first 20 points (T[2k−1], T[2k]), for
 k = 1,2,…,20, produced with the pseudo-random number generator:
@@ -5593,14 +5582,14 @@ If d is odd, set x[0] = 2×10^((d-1)⁄/2).
 If d is even, set x[0] = 7×10^((d-2)⁄/2).
 Repeat:
 
-[Image: http://projecteuler.net/project/images/p_255_Heron.gif]
+[Image: 255_Heron.gif]
 
 until x[k+1] = x[k].
 
 As an example, let us find the rounded-square-root of n = 4321.
 n has 4 digits, so x[0] = 7×10^(4-2)⁄2 = 70.
 
-[Image: http://projecteuler.net/project/images/p_255_Example.gif]
+[Image: 255_Example.gif]
 
 Since x[2] = x[1], we stop here.
 So, after just two iterations, we have found that the rounded-square-root
@@ -5640,7 +5629,7 @@ There is one rule to follow when laying out tatami: there must be no
 points where corners of four different mats meet.
 For example, consider the two arrangements below for a 4×4 room:
 
-[Image: http://projecteuler.net/project/images/p_256_tatami3.gif]
+[Image: 256_tatami3.gif]
 
 The arrangement on the left is acceptable, whereas the one on the right is
 not: a red "X" in the middle, marks the point where four tatami meet.
@@ -5670,7 +5659,7 @@ a and AC = b).
 The angular bisectors of the triangle intersect the sides at points E, F
 and G (see picture below).
 
-[Image: http://projecteuler.net/project/images/p_257_bisector.gif]
+[Image: 257_bisector.gif]
 
 The segments EF, EG and FG partition the triangle ABC into four smaller
 triangles: AEG, BFE, CGF and EFG.
@@ -5772,7 +5761,7 @@ Problem 262
 The following equation represents the continuous topography of a
 mountainous region, giving the elevation h at any point (x,y):
 
-[Image: http://projecteuler.net/project/images/p_262_formula1.gif]
+[Image: 262_formula1.gif]
 
 A mosquito intends to fly from A(200,200) to B(1400,1400), without leaving
 the area given by 0 ≤ x, y ≤ 1600.
@@ -5849,7 +5838,7 @@ A(8, 1),  B(1, -8), C(-4, 7)
 A(2, 9),  B(9, -2), C(-6, -7)
 A(9, 2),  B(2, -9), C(-6, 7)
 
-[Image: http://projecteuler.net/project/images/p_264_TriangleCentres.gif]
+[Image: 264_TriangleCentres.gif]
 
 The sum of their perimeters, rounded to four decimal places, is 291.0089.
 
@@ -5866,7 +5855,7 @@ clockwise subsequences are distinct.
 
 For N=3, two such circular arrangements are possible, ignoring rotations:
 
-[Image: http://projecteuler.net/project/images/p_265_BinaryCircles.gif]
+[Image: 265_BinaryCircles.gif]
 
 For the first arrangement, the 3-digit subsequences, in clockwise order,
 are: 000, 001, 010, 101, 011, 111, 110 and 100.
