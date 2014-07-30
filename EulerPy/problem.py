@@ -3,6 +3,7 @@
 import os
 import sys
 import glob
+import json
 import linecache
 
 import click
@@ -32,6 +33,22 @@ class Problem(object):
     def iglob(self):
         """Returns a glob iterator for files belonging to a given problem"""
         return glob.iglob('{0:03d}*.py'.format(self.num))
+
+
+    @property
+    def resources(self):
+        """Returns a list of resources related to the problem (or None)"""
+        with open(os.path.join(dataDir, 'resources.json')) as data_file:
+            data = json.load(data_file)
+
+        problemNum = str(self.num)
+
+        if problemNum in data:
+            files = data[problemNum]
+            # Ensure a list of files is returned
+            return files if type(files) == list else [files]
+        else:
+            return None
 
 
     @property
