@@ -15,10 +15,9 @@ guidelines for the format of the file:
 * Leave **one** empty line after the divider line.
 * Keep the width of each line to **74 characters** maximum.
 * Align centered text with the 74 character width in mind.
-* If the problem links to a file or page on the Project Euler website, put the
-  link to the resource in brackets directly following its name
-  (``words.txt [http://projecteuler.net/project/words.txt]``)
-* If the problem contains an image, use the format ``[Image: <image link>]``.
+* If the problem links to a resource, ensure that the file exists in the
+  `data/resources`_ directory and update `resources.json`_ appropriately.
+* If the problem contains an image, use the format ``[Image: image name]``.
 * Leave **two** empty lines after the final line of the problem text.
 * In addition, the problem text itself should never contain two consecutive
   empty lines, as this indicates to the script that the the problem has
@@ -27,4 +26,6 @@ guidelines for the format of the file:
 I've probably made countless coding *faux pas* given my level of experience, so
 any improvements to the codebase are graciously welcomed as well.
 
+.. _data/resources: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/resources/
+.. _resources.json: https://github.com/iKevinY/EulerPy/blog/master/EulerPy/data/resources.json
 .. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/problems.txt
