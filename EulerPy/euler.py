@@ -43,6 +43,10 @@ def generate(p, prompt_default=True):
 
     click.secho('Successfully created "{0}".'.format(p.filename), fg='green')
 
+    # Copy over problem resources if required
+    if p.resources:
+        p.copy_resources()
+
 
 # --preview / -p
 def preview(p):

@@ -5,6 +5,7 @@ import sys
 import glob
 import json
 import linecache
+import shutil
 
 import click
 
@@ -49,6 +50,24 @@ class Problem(object):
             return files if type(files) == list else [files]
         else:
             return None
+
+    def copy_resources(self):
+        """Copies the relevant resources to a resources subdirectory"""
+        if not os.path.isdir('resources'):
+            os.mkdir('resources')
+
+        resourcesDir = os.path.join(os.getcwd(), 'resources', '')
+
+        for resource in self.resources:
+            src = os.path.join(dataDir, 'resources', resource)
+            shutil.copy(src, resourcesDir)
+
+        msg = 'Copied relevant resources ({0}) to {1}.'.format(
+            ', '.join('"' + resource + '"' for resource in self.resources),
+            resourcesDir
+        )
+
+        click.secho(msg, fg='green')
 
 
     @property
