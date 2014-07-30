@@ -15,35 +15,35 @@
   "102": "triangles.txt",
   "105": "sets.txt",
   "107": "network.txt",
-  "202": "p_201_laserbeam.gif",
-  "208": "p_208_robotwalk.gif",
-  "215": "p_215_crackfree.gif",
-  "220": "p_220.gif",
+  "202": "202_laserbeam.gif",
+  "208": "208_robotwalk.gif",
+  "215": "215_crackfree.gif",
+  "220": "220.gif",
   "226": [
-    "p_226_formula.gif",
-    "p_226_scoop2.gif"
+    "226_formula.gif",
+    "226_scoop2.gif"
   ],
-  "228": "p_228.png",
-  "237": "p_237.gif",
+  "228": "228.png",
+  "237": "237.gif",
   "244": [
-    "p_244_start.gif",
-    "p_244_example.gif",
-    "p_244_target.gif"
+    "244_start.gif",
+    "244_example.gif",
+    "244_target.gif"
   ],
   "246": [
-    "p_246_anim.gif",
-    "p_246_ellipse.gif"
+    "246_anim.gif",
+    "246_ellipse.gif"
   ],
-  "247": "p_247_hypersquares.gif",
-  "251": "p_251_cardano.gif",
-  "252": "p_252_convexhole.gif",
+  "247": "247_hypersquares.gif",
+  "251": "251_cardano.gif",
+  "252": "252_convexhole.gif",
   "255": [
-    "p_255_Heron.gif",
-    "p_255_Example.gif"
+    "255_Heron.gif",
+    "255_Example.gif"
   ],
-  "256": "p_256_tatami3.gif",
-  "257": "p_257_bisector.gif",
-  "262": "p_262_formula1.gif",
-  "264": "p_264_TriangleCentres.gif",
-  "265": "p_265_BinaryCircles.gif"
+  "256": "256_tatami3.gif",
+  "257": "257_bisector.gif",
+  "262": "262_formula1.gif",
+  "264": "264_TriangleCentres.gif",
+  "265": "265_BinaryCircles.gif"
 }
