@@ -78,7 +78,7 @@ def verify(p, filename=None, exit=True):
     solution = p.solution
     click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
 
-    cmd = [sys.executable or 'python', filename]
+    cmd = (sys.executable or 'python', filename)
     start = clock()
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     stdout = proc.communicate()[0]
@@ -142,13 +142,20 @@ def verify_all(current_p):
     overview = {}
 
     # Search through problem files using glob module
-    for filename in problem_glob():
-        p = Problem(int(filename[:3]))
+    files = problem_glob()
+
+    # No Project Euler files in the current directory
+    if not files:
+        click.echo("No Project Euler files found in the current directory.")
+        sys.exit(1)
+
+    for file in files:
+        p = Problem(int(file[:3]))
 
         # Catch KeyboardInterrupt during verification to allow the user
         # to skip the verification of a problem if it takes too long
         try:
-            is_correct = verify(p, filename=filename, exit=False)
+            is_correct = verify(p, filename=file, exit=False)
         except KeyboardInterrupt:
             overview[p.num] = status['skipped']
         else:
@@ -164,15 +171,10 @@ def verify_all(current_p):
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
                 if p.num != current_p.num:
-                    rename_file(filename, p.suf_name('skipped'))
+                    rename_file(file, p.suf_name('skipped'))
 
         # Separate each verification with a newline
         click.echo()
-
-    # No Project Euler files in the current directory
-    if not overview:
-        click.echo("No Project Euler files found in the current directory.")
-        sys.exit(1)
 
     # Print overview of the status of each problem
     legend = ', '.join('{0} = {1}'.format(v, k) for k, v in status.items())
@@ -254,7 +256,7 @@ def main(option, problem):
             option = generate
 
     # Problem given but no option; decide between generate and verify
-    elif not option:
+    elif option is None:
         option = verify if any(Problem(problem).iglob) else generate
 
     # Execute function based on option (pass Problem object as argument)
