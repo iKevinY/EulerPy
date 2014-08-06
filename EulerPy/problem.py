@@ -62,9 +62,9 @@ class Problem(object):
             src = os.path.join(dataDir, 'resources', resource)
             shutil.copy(src, resourcesDir)
 
-        msg = 'Copied relevant resources ({0}) to {1}.'.format(
-            ', '.join('"' + resource + '"' for resource in self.resources),
-            resourcesDir
+        msg = "Copied {0} to {1}.".format(', '.join(
+            '"%s"' % resource for resource in self.resources),
+            os.path.relpath(resourcesDir, os.pardir)
         )
 
         click.secho(msg, fg='green')
