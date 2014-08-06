@@ -135,6 +135,16 @@ the user).
     Generate file for problem 5? [Y/n]: n
     Aborted!
 
+The file generation process will also automatically copy any relevant
+resource files to a ``resources`` subdirectory.
+
+.. code-block:: bash
+
+    $ euler 22
+    Generate file for problem 22? [Y/n]: Y
+    Successfully created "022.py".
+    Copied "names.txt" to project-euler/resources.
+
 
 ``--preview / -p``
 ------------------
