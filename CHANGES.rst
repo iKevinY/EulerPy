@@ -2,6 +2,14 @@
 Changelog
 =========
 
+v1.2.0 (2014-08-06)
+-------------------
+
+- Dropped official support for Python 2.6 and added Python 3.4
+- Added problems 257-266
+- Changed file generation to automatically copy relevant resources
+
+
 v1.1.0 (2014-07-20)
 -------------------
 
