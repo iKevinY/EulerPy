@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v1.2.1 (2014-08-10)
+-------------------
+
+- Changed --generate to allow skipped problem files to be regenerated
+
+
 v1.2.0 (2014-08-06)
 -------------------
 
