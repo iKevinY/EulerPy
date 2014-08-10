@@ -26,14 +26,20 @@ def generate(p, prompt_default=True):
 
     msg = "Generate file for problem %i?" % p.num
     click.confirm(msg, default=prompt_default, abort=True)
-    problemText = p.text
 
-    if os.path.isfile(p.filename):
-        msg = '"{0}" already exists. Overwrite?'.format(p.filename)
+    # Allow skipped problem files to be recreated
+    problem_files = list(p.iglob)
+    if problem_files:
+        filename = problem_files[0]
+        msg = '"{0}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
+    else:
+        filename = p.filename
 
     problemHeader = 'Project Euler Problem %i\n' % p.num
     problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
+
+    problemText = p.text
 
     with open(p.filename, 'w') as file:
         file.write('"""\n')
@@ -41,7 +47,7 @@ def generate(p, prompt_default=True):
         file.write(problemText)
         file.write('"""\n\n\n')
 
-    click.secho('Successfully created "{0}".'.format(p.filename), fg='green')
+    click.secho('Successfully created "{0}".'.format(filename), fg='green')
 
     # Copy over problem resources if required
     if p.resources:
