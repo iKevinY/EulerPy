@@ -2,6 +2,12 @@
 Changelog
 =========
 
+v1.2.2 (2014-08-11)
+-------------------
+
+- Fixed bug with filename of resource for problem 59
+
+
 v1.2.1 (2014-08-10)
 -------------------
 
