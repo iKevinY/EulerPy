@@ -58,16 +58,24 @@ class Problem(object):
 
         resourcesDir = os.path.join(os.getcwd(), 'resources', '')
 
+        copiedResources = []
+
         for resource in self.resources:
             src = os.path.join(dataDir, 'resources', resource)
-            shutil.copy(src, resourcesDir)
+            try:
+                shutil.copy(src, resourcesDir)
+            except IOError:
+                pass
+            else:
+                copiedResources.append(resource)
 
-        msg = "Copied {0} to {1}.".format(', '.join(
-            '"%s"' % resource for resource in self.resources),
-            os.path.relpath(resourcesDir, os.pardir)
-        )
+        if copiedResources:
+            msg = "Copied {0} to {1}.".format(
+                ', '.join(copiedResources),
+                os.path.relpath(resourcesDir, os.pardir)
+            )
 
-        click.secho(msg, fg='green')
+            click.secho(msg, fg='green')
 
 
     @property
