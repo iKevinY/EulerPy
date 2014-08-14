@@ -57,16 +57,12 @@ class Problem(object):
             os.mkdir('resources')
 
         resourcesDir = os.path.join(os.getcwd(), 'resources', '')
-
         copiedResources = []
 
         for resource in self.resources:
             src = os.path.join(dataDir, 'resources', resource)
-            try:
+            if os.path.isfile(src):
                 shutil.copy(src, resourcesDir)
-            except IOError:
-                pass
-            else:
                 copiedResources.append(resource)
 
         if copiedResources:
