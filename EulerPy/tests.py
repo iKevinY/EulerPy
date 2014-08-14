@@ -107,6 +107,14 @@ class EulerTests(unittest.TestCase):
         with open('001.py') as file:
             self.assertTrue(file.readlines() == [])
 
+    def test_generate_overwrite_skipped(self):
+        generateFile(1, '001-skipped.py')
+
+        result = CliRun('-g', '1', input='\nY\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('001-skipped.py'))
+        self.assertFalse(os.path.isfile('001.py'))
+
 
     # --preview / -p
     def test_preview(self):

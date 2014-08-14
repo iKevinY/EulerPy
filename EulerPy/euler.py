@@ -41,7 +41,7 @@ def generate(p, prompt_default=True):
 
     problemText = p.text
 
-    with open(p.filename, 'w') as file:
+    with open(filename, 'w') as file:
         file.write('"""\n')
         file.write(problemHeader)
         file.write(problemText)
