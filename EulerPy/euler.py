@@ -23,6 +23,7 @@ def cheat(p):
 # --generate / -g
 def generate(p, prompt_default=True):
     """Generates Python file for a problem."""
+    problemText = p.text
 
     msg = "Generate file for problem %i?" % p.num
     click.confirm(msg, default=prompt_default, abort=True)
@@ -38,8 +39,6 @@ def generate(p, prompt_default=True):
 
     problemHeader = 'Project Euler Problem %i\n' % p.num
     problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
-
-    problemText = p.text
 
     with open(filename, 'w') as file:
         file.write('"""\n')
