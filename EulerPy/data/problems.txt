@@ -5881,7 +5881,106 @@ The divisors of 12 are: 1, 2, 3, 4, 6, and 12.
 The largest divisor of 12 that does not exceed the square root of 12 is 3.
 We shall call the largest divisor of an integer n that does not exceed the
 square root of n the pseudo square root (PSR) of n.
-It can be seen that PSR(3102)=47.
+It can be seen that PSR(3102) = 47.
 
 Let p be the product of the primes below 190. Find PSR(p) mod 10^16.
+
+
+Problem 267
+===========
+
+You are given a unique investment opportunity.
+
+Starting with £1 of capital, you can choose a fixed proportion, f, of your
+capital to bet on a fair coin toss repeatedly for 1000 tosses.
+
+Your return is double your bet for heads and you lose your bet for tails.
+
+For example, if f = 1/4, for the first toss you bet £0.25, and if heads
+comes up you win £0.5 and so then have £1.5. You then bet £0.375 and if
+the second toss is tails, you have £1.125.
+
+Choosing f to maximize your chances of having at least £1,000,000,000
+after 1,000 flips, what is the chance that you become a billionaire?
+
+All computations are assumed to be exact (no rounding), but give your
+answer rounded to 12 digits behind the decimal point in the form
+0.abcdefghijkl.
+
+
+Problem 268
+===========
+
+It can be verified that there are 23 positive integers less than 1000 that
+are divisible by at least four distinct primes less than 100.
+
+Find how many positive integers less than 10^16 are divisible by at least
+four distinct primes less than 100.
+
+
+Problem 269
+===========
+
+A root or zero of a polynomial P(x) is a solution to the equation P(x) = 0.
+Define P[n] as the polynomial whose coefficients are the digits of n.
+For example, P[5703](x) = 5x^3 + 7x^2 + 3.
+
+We can see that:
+
+ • P[n](0) is the last digit of n,
+ • P[n](1) is the sum of the digits of n,
+ • P[n](10) is n itself.
+
+Define Z(k) as the number of positive integers, n, not exceeding k for
+which the polynomial P[n] has at least one integer root.
+
+It can be verified that Z(100 000) is 14696.
+
+What is Z(10^16)?
+
+
+Problem 270
+===========
+
+A square piece of paper with integer dimensions N×N is placed with a
+corner at the origin and two of its sides along the x- and y-axes. Then,
+we cut it up respecting the following rules:
+
+ • We only make straight cuts between two points lying on different sides
+   of the square, and having integer coordinates.
+ • Two cuts cannot cross, but several cuts can meet at the same border
+   point.
+ • Proceed until no more legal cuts can be made.
+
+Counting any reflections or rotations as distinct, we call C(N) the number
+of ways to cut an N×N square. For example, C(1) = 2 and C(2) = 30 (shown
+below).
+
+[Image: 270_CutSquare.gif]
+
+What is C(30) mod 10^8?
+
+
+Problem 271
+===========
+
+For a positive number n, define S(n) as the sum of the integers x, for
+which 1 < x < n and x^3 ≡ 1 mod n.
+
+When n=91, there are 8 possible values for x, namely: 9, 16, 22, 29, 53,
+74, 79, 81. Thus, S(91)=9+16+22+29+53+74+79+81=363.
+
+Find S(13082761331670030).
+
+
+Problem 272
+===========
+
+For a positive number n, define C(n) as the number of the integers x, for
+which 1 < x < n and x^3 ≡ 1 mod n.
+
+When n=91, there are 8 possible values for x, namely: 9, 16, 22, 29, 53,
+74, 79, 81. Thus, C(91)=8.
+
+Find the sum of the positive numbers n ≤ 10^11 for which C(n) = 242.
 
