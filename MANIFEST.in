@@ -1,2 +1,3 @@
 include CHANGES.rst LICENSE README.rst requirements.txt
 graft EulerPy/data
+global-exclude .DS_Store
