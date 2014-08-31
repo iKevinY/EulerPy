@@ -33,7 +33,8 @@ class EulerTests(unittest.TestCase):
     def setUp(self):
         # Copy problem and solution files to temporary directory
         os.chdir(tempfile.mkdtemp())
-        dataDir = os.path.join(os.path.dirname(__file__), 'data')
+        eulerDir = os.path.dirname(os.path.dirname(__file__))
+        dataDir = os.path.join(eulerDir, 'EulerPy', 'data')
         tempData = os.path.join(os.getcwd(), 'EulerPy', 'data')
         shutil.copytree(dataDir, tempData)
 
@@ -213,8 +214,8 @@ class EulerTests(unittest.TestCase):
         """
 
         # Determine largest problem in problems.txt
-        problemsFile = os.path.join(os.path.dirname(__file__),
-                                    'data', 'problems.txt')
+        eulerDir = os.path.dirname(os.path.dirname(__file__))
+        problemsFile = os.path.join(eulerDir, 'EulerPy', 'data', 'problems.txt')
         with open(problemsFile) as file:
             largest = ''
             for line in file:

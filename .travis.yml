@@ -8,4 +8,4 @@ branches:
   only:
     - master
 install: pip install -r requirements.txt
-script: python -m EulerPy.tests
+script: python -m unittest discover tests
