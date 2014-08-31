@@ -1,3 +1,2 @@
-include *.rst
-include *.txt
-recursive-include EulerPy/data *
+include CHANGES.rst LICENSE README.rst requirements.txt
+graft EulerPy/data
