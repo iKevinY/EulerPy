@@ -5984,3 +5984,178 @@ When n=91, there are 8 possible values for x, namely: 9, 16, 22, 29, 53,
 
 Find the sum of the positive numbers n ≤ 10^11 for which C(n) = 242.
 
+
+Problem 273
+===========
+
+Consider equations of the form: a^2 + b^2 = N, 0 ≤ a ≤ b, a, b and N
+integer.
+
+For N=65 there are two solutions:
+
+a=1, b=8 and a=4, b=7.
+
+We call S(N) the sum of the values of a of all solutions of a^2 + b^2 = N,
+0 ≤ a ≤ b, a, b and N integer.
+
+Thus S(65) = 1 + 4 = 5.
+
+Find ∑S(N), for all squarefree N only divisible by primes of the form 4k+1
+with 4k+1 < 150.
+
+
+Problem 274
+===========
+
+For each integer p > 1 coprime to 10 there is a positive divisibility
+multiplier m < p which preserves divisibility by p for the following
+function on any positive integer, n:
+
+f(n) = (all but the last digit of n) + (the last digit of n) * m
+
+That is, if m is the divisibility multiplier for p, then f(n) is divisible
+by p if and only if n is divisible by p.
+
+(When n is much larger than p, f(n) will be less than n and repeated
+application of f provides a multiplicative divisibility test for p.)
+
+For example, the divisibility multiplier for 113 is 34.
+
+f(76275) = 7627 + 5 * 34 = 7797 : 76275 and 7797 are both divisible by 113
+f(12345) = 1234 + 5 * 34 = 1404 : 12345 and 1404 are both not divisible by
+113
+
+The sum of the divisibility multipliers for the primes that are coprime to
+10 and less than 1000 is 39517. What is the sum of the divisibility
+multipliers for the primes that are coprime to 10 and less than 10^7?
+
+
+Problem 275
+===========
+
+Let us define a balanced sculpture of order n as follows:
+
+ • A polyomino made up of n+1 tiles known as the blocks (n tiles)
+   and the plinth (remaining tile);
+ • the plinth has its centre at position (x = 0, y = 0);
+ • the blocks have y-coordinates greater than zero (so the plinth is the
+   unique lowest tile);
+ • the centre of mass of all the blocks, combined, has x-coordinate equal
+   to zero.
+
+When counting the sculptures, any arrangements which are simply
+reflections about the y-axis, are not counted as distinct. For example,
+the 18 balanced sculptures of order 6 are shown below; note that each pair
+of mirror images (about the y-axis) is counted as one sculpture:
+
+[Image: 275_sculptures2.gif]
+
+There are 964 balanced sculptures of order 10 and 360505 of order 15.
+How many balanced sculptures are there of order 18?
+
+
+Problem 276
+===========
+
+Consider the triangles with integer sides a, b and c with a ≤ b ≤ c.
+An integer sided triangle (a,b,c) is called primitive if gcd(a,b,c)=1.
+How many primitive integer sided triangles exist with a perimeter not
+exceeding 10 000 000?
+
+
+Problem 277
+===========
+
+A modified Collatz sequence of integers is obtained from a starting value
+a[1] in the following way:
+
+a[n+1] = a[n]/3 if a[n] is divisible by 3. We shall denote this as a large
+downward step, "D".
+
+a[n+1] = (4a[n] + 2)/3 if a[n] divided by 3 gives a remainder of 1. We
+shall denote this as an upward step, "U".
+
+a[n+1] = (2a[n] - 1)/3 if a[n] divided by 3 gives a remainder of 2. We
+shall denote this as a small downward step, "d".
+
+The sequence terminates when some a[n] = 1.
+
+Given any integer, we can list out the sequence of steps.
+For instance if a[1]=231, then the sequence
+{a[n]}={231,77,51,17,11,7,10,14,9,3,1} corresponds to the steps
+"DdDddUUdDD".
+
+Of course, there are other sequences that begin with that same sequence
+"DdDddUUdDD....".
+For instance, if a[1]=1004064, then the sequence is
+DdDddUUdDDDdUDUUUdDdUUDDDUdDD.
+In fact, 1004064 is the smallest possible a[1] > 10^6 that begins with the
+sequence DdDddUUdDD.
+
+What is the smallest a[1] > 10^15 that begins with the sequence
+"UDDDUdddDDUDDddDdDddDDUDDdUUDd"?
+
+
+Problem 278
+===========
+
+Given the values of integers 1 < a[1] < a[2] <... < a[n], consider the
+linear combination
+q[1]a[1] + q[2]a[2] + ... + q[n]a[n] = b, using only integer values q[k] ≥
+0.
+
+Note that for a given set of a[k], it may be that not all values of b are
+possible.
+For instance, if a[1] = 5 and a[2] = 7, there are no q[1] ≥ 0 and q[2] ≥ 0
+such that b could be
+1, 2, 3, 4, 6, 8, 9, 11, 13, 16, 18 or 23.
+In fact, 23 is the largest impossible value of b for a[1] = 5 and a[2] =
+7.
+We therefore call f(5, 7) = 23.
+Similarly, it can be shown that f(6, 10, 15)=29 and f(14, 22, 77) = 195.
+
+Find ∑ f(p*q,p*r,q*r), where p, q and r are prime numbers and p < q < r <
+5000.
+
+
+Problem 279
+===========
+
+How many triangles are there with integral sides, at least one integral
+angle (measured in degrees), and a perimeter that does not exceed 10^8?
+
+
+Problem 280
+===========
+
+A laborious ant walks randomly on a 5x5 grid. The walk starts from the
+central square. At each step, the ant moves to an adjacent square at
+random, without leaving the grid; thus there are 2, 3 or 4 possible moves
+at each step depending on the ant's position.
+
+At the start of the walk, a seed is placed on each square of the lower
+row. When the ant isn't carrying a seed and reaches a square of the lower
+row containing a seed, it will start to carry the seed. The ant will drop
+the seed on the first empty square of the upper row it eventually reaches.
+
+What's the expected number of steps until all seeds have been dropped in
+the top row? Give your answer rounded to 6 decimal places.
+
+
+Problem 281
+===========
+
+You are given a pizza (perfect circle) that has been cut into m·n equal
+pieces and you want to have exactly one topping on each slice.
+
+Let f(m,n) denote the number of ways you can have toppings on the pizza
+with m different toppings (m ≥ 2), using each topping on exactly n slices
+(n ≥ 1). Reflections are considered distinct, rotations are not.
+
+Thus, for instance, f(2,1) = 1, f(2,2) = f(3,1) = 2 and f(3,2) = 16.
+f(3,2) is shown below:
+
+[Image: 281_pizza.gif]
+
+Find the sum of all f(m,n) such that f(m,n) ≤ 10^15.
+
