@@ -5,7 +5,7 @@ Changelog
 v1.2.3
 ------
 
-- Added problems 267-281
+- Added problems 267-300
 - Fixed bug with regenerating skipped files
 - Pruned files included in source distribution
 - Changed --generate to check for existence of problem before displaying
