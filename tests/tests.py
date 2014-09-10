@@ -116,6 +116,14 @@ class EulerTests(unittest.TestCase):
         self.assertTrue(os.path.isfile('001-skipped.py'))
         self.assertFalse(os.path.isfile('001.py'))
 
+    def test_generate_copy_resources(self):
+        result = CliRun('-g', '22', input='\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('022.py'))
+
+        resource = os.path.join('resources', 'names.txt')
+        self.assertTrue(os.path.isfile(resource))
+
 
     # --preview / -p
     def test_preview(self):
@@ -180,6 +188,18 @@ class EulerTests(unittest.TestCase):
 
         result = CliRun('-v')
         self.assertEqual(result.exit_code, 0)
+
+    def test_verify_non_existent_problem_file(self):
+        result = CliRun('-v', '5')
+        self.assertEqual(result.exit_code, 1)
+
+    def test_verify_file_with_multiline_output(self):
+        with open('001.py', 'a') as file:
+            file.write('print(1)\n')
+            file.write('print(2)\n')
+
+        result = CliRun('-v', '1')
+        self.assertEqual(result.exit_code, 1)
 
 
     # --verify-all
