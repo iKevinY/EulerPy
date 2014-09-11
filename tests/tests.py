@@ -10,6 +10,7 @@ from click.testing import CliRunner
 
 from EulerPy import euler
 from EulerPy.problem import Problem
+from EulerPy.utils import human_time
 
 
 def CliRun(*commands, **kwargs):
@@ -55,6 +56,24 @@ class EulerTests(unittest.TestCase):
         self.assertFalse(os.path.isfile('001.py'))
 
 
+    # No option or problem number; should verify and generate next file
+    def test_no_arguments(self):
+        generateFile(1, correct=True)
+        result = CliRun(input='\n')
+        self.assertEqual(result.exit_code, 0)
+
+
+    # Ambiguous case; infer option from file existence check
+    def test_ambiguous_option_generate(self):
+        result = CliRun('1')
+        self.assertEqual(result.exit_code, 0)
+
+    def test_ambiguous_option_verify(self):
+        generateFile(1, correct=True)
+        result = CliRun('1')
+        self.assertEqual(result.exit_code, 0)
+
+
     # --cheat / -c
     def test_cheat_neutral(self):
         result = CliRun('-c', input='\n')
@@ -72,6 +91,10 @@ class EulerTests(unittest.TestCase):
     def test_chest_specific(self):
         result = CliRun('-c', '2', input='Y\n')
         self.assertTrue('The answer to problem 2' in result.output)
+
+    def test_cheat_not_in_solutions(self):
+        result = CliRun('-c', '1000', input='Y\n')
+        self.assertEqual(result.exit_code, 1)
 
 
     # --generate / -g
@@ -142,6 +165,10 @@ class EulerTests(unittest.TestCase):
         result = CliRun('-p')
         self.assertEqual(result.exit_code, 0)
         self.assertTrue('Project Euler Problem 2' in result.output)
+
+    def test_preview_nonexistent(self):
+        result = CliRun('-p', '1000')
+        self.assertEqual(result.exit_code, 1)
 
 
     # --skip / -s
@@ -220,6 +247,10 @@ class EulerTests(unittest.TestCase):
         self.assertFalse(os.path.isfile('004.py'))
         self.assertTrue(os.path.isfile('004-skipped.py'))
 
+    def test_verify_all_no_files(self):
+        result = CliRun('--verify-all')
+        self.assertEqual(result.exit_code, 1)
+
 
     # --help
     def test_help_option(self):
@@ -272,6 +303,9 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(Problem(1).filename, "001.py")
         self.assertEqual(Problem(10).filename, "010.py")
         self.assertEqual(Problem(100).filename, "100.py")
+
+    def test_time_format(self):
+        self.assertEqual(human_time(100000), '1d 3h 46m 40s')
 
 
 if __name__ == '__main__':
