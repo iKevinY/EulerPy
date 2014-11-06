@@ -30,7 +30,7 @@ def generateFile(problem, filename=None, correct=False):
             file.write('print({0})\n'.format(p.solution))
 
 
-class EulerTests(unittest.TestCase):
+class EulerPyTest(unittest.TestCase):
     def setUp(self):
         # Copy problem and solution files to temporary directory
         os.chdir(tempfile.mkdtemp())
@@ -44,6 +44,7 @@ class EulerTests(unittest.TestCase):
         shutil.rmtree(os.getcwd())
 
 
+class EulerPyNoOption(EulerPyTest):
     # Empty directory with no option
     def test_empty_directory_install_neutral(self):
         result = CliRun(input='\n')
@@ -55,13 +56,11 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
         self.assertFalse(os.path.isfile('001.py'))
 
-
     # No option or problem number; should verify and generate next file
     def test_no_arguments(self):
         generateFile(1, correct=True)
         result = CliRun(input='\n')
         self.assertEqual(result.exit_code, 0)
-
 
     # Ambiguous case; infer option from file existence check
     def test_ambiguous_option_generate(self):
@@ -74,7 +73,7 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 0)
 
 
-    # --cheat / -c
+class EulerPyCheat(EulerPyTest):
     def test_cheat_neutral(self):
         result = CliRun('-c', input='\n')
         self.assertEqual(result.exit_code, 1)
@@ -97,7 +96,7 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
 
 
-    # --generate / -g
+class EulerPyGenerate(EulerPyTest):
     def test_generate_neutral(self):
         result = CliRun('-g', input='\n')
         self.assertEqual(result.exit_code, 0)
@@ -148,7 +147,7 @@ class EulerTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(resource))
 
 
-    # --preview / -p
+class EulerPyPreview(EulerPyTest):
     def test_preview(self):
         result = CliRun('-p')
         self.assertEqual(result.exit_code, 0)
@@ -171,7 +170,7 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
 
 
-    # --skip / -s
+class EulerPySkip(EulerPyTest):
     def test_skip_neutral(self):
         generateFile(1)
 
@@ -188,7 +187,7 @@ class EulerTests(unittest.TestCase):
         self.assertTrue(os.path.isfile('001-skipped.py'))
 
 
-    # --verify / -v
+class EulerPyVerify(EulerPyTest):
     def test_verify(self):
         generateFile(1)
 
@@ -229,7 +228,7 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
 
 
-    # --verify-all
+class EulerPyVerifyAll(EulerPyTest):
     def test_verify_all(self):
         generateFile(1, correct=True)
         generateFile(2, filename='002-skipped.py', correct=True)
@@ -252,12 +251,13 @@ class EulerTests(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
 
 
-    # --help
+class EulerPyHelp(EulerPyTest):
     def test_help_option(self):
         result = CliRun('--help')
         self.assertEqual(result.exit_code, 0)
 
 
+class EulerPyUtils(EulerPyTest):
     def test_problem_format(self):
         """
         Ensure each parsed problem only contains one problem (that one problem
@@ -306,7 +306,3 @@ class EulerTests(unittest.TestCase):
 
     def test_time_format(self):
         self.assertEqual(human_time(100000), '1d 3h 46m 40s')
-
-
-if __name__ == '__main__':
-    unittest.main()
