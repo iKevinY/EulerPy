@@ -27,6 +27,13 @@ Conversely, it can be uninstalled using `pip`_ as well.
     $ pip uninstall EulerPy
 
 
+Alternatively, OS X users can install EulerPy using `Homebrew`_:
+
+.. code-block:: bash
+
+    $ brew install euler-py
+
+
 =====
 Usage
 =====
@@ -294,6 +301,7 @@ EulerPy is licensed under the `MIT License`_.
           :target: https://pypi.python.org/pypi/EulerPy/
 
 .. _pip: http://www.pip-installer.org/en/latest/index.html
+.. _Homebrew: http://brew.sh
 .. _CONTRIBUTING.rst: https://github.com/iKevinY/EulerPy/blob/master/CONTRIBUTING.rst
 .. _Local Euler: http://kmkeen.com/local-euler/
 .. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/problems.txt
