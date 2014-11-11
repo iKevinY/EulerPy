@@ -23,18 +23,15 @@ class Problem(object):
         """Returns filename padded with leading zeros"""
         return base_name.format(self.num, '', w=width, ext=extension)
 
-
     def suf_name(self, suffix, width=3, extension='py'):
         """Similar to filename property but takes a suffix argument"""
         suffix = '-' + suffix
         return base_name.format(self.num, suffix, w=width, ext=extension)
 
-
     @property
     def iglob(self):
         """Returns a glob iterator for files belonging to a given problem"""
         return glob.iglob('{0:03d}*.py'.format(self.num))
-
 
     @property
     def resources(self):
@@ -73,7 +70,6 @@ class Problem(object):
 
             click.secho(msg, fg='green')
 
-
     @property
     def solution(self):
         """Returns the answer to a given problem"""
@@ -95,7 +91,6 @@ class Problem(object):
             click.echo('If you have an answer, consider submitting a pull '
                        'request to EulerPy on GitHub.')
             sys.exit(1)
-
 
     @property
     def text(self):

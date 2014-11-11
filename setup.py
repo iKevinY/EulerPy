@@ -6,9 +6,11 @@ try:
 except ImportError:
     from distutils.core import setup
 
+
 def readme():
     with open('README.rst') as f:
         return f.read()
+
 
 def requirements():
     install_requires = []
@@ -43,6 +45,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.2",
         "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
     ],
     keywords=['EulerPy', 'euler', 'project-euler', 'projecteuler'],
     include_package_data=True,

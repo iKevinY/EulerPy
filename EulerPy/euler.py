@@ -15,7 +15,7 @@ from EulerPy.utils import clock, format_time, problem_glob, rename_file
 # --cheat / -c
 def cheat(p):
     """View the answer to a problem."""
-    # Define first instead of echoing in case the solution does not exist
+    # Define solution before echoing in case solution does not exist
     solution = click.style(p.solution, bold=True)
     click.confirm("View answer to problem %i?" % p.num, abort=True)
     click.echo("The answer to problem %i is {0}.".format(solution) % p.num)
@@ -57,8 +57,8 @@ def generate(p, prompt_default=True):
 # --preview / -p
 def preview(p):
     """Prints the text of a problem."""
-    # Define first instead of echoing in case the problem does not exist
-    problem_text = p.text[:-1] # strip newline from text
+    # Define problem_text before echoing in case problem does not exist
+    problem_text = p.text[:-1]  # strip newline from text
     click.secho("Project Euler Problem %i" % p.num, bold=True)
     click.echo(problem_text)
 
@@ -115,7 +115,7 @@ def verify(p, filename=None, exit=True):
     # skip the solution check (multi-line solution won't be correct)
     if len(output_lines) > 1:
         is_correct = False
-        click.echo() # force output to start on next line
+        click.echo()  # force output to start on next line
         click.secho('\n'.join(output_lines), bold=True, fg='red')
     else:
         is_correct = output_lines[0] == solution
@@ -169,7 +169,7 @@ def verify_all(current_p):
         except KeyboardInterrupt:
             overview[p.num] = status['skipped']
         else:
-            if is_correct is None: # error was returned by problem file
+            if is_correct is None:  # error was returned by problem file
                 overview[p.num] = status['error']
             elif is_correct:
                 overview[p.num] = status['correct']
@@ -222,7 +222,7 @@ def euler_options(fn):
         flags = ['--%s' % name.replace('_', '-')]
 
         # Add short flag if function name is a single word
-        if not '_' in name:
+        if '_' not in name:
             flags.append('-%s' % name[0])
 
         kwargs = {'flag_value': option, 'help': docstring}

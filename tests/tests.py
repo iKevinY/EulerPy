@@ -17,6 +17,7 @@ def CliRun(*commands, **kwargs):
     """Simplifies running tests using CliRunner()"""
     return CliRunner().invoke(euler.main, commands, **kwargs)
 
+
 def generateFile(problem, filename=None, correct=False):
     """
     Uses Problem().solution to generate a problem file. The correct
@@ -283,7 +284,6 @@ class EulerPyUtils(EulerPyTest):
             self.assertFalse('========='in problemText, msg=msg)
             self.assertFalse('\n\n\n' in problemText, msg=msg)
 
-
     def test_expected_problem(self):
         """Check that problem #1 returns the correct problem text"""
         problemOne = textwrap.dedent(
@@ -296,7 +296,6 @@ class EulerPyUtils(EulerPyTest):
         )
 
         self.assertEqual(problemOne[1:], Problem(1).text)
-
 
     def test_filename_format(self):
         """Check that filenames are being formatted correctly"""
