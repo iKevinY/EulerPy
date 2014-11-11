@@ -100,7 +100,7 @@ class Problem(object):
     @property
     def text(self):
         """Parses problems.txt and returns problem text"""
-        def problem_iter(problem_num):
+        def _problem_iter(problem_num):
             problemFile = os.path.join(dataDir, 'problems.txt')
 
             with open(problemFile) as file:
@@ -118,7 +118,7 @@ class Problem(object):
                             yield line[:-1]
                             lastLine = line
 
-        problemLines = [line for line in problem_iter(self.num)]
+        problemLines = [line for line in _problem_iter(self.num)]
 
         if problemLines:
             # First three lines are the problem number, the divider line,

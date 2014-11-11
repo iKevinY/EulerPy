@@ -212,7 +212,7 @@ def verify_all(current_p):
     click.echo()
 
 
-def euler_options(function):
+def euler_options(fn):
     """Decorator to link CLI options with their appropriate functions"""
     eulerFunctions = cheat, generate, preview, skip, verify, verify_all
 
@@ -226,10 +226,9 @@ def euler_options(function):
             flags.append('-%s' % name[0])
 
         kwargs = {'flag_value': option, 'help': docstring}
+        fn = click.option('option', *flags, **kwargs)(fn)
 
-        function = click.option('option', *flags, **kwargs)(function)
-
-    return function
+    return fn
 
 
 @click.command(name='euler', options_metavar='[OPTION]')
@@ -239,7 +238,7 @@ def euler_options(function):
 def main(option, problem):
     """Python-based Project Euler command line tool."""
     # No problem given (or given option ignores the problem argument)
-    if problem == 0 or option in (skip, verify_all):
+    if problem == 0 or option in {skip, verify_all}:
         # Determine the highest problem number in the current directory
         files = problem_glob()
         problem = max(int(file[:3]) for file in files) if files else 0
@@ -247,7 +246,7 @@ def main(option, problem):
         # No Project Euler files in current directory (no glob results)
         if problem == 0:
             # Generate the first problem file if option is appropriate
-            if option not in (cheat, preview, verify_all):
+            if option not in {cheat, preview, verify_all}:
                 msg = "No Project Euler files found in the current directory."
                 click.echo(msg)
                 option = generate

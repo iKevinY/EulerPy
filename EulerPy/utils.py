@@ -53,7 +53,7 @@ def human_time(timespan, precision=3):
     if timespan >= 60.0:
         # Format time greater than one minute in a human-readable format
         # Idea from http://snipplr.com/view/5713/
-        def format_long_time(time):
+        def _format_long_time(time):
             suffixes = ('d', 'h', 'm', 's')
             lengths = (24*60*60, 60*60, 60, 1)
 
@@ -67,7 +67,7 @@ def human_time(timespan, precision=3):
                 if time < 1:
                     break
 
-        return ' '.join(format_long_time(timespan))
+        return ' '.join(_format_long_time(timespan))
 
     else:
         # Unfortunately, the Unicode symbol for mu can cause problems.
