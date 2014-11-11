@@ -222,10 +222,17 @@ class EulerPyVerify(EulerPyTest):
 
     def test_verify_file_with_multiline_output(self):
         with open('001.py', 'a') as file:
-            file.write('print(1)\n')
-            file.write('print(2)\n')
+            file.write('print(1); print(2)')
 
         result = CliRun('-v', '1')
+        self.assertEqual(result.exit_code, 1)
+
+    def test_verify_error_file(self):
+        with open('001.py', 'a') as file:
+            file.write('import sys; sys.exit(1)')
+
+        result = CliRun('-v', '1')
+        self.assertTrue('Error calling "001.py"' in result.output)
         self.assertEqual(result.exit_code, 1)
 
 
@@ -234,10 +241,12 @@ class EulerPyVerifyAll(EulerPyTest):
         generateFile(1, correct=True)
         generateFile(2, filename='002-skipped.py', correct=True)
         generateFile(4)
-        generateFile(5, correct=True)
+
+        with open('005.py', 'a') as file:
+            file.write('import sys; sys.exit(1)')
 
         result = CliRun('--verify-all')
-        self.assertTrue('Problems 001-020: C C . I C' in result.output)
+        self.assertTrue('Problems 001-020: C C . I E' in result.output)
 
         # "002-skipped.py" should have been renamed to "002.py"
         self.assertTrue(os.path.isfile('002.py'))
