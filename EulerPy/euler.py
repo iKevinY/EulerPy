@@ -7,6 +7,7 @@ from collections import OrderedDict
 
 import click
 
+from EulerPy import __version__
 from EulerPy.problem import Problem
 from EulerPy.utils import clock, format_time, problem_glob, rename_file
 
@@ -234,6 +235,7 @@ def euler_options(function):
 @click.command(name='euler', options_metavar='[OPTION]')
 @click.argument('problem', default=0, type=click.IntRange(0, None))
 @euler_options
+@click.version_option(version=__version__, message="EulerPy %(version)s")
 def main(option, problem):
     """Python-based Project Euler command line tool."""
     # No problem given (or given option ignores the problem argument)
