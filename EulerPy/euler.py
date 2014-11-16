@@ -24,27 +24,27 @@ def cheat(p):
 # --generate / -g
 def generate(p, prompt_default=True):
     """Generates Python file for a problem."""
-    problemText = p.text
+    problem_text = p.text
 
     msg = "Generate file for problem %i?" % p.num
     click.confirm(msg, default=prompt_default, abort=True)
 
     # Allow skipped problem files to be recreated
-    problem_files = list(p.iglob)
-    if problem_files:
-        filename = problem_files[0]
+    if p.glob:
+        filename = p.glob[0]
         msg = '"{0}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
     else:
         filename = p.filename
 
-    problemHeader = 'Project Euler Problem %i\n' % p.num
-    problemHeader += '=' * len(problemHeader.strip()) + '\n\n'
+    header = 'Project Euler Problem %i' % p.num
+    divider = '=' * len(header)
 
     with open(filename, 'w') as file:
         file.write('"""\n')
-        file.write(problemHeader)
-        file.write(problemText)
+        file.write(header + '\n')
+        file.write(divider + '\n\n')
+        file.write(problem_text)
         file.write('"""\n\n\n')
 
     click.secho('Successfully created "{0}".'.format(filename), fg='green')
@@ -79,9 +79,9 @@ def verify(p, filename=None, exit=True):
 
     if not os.path.isfile(filename):
         # Attempt to verify the first problem file matched by glob
-        try:
-            filename = next(p.iglob)
-        except StopIteration:
+        if p.glob:
+            filename = p.glob[0]
+        else:
             click.secho('No file found for problem %i.' % p.num, fg='red')
             sys.exit(1)
 
@@ -267,7 +267,7 @@ def main(option, problem):
 
     # Problem given but no option; decide between generate and verify
     elif option is None:
-        option = verify if any(Problem(problem).iglob) else generate
+        option = verify if Problem(problem).glob else generate
 
     # Execute function based on option (pass Problem object as argument)
     option(Problem(problem))

@@ -29,9 +29,12 @@ class Problem(object):
         return base_name.format(self.num, suffix, w=width, ext=extension)
 
     @property
-    def iglob(self):
-        """Returns a glob iterator for files belonging to a given problem"""
-        return glob.iglob('{0:03d}*.py'.format(self.num))
+    def glob(self):
+        """Returns a sorted glob of files belonging to a given problem"""
+        file_glob = glob.glob('{0:03d}*.py'.format(self.num))
+
+        # Sort by filename (excluding the file extension)
+        return sorted(file_glob, key=lambda f: os.path.splitext(f)[0])
 
     @property
     def resources(self):

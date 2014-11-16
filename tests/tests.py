@@ -210,6 +210,15 @@ class EulerPyVerify(EulerPyTest):
         self.assertEqual(result.exit_code, 1)
         self.assertTrue('Checking "001-skipped.py"' in result.output)
 
+    def test_verify_sorted_glob(self):
+        generateFile(1, '001.py')
+        generateFile(1, '001-skipped.py')
+
+        result = CliRun('-v', '1')
+        self.assertEqual(result.exit_code, 1)
+        self.assertTrue('Checking "001.py"' in result.output)
+        self.assertFalse('Checking "001-skipped.py"' in result.output)
+
     def test_verify_correct(self):
         generateFile(1, correct=True)
 
