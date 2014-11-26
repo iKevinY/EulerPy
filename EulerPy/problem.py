@@ -46,8 +46,9 @@ class Problem(object):
 
         if problemNum in data:
             files = data[problemNum]
+
             # Ensure a list of files is returned
-            return files if type(files) == list else [files]
+            return files if isinstance(files, list) else [files]
         else:
             return None
 
