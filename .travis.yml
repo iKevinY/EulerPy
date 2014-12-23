@@ -4,8 +4,12 @@ python:
   - "3.2"
   - "3.3"
   - "3.4"
+sudo: false
 branches:
   only:
     - master
-install: pip install -r requirements.txt
+caching:
+  directories:
+    - $HOME/.pip-cache/
+install: pip install -r requirements.txt --download-cache $HOME/.pip-cache
 script: nosetests
