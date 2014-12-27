@@ -6574,3 +6574,223 @@ a random protein string of length 15?
 Give your answer using as many decimal places as necessary for an exact
 result.
 
+
+Problem 301
+===========
+
+Nim is a game played with heaps of stones, where two players take it in
+turn to remove any number of stones from any heap until no stones remain.
+
+We'll consider the three-heap normal-play version of Nim, which works as
+follows:
+- At the start of the game there are three heaps of stones.
+- On his turn the player removes any positive number of stones from any
+single heap.
+- The first player unable to move (because no stones remain) loses.
+
+If (n[1], n[2], n[3]) indicates a Nim position consisting of heaps of size
+n[1], n[2] and n[3] then there is a simple function X(n[1], n[2], n[3]) —
+that you may look up or attempt to deduce for yourself — that returns:
+
+ • zero if, with perfect strategy, the player about to move will
+   eventually lose; or
+ • non-zero if, with perfect strategy, the player about to move will
+   eventually win.
+
+For example X(1, 2, 3) = 0 because, no matter what the current player does,
+his opponent can respond with a move that leaves two heaps of equal size,
+at which point every move by the current player can be mirrored by his
+opponent until no stones remain; so the current player loses. To
+illustrate:
+
+- current player moves to (1, 2, 1)
+- opponent moves to (1, 0, 1)
+- current player moves to (0, 0, 1)
+- opponent moves to (0, 0, 0), and so wins.
+
+For how many positive integers n ≤ 2^30 does X(n, 2n, 3n) = 0?
+
+
+Problem 302
+===========
+
+A positive integer n is powerful if p^2 is a divisor of n for every prime
+factor p in n.
+
+A positive integer n is a perfect power if n can be expressed as a power
+of another positive integer.
+
+A positive integer n is an Achilles number if n is powerful but not a
+perfect power. For example, 864 and 1800 are Achilles numbers: 864 =
+2^5·3^3 and 1800 = 2^3·3^2·5^2.
+
+We shall call a positive integer S a Strong Achilles number if both S and
+φ(S) are Achilles numbers. (φ denotes Euler's totient function.)
+
+For example, 864 is a Strong Achilles number: φ(864) = 288 = 2^5·3^2.
+However, 1800 isn't a Strong Achilles number because: φ(1800) = 480 =
+2^5·3^1·5^1.
+
+There are 7 Strong Achilles numbers below 10^4 and 656 below 10^8.
+
+How many Strong Achilles numbers are there below 10^18?
+
+
+Problem 303
+===========
+
+For a positive integer n, define f(n) as the least positive multiple of n
+that, written in base 10, uses only digits ≤ 2.
+
+Thus f(2)=2, f(3)=12, f(7)=21, f(42)=210, f(89)=1121222.
+
+Also, ∑[f(n)/n] for 1 ≤ n ≤ 100 is 11363107.
+
+Find ∑[f(n)/n] for 1 ≤ n ≤ 10000.
+
+
+Problem 304
+===========
+
+For any positive integer n the function next_prime(n) returns the smallest
+prime p such that p>n.
+
+The sequence a(n) is defined by:
+a(1)=next_prime(10^14) and a(n)=next_prime(a(n-1)) for n>1.
+
+The fibonacci sequence f(n) is defined by:f(0)=0, f(1)=1 and
+f(n)=f(n-1)+f(n-2) for n>1.
+
+The sequence b(n) is defined as f(a(n)).
+
+Find ∑b(n) for 1 ≤ n ≤ 100 000. Give your answer mod 1234567891011.
+
+
+Problem 305
+===========
+
+Let's call S the (infinite) string that is made by concatenating the
+consecutive positive integers (starting from 1) written down in base 10.
+Thus, S = 1234567891011121314151617181920212223242...
+
+It's easy to see that any number will show up an infinite number of times
+in S.
+
+Let's call f(n) the starting position of the n^th occurrence of n in S.
+For example, f(1)=1, f(5)=81, f(12)=271 and f(7780)=111111365.
+
+Find ∑f(3^k) for 1 ≤ k ≤ 13.
+
+
+Problem 306
+===========
+
+The following game is a classic example of Combinatorial Game Theory:
+
+Two players start with a strip of n white squares and they take alternate
+turns. On each turn, a player picks two contiguous white squares and
+paints them black. The first player who cannot make a move loses.
+
+ • If n = 1, there are no valid moves, so the first player loses
+   automatically.
+ • If n = 2, there is only one valid move, after which the second player
+   loses.
+ • If n = 3, there are two valid moves, but both leave a situation where
+   the second player loses.
+ • If n = 4, there are three valid moves for the first player; she can
+   win the game by painting the two middle squares.
+ • If n = 5, there are four valid moves for the first player (shown below
+   in red); but no matter what she does, the second player (blue) wins.
+
+[Image: 306_pstrip.gif]
+
+So, for 1 ≤ n ≤ 5, there are 3 values of n for which the first player can
+force a win. Similarly, for 1 ≤ n ≤ 50, there are 40 values of n for which
+the first player can force a win.
+
+For 1 ≤ n ≤ 1 000 000, how many values of n are there for which the first
+player can force a win?
+
+
+Problem 307
+===========
+
+k defects are randomly distributed amongst n integrated-circuit chips
+produced by a factory (any number of defects may be found on a chip and
+each defect is independent of the other defects).
+
+Let p(k, n) represent the probability that there is a chip with at least
+3 defects. For instance p(3, 7) ≈ 0.0204081633.
+
+Find p(20 000, 1 000 000) and give your answer rounded to 10 decimal
+places in the form 0.abcdefghij
+
+
+Problem 308
+===========
+
+A program written in the programming language Fractran consists of a list
+of fractions.
+
+The internal state of the Fractran Virtual Machine is a positive integer,
+which is initially set to a seed value. Each iteration of a Fractran
+program multiplies the state integer by the first fraction in the list
+which will leave it an integer.
+
+For example, one of the Fractran programs that John Horton Conway wrote
+for prime-generation consists of the following 14 fractions:
+
+17 , 78 , 19 , 23 , 29 , 77 , 95 , 77 , 1  , 11 , 13 , 15 , 1 , 55 .
+91   85   51   38   33   29   23   19   17   13   11   2    7   1
+
+Starting with the seed integer 2, successive iterations of the program
+produce the sequence:
+15, 825, 725, 1925, 2275, 425, ..., 68, 4, 30, ..., 136, 8, 60, ..., 544,
+32, 240, ...
+
+The powers of 2 that appear in this sequence are 2^2, 2^3, 2^5, ...
+It can be shown that all the powers of 2 in this sequence have prime
+exponents and that all the primes appear as exponents of powers of 2, in
+proper order!
+
+If someone uses the above Fractran program to solve Project Euler Problem
+7 (find the 10001^st prime), how many iterations would be needed until the
+program produces 2^10001st prime?
+
+
+Problem 309
+===========
+
+In the classic "Crossing Ladders" problem, we are given the lengths x and
+y of two ladders resting on the opposite walls of a narrow, level street.
+We are also given the height h above the street where the two ladders
+cross and we are asked to find the width of the street (w).
+
+[Image: 309ladders.gif]
+
+Here, we are only concerned with instances where all four variables are
+positive integers.
+For example, if x = 70, y = 119 and h = 30, we can calculate that w = 56.
+
+In fact, for integer values x, y, h and 0 < x < y < 200, there are only
+five triplets (x, y, h) producing integer solutions for w:
+(70, 119, 30), (74, 182, 21), (87, 105, 35), (100, 116, 35) and (119, 175,
+40).
+
+For integer values x, y, h and 0 < x < y < 1 000 000, how many triplets
+(x, y, h) produce integer solutions for w?
+
+
+Problem 310
+===========
+
+Alice and Bob play the game Nim Square. Nim Square is just like ordinary
+three-heap normal play Nim, but the players may only remove a square
+number of stones from a heap. The number of stones in the three heaps
+is represented by the ordered triple (a, b, c).
+
+If 0 ≤ a ≤ b ≤ c ≤ 29 then the number of losing positions for the next
+player is 1160.
+
+Find the number of losing positions for the next player if
+0 ≤ a ≤ b ≤ c ≤ 100 000.
