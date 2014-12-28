@@ -8,7 +8,7 @@ sudo: false
 branches:
   only:
     - master
-caching:
+cache:
   directories:
     - $HOME/.pip-cache/
 install: pip install -r requirements.txt --download-cache $HOME/.pip-cache
