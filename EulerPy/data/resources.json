@@ -57,5 +57,16 @@
   "299": "299_ThreeSimTri.gif",
   "300": "300_protein.gif",
   "306": "306_pstrip.gif",
-  "309": "309_ladders.gif"
+  "309": "309_ladders.gif",
+  "311": "311_biclinic.gif",
+  "312": [
+    "312_sierpinskyAt.gif",
+    "312_sierpinsky8t.gif"
+  ],
+  "313": [
+    "313_sliding_game_1.gif",
+    "313_sliding_game_2.gif"
+  ],
+  "314": "314_landgrab.gif",
+  "315": "315_clocks.gif"
 }

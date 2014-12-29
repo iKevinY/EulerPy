@@ -6794,3 +6794,275 @@ player is 1160.
 
 Find the number of losing positions for the next player if
 0 ≤ a ≤ b ≤ c ≤ 100 000.
+
+
+Problem 311
+===========
+
+ABCD is a convex, integer sided quadrilateral with 1 ≤ AB < BC < CD < AD.
+BD has integer length. O is the midpoint of BD. AO has integer length.
+We'll call ABCD a biclinic integral quadrilateral if AO = CO ≤ BO = DO.
+
+For example, the following quadrilateral is a biclinic integral
+quadrilateral:
+AB = 19, BC = 29, CD = 37, AD = 43, BD = 48 and AO = CO = 23.
+
+[Image: 311_biclinic.gif]
+
+Let B(N) be the number of distinct biclinic integral quadrilaterals ABCD
+that satisfy AB^2 + BC^2 + CD^2 + AD^2 ≤ N.
+We can verify that B(10 000) = 49 and B(1 000 000) = 38239.
+
+Find B(10 000 000 000).
+
+
+Problem 312
+===========
+
+- A Sierpiński graph of order-1 (S[1]) is an equilateral triangle.
+- S[n+1] is obtained from S[n] by positioning three copies of S[n] so that
+every pair of copies has one common corner.
+
+[Image: 312_sierpinskyAt.gif]
+
+Let C(n) be the number of cycles that pass exactly once through all the
+vertices of S[n]. For example, C(3) = 8 because eight such cycles can be
+drawn on S[3], as shown below:
+
+[Image: 312_sierpinsky8t.gif]
+
+It can also be verified that:
+C(1) = C(2) = 1
+C(5) = 71328803586048
+C(10 000) mod 10^8 = 37652224
+C(10 000) mod 13^8 = 617720485
+
+Find C(C(C(10 000))) mod 13^8.
+
+
+Problem 313
+===========
+
+In a sliding game a counter may slide horizontally or vertically into an
+empty space. The objective of the game is to move the red counter from the
+top left corner of a grid to the bottom right corner; the space always
+starts in the bottom right corner. For example, the following sequence of
+pictures show how the game can be completed in five moves on a 2 by 2
+grid.
+
+[Image: 313_sliding_game_1.gif]
+
+Let S(m, n) represent the minimum number of moves to complete the game on
+an m by n grid. For example, it can be verified that S(5, 4) = 25.
+
+[Image: 313_sliding_game_2.gif]
+
+There are exactly 5482 grids for which S(m, n) = p^2, where p < 100 is
+prime.
+
+How many grids does S(m, n) = p^2, where p < 10^6 is prime?
+
+
+Problem 314
+===========
+
+The moon has been opened up, and land can be obtained for free, but there
+is a catch. You have to build a wall around the land that you stake out,
+and building a wall on the moon is expensive. Every country has been
+allotted a 500 m by 500 m square area, but they will possess only that
+area which they wall in. 251001 posts have been placed in a rectangular
+grid with 1 meter spacing. The wall must be a closed series of straight
+lines, each line running from post to post.
+
+The bigger countries of course have built a 2000 m wall enclosing the
+entire 250 000 m^2 area. The Duchy of Grand Fenwick
+[http://en.wikipedia.org/wiki/Grand_Fenwick], has a tighter budget,
+and has asked you (their Royal Programmer) to compute what shape would
+get best maximum enclosed-area/wall-length ratio.
+
+You have done some preliminary calculations on a sheet of paper. For a
+2000 meter wall enclosing the 250 000 m^2 area the enclosed-area /
+wall-length ratio is 125.
+
+Although not allowed, but to get an idea if this is anything better: if
+you place a circle inside the square area touching the four sides the area
+will be equal to π*250^2 m^2 and the perimeter will be π*500 m, so the
+enclosed-area/wall-length ratio will also be 125.
+
+However, if you cut off from the square four triangles with sides 75 m, 75
+m and 75√2 m the total area becomes 238750 m^2 and the perimeter becomes
+1400+300√2 m. So this gives an enclosed-area/wall-length ratio of 130.87,
+which is significantly better.
+
+[Image: 314_landgrab.gif]
+
+Find the maximum enclosed-area/wall-length ratio. Give your answer rounded
+to 8 places behind the decimal point in the form abc.defghijk.
+
+
+Problem 315
+===========
+
+[Image: 315_clocks.gif]
+
+Sam and Max are asked to transform two digital clocks into two "digital
+root" clocks. A digital root clock is a digital clock that calculates
+digital roots step by step.
+
+When a clock is fed a number, it will show it and then it will start the
+calculation, showing all the intermediate values until it gets to the
+result. For example, if the clock is fed the number 137, it will show:
+"137" → "11" → "2" and then it will go black, waiting for the next number.
+
+Every digital number consists of some light segments: three horizontal
+(top, middle, bottom) and four vertical (top-left, top-right, bottom-left,
+bottom-right). Number "1" is made of vertical top-right and bottom-right,
+number "4" is made by middle horizontal and vertical top-left, top-right
+and bottom-right. Number "8" lights them all.
+
+The clocks consume energy only when segments are turned on/off. To turn on
+a "2" will cost 5 transitions, while a "7" will cost only 4 transitions.
+
+Sam and Max built two different clocks.
+
+Sam's clock is fed e.g. number 137: the clock shows "137", then the panel
+is turned off, then the next number ("11") is turned on, then the panel is
+turned off again and finally the last number ("2") is turned on and, after
+some time, off.
+For the example, with number 137, Sam's clock requires:
+
+"137" : (2 + 5 + 4) × 2 = 22 transitions ("137" on/off).
+"11"  : (2 + 2) × 2 = 8 transitions ("11" on/off).
+"2"   : (5) × 2 = 10 transitions ("2" on/off).
+
+For a grand total of 40 transitions.
+
+Max's clock works differently. Instead of turning off the whole panel, it
+is smart enough to turn off only those segments that won't be needed for
+the next number.
+For number 137, Max's clock requires:
+
+       2 + 5 + 4 = 11 transitions ("137" on)
+"137" : 7 transitions (to turn off the segments that are not needed for
+       number "11").
+       0 transitions (number "11" is already turned on correctly)
+"11"  : 3 transitions (to turn off the first "1" and the bottom part of
+       the second "1";
+       the top part is common with number "2").
+       4 tansitions (to turn on the remaining segments in order to get a
+"2"   : "2")
+       5 transitions (to turn off number "2").
+
+For a grand total of 30 transitions.
+
+Of course, Max's clock consumes less power than Sam's one. The two clocks
+are fed all the prime numbers between A = 10^7 and B = 2×10^7.
+
+Find the difference between the total number of transitions needed by
+Sam's clock and that needed by Max's one.
+
+
+Problem 316
+===========
+
+Let p = p[1] p[2] p[3] ... be an infinite sequence of random digits,
+selected from {0,1,2,3,4,5,6,7,8,9} with equal probability.
+It can be seen that p corresponds to the real number 0.p[1] p[2] p[3] ....
+It can also be seen that choosing a random real number from the interval
+[0,1) is equivalent to choosing an infinite sequence of random digits
+selected from {0,1,2,3,4,5,6,7,8,9} with equal probability.
+
+For any positive integer n with d decimal digits, let k be the smallest
+index such that
+p[k, ]p[k+1], ...p[k+d-1] are the decimal digits of n, in the same order.
+Also, let g(n) be the expected value of k; it can be proven that g(n) is
+always finite and, interestingly, always an integer number.
+
+For example, if n = 535, then
+for p = 31415926535897...., we get k = 9
+for p = 355287143650049560000490848764084685354..., we get k = 36
+etc and we find that g(535) = 1008.
+
+Given that ∑g(⌊(10^6 / n)⌋) for 2 ≤ n ≤ 999 is 27280188,
+find ∑g(⌊(10^16 / n)⌋) for 2 ≤ n ≤ 999999.
+
+Note: ⌊x⌋ represents the floor function.
+
+
+Problem 317
+===========
+
+A firecracker explodes at a height of 100 m above level ground. It breaks
+into a large number of very small fragments, which move in every
+direction; all of them have the same initial velocity of 20 m/s.
+
+We assume that the fragments move without air resistance, in a uniform
+gravitational field with g=9.81 m/s^2.
+
+Find the volume (in m^3) of the region through which the fragments move
+before reaching the ground. Give your answer rounded to four decimal
+places.
+
+
+Problem 318
+===========
+
+Consider the real number √2+√3.
+When we calculate the even powers of √2+√3we get:
+(√2+√3)^2 = 9.898979485566356...
+(√2+√3)^4 = 97.98979485566356...
+(√2+√3)^6 = 969.998969071069263...
+(√2+√3)^8 = 9601.99989585502907...
+(√2+√3)^10 = 95049.999989479221...
+(√2+√3)^12 = 940897.9999989371855...
+(√2+√3)^14 = 9313929.99999989263...
+(√2+√3)^16 = 92198401.99999998915...
+
+It looks like that the number of consecutive nines at the beginning of the
+fractional part of these powers is non-decreasing. In fact it can be
+proven that the fractional part of (√2+√3)^2n approaches 1 for large n.
+
+Consider all real numbers of the form √p+√q with p and q positive integers
+and p<q, such that the fractional part of (√p+√q)^2n approaches 1 for
+large n.
+
+Let C(p, q, n) be the number of consecutive nines at the beginning of the
+fractional part of (√p+√q)^2n.
+
+Let N(p,q) be the minimal value of n such that C(p,q,n) ≥ 2011.
+
+Find ∑N(p,q) for p+q ≤ 2011.
+
+
+Problem 319
+===========
+
+Let x[1], x[2], ..., x[n] be a sequence of length n such that:
+
+ • x[1] = 2
+ • for all 1 < i ≤ n : x[i-1] < x[i]
+ • for all i and j with 1 ≤ i, j ≤ n : (x[i]) ^ j < (x[j] + 1)^i
+
+There are only five such sequences of length 2, namely: {2,4}, {2,5},
+{2,6}, {2,7} and {2,8}.
+
+There are 293 such sequences of length 5; three examples are given below:
+{2,5,11,25,55}, {2,6,14,36,88}, {2,8,22,64,181}.
+
+Let t(n) denote the number of such sequences of length n.
+You are given that t(10) = 86195 and t(20) = 5227991891.
+
+Find t(10^10) and give your answer modulo 10^9.
+
+
+Problem 320
+===========
+
+Let N(i) be the smallest integer n such that n! is divisible by
+(i!)^1234567890
+
+Let S(u)=∑N(i) for 10 ≤ i ≤ u.
+
+S(1000)=614538266565663.
+
+Find S(1 000 000) mod 10^18.
