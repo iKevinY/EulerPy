@@ -60,19 +60,29 @@ class EulerPyUtils(unittest.TestCase):
         self.assertEqual(human_time(100000), '1d 3h 46m 40s')
 
     def test_problem_resources(self):
-        """Ensure each resource in `resources.json` actually exists"""
-        def _resource_exists(filename):
-            path = os.path.join(EULER_DATA, 'resources', filename)
-            return os.path.isfile(path)
+        """Ensure resources in `/data` match `resources.json`"""
+        resources_path = os.path.join(EULER_DATA, 'resources')
+
+        def _resource_check(filename, seen_files):
+            path = os.path.join(resources_path, filename)
+
+            # Check that resource exists in `/data`
+            self.assertTrue(os.path.isfile(path),
+                '%s does not exist.' % filename)
+
+            # Add resource to set `seen_files`
+            seen_files.add(filename)
 
         with open(os.path.join(EULER_DATA, 'resources.json')) as f:
             resource_dict = json.load(f)
 
+        seen_files = set()
+
         for item in [v for k, v in resource_dict.items()]:
             if isinstance(item, list):
                 for subitem in item:
-                    self.assertTrue(_resource_exists(subitem),
-                        msg='%s does not exist.' % subitem)
+                    _resource_check(subitem, seen_files)
             else:
-                self.assertTrue(_resource_exists(item),
-                    msg='%s does not exist.' % item)
+                _resource_check(item, seen_files)
+
+        self.assertEqual(seen_files, set(os.listdir(resources_path)))
