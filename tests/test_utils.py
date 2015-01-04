@@ -48,7 +48,7 @@ class EulerPyUtils(unittest.TestCase):
             """
         )
 
-        self.assertEqual(problem_one[1:], Problem(1).text)
+        self.assertEqual(problem_one.strip(), Problem(1).text)
 
     def test_filename_format(self):
         """Check that filenames are being formatted correctly"""

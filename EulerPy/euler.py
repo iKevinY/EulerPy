@@ -44,7 +44,7 @@ def generate(p, prompt_default=True):
         file.write('"""\n')
         file.write(header + '\n')
         file.write(divider + '\n\n')
-        file.write(problem_text)
+        file.write(problem_text + '\n')
         file.write('"""\n\n\n')
 
     click.secho('Successfully created "{0}".'.format(filename), fg='green')
@@ -58,7 +58,7 @@ def generate(p, prompt_default=True):
 def preview(p):
     """Prints the text of a problem."""
     # Define problem_text before echoing in case problem does not exist
-    problem_text = p.text[:-1]  # strip newline from text
+    problem_text = p.text
     click.secho("Project Euler Problem %i" % p.num, bold=True)
     click.echo(problem_text)
 

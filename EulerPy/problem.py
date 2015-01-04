@@ -9,43 +9,41 @@ import shutil
 
 import click
 
-
-base_name = '{0:0{w}d}{1}.{ext}'
-dataDir = os.path.join(os.path.dirname(__file__), 'data')
-
+BASE_NAME = '{0:03d}{1}.{ext}'
+EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
     def __init__(self, problem_number):
         self.num = problem_number
 
     @property
-    def filename(self, width=3, extension='py'):
+    def filename(self):
         """Returns filename padded with leading zeros"""
-        return base_name.format(self.num, '', w=width, ext=extension)
+        return BASE_NAME.format(self.num, '', ext='py')
 
-    def suf_name(self, suffix, width=3, extension='py'):
+    def suf_name(self, suffix, extension='py'):
         """Similar to filename property but takes a suffix argument"""
         suffix = '-' + suffix
-        return base_name.format(self.num, suffix, w=width, ext=extension)
+        return BASE_NAME.format(self.num, suffix, ext=extension)
 
     @property
     def glob(self):
         """Returns a sorted glob of files belonging to a given problem"""
-        file_glob = glob.glob('{0:03d}*.py'.format(self.num))
+        file_glob = glob.glob('{0:03d}*.*'.format(self.num))
 
-        # Sort by filename (excluding the file extension)
-        return sorted(file_glob, key=lambda f: os.path.splitext(f)[0])
+        # Sort globbed files by tuple (filename, extension)
+        return sorted(file_glob, key=lambda f: os.path.splitext(f))
 
     @property
     def resources(self):
         """Returns a list of resources related to the problem (or None)"""
-        with open(os.path.join(dataDir, 'resources.json')) as data_file:
+        with open(os.path.join(EULER_DATA, 'resources.json')) as data_file:
             data = json.load(data_file)
 
-        problemNum = str(self.num)
+        problem_num = str(self.num)
 
-        if problemNum in data:
-            files = data[problemNum]
+        if problem_num in data:
+            files = data[problem_num]
 
             # Ensure a list of files is returned
             return files if isinstance(files, list) else [files]
@@ -57,19 +55,19 @@ class Problem(object):
         if not os.path.isdir('resources'):
             os.mkdir('resources')
 
-        resourcesDir = os.path.join(os.getcwd(), 'resources', '')
-        copiedResources = []
+        resource_dir = os.path.join(os.getcwd(), 'resources', '')
+        copied_resources = []
 
         for resource in self.resources:
-            src = os.path.join(dataDir, 'resources', resource)
+            src = os.path.join(EULER_DATA, 'resources', resource)
             if os.path.isfile(src):
-                shutil.copy(src, resourcesDir)
-                copiedResources.append(resource)
+                shutil.copy(src, resource_dir)
+                copied_resources.append(resource)
 
-        if copiedResources:
+        if copied_resources:
             msg = "Copied {0} to {1}.".format(
-                ', '.join(copiedResources),
-                os.path.relpath(resourcesDir, os.pardir)
+                ', '.join(copied_resources),
+                os.path.relpath(resource_dir, os.pardir)
             )
 
             click.secho(msg, fg='green')
@@ -79,11 +77,11 @@ class Problem(object):
         """Returns the answer to a given problem"""
         num = self.num
 
-        solutionFile = os.path.join(dataDir, 'solutions.txt')
-        solutionLine = linecache.getline(solutionFile, num)
+        solution_file = os.path.join(EULER_DATA, 'solutions.txt')
+        solution_line = linecache.getline(solution_file, num)
 
         try:
-            answer = solutionLine.split('. ')[1].strip()
+            answer = solution_line.split('. ')[1].strip()
         except IndexError:
             answer = None
 
@@ -100,9 +98,9 @@ class Problem(object):
     def text(self):
         """Parses problems.txt and returns problem text"""
         def _problem_iter(problem_num):
-            problemFile = os.path.join(dataDir, 'problems.txt')
+            problem_file = os.path.join(EULER_DATA, 'problems.txt')
 
-            with open(problemFile) as file:
+            with open(problem_file) as file:
                 problemText = False
                 lastLine = ''
 
@@ -117,12 +115,13 @@ class Problem(object):
                             yield line[:-1]
                             lastLine = line
 
-        problemLines = [line for line in _problem_iter(self.num)]
+        problem_lines = [line for line in _problem_iter(self.num)]
 
-        if problemLines:
+        if problem_lines:
             # First three lines are the problem number, the divider line,
-            # and a newline, so don't include them in the returned string
-            return '\n'.join(problemLines[3:])
+            # and a newline, so don't include them in the returned string.
+            # Also, strip the final newline.
+            return '\n'.join(problem_lines[3:-1])
         else:
             msg = 'Problem %i not found in problems.txt.' % self.num
             click.secho(msg, fg='red')
