@@ -39,13 +39,11 @@ def generate(p, prompt_default=True):
 
     header = 'Project Euler Problem %i' % p.num
     divider = '=' * len(header)
+    text = '\n'.join([header, divider, '', problem_text])
+    content = '\n'.join(['"""', text, '"""'])
 
     with open(filename, 'w') as file:
-        file.write('"""\n')
-        file.write(header + '\n')
-        file.write(divider + '\n\n')
-        file.write(problem_text + '\n')
-        file.write('"""\n\n\n')
+        file.write(content + '\n\n\n')
 
     click.secho('Successfully created "{0}".'.format(filename), fg='green')
 
