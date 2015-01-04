@@ -102,7 +102,7 @@ def format_time(start, end):
         cpu_sys = end[1] - start[1]
 
     except TypeError:
-        # clock()[1] == None so subtraction results in a TypeError
+        # `clock()[1] == None` so subtraction results in a TypeError
         return 'Time elapsed: {0}'.format(human_time(cpu_usr))
 
     else:

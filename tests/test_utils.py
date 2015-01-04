@@ -78,7 +78,7 @@ class EulerPyUtils(unittest.TestCase):
 
         seen_files = set()
 
-        for item in [v for k, v in resource_dict.items()]:
+        for item in (v for k, v in resource_dict.items()):
             if isinstance(item, list):
                 for subitem in item:
                     _resource_check(subitem, seen_files)

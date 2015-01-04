@@ -65,10 +65,9 @@ class Problem(object):
                 copied_resources.append(resource)
 
         if copied_resources:
-            msg = "Copied {0} to {1}.".format(
-                ', '.join(copied_resources),
-                os.path.relpath(resource_dir, os.pardir)
-            )
+            copied = ', '.join(copied_resources)
+            path = os.path.relpath(resource_dir, os.pardir)
+            msg = "Copied {0} to {1}.".format(copied, path)
 
             click.secho(msg, fg='green')
 
@@ -101,19 +100,19 @@ class Problem(object):
             problem_file = os.path.join(EULER_DATA, 'problems.txt')
 
             with open(problem_file) as file:
-                problemText = False
-                lastLine = ''
+                is_problem = False
+                last_line = ''
 
                 for line in file:
                     if line.strip() == 'Problem %i' % problem_num:
-                        problemText = True
+                        is_problem = True
 
-                    if problemText:
-                        if line == lastLine == '\n':
+                    if is_problem:
+                        if line == last_line == '\n':
                             break
                         else:
                             yield line[:-1]
-                            lastLine = line
+                            last_line = line
 
         problem_lines = [line for line in _problem_iter(self.num)]
 
