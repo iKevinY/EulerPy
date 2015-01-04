@@ -7066,3 +7066,285 @@ Let S(u)=∑N(i) for 10 ≤ i ≤ u.
 S(1000)=614538266565663.
 
 Find S(1 000 000) mod 10^18.
+
+
+Problem 321
+===========
+
+A horizontal row comprising of 2n + 1 squares has n red counters placed at
+one end and n blue counters at the other end, being separated by a single
+empty square in the centre. For example, when n = 3.
+
+[Image: 321_swapping_counters_1.gif]
+
+A counter can move from one square to the next (slide) or can jump over
+another counter (hop) as long as the square next to that counter is
+unoccupied.
+
+[Image: 321_swapping_counters_2.gif]
+
+Let M(n) represent the minimum number of moves/actions to completely
+reverse the positions of the coloured counters; that is, move all the red
+counters to the right and all the blue counters to the left.
+
+It can be verified M(3) = 15, which also happens to be a triangle number.
+
+If we create a sequence based on the values of n for which M(n) is a
+triangle number then the first five terms would be:
+1, 3, 10, 22, and 63, and their sum would be 99.
+
+Find the sum of the first forty terms of this sequence.
+
+
+Problem 322
+===========
+
+Let T(m, n) be the number of the binomial coefficients ^iC[n] that are
+divisible by 10 for n ≤ i < m(i, m and n are positive integers).
+You are given that T(10^9, 10^7-10) = 989697000.
+
+Find T(10^18, 10^12-10).
+
+
+Problem 323
+===========
+
+Let y[0], y[1], y[2],... be a sequence of random unsigned 32 bit integers
+(i.e. 0 ≤ y[i] < 2^32, every value equally likely).
+
+For the sequence x[i] the following recursion is given:
+
+ • x[0] = 0 and
+ • x[i] = x[i-1] | y[i-1], for i > 0. ( | is the bitwise-OR operator)
+
+It can be seen that eventually there will be an index N such that x[i] =
+2^32 -1 (a bit-pattern of all ones) for all i ≥ N.
+
+Find the expected value of N.
+Give your answer rounded to 10 digits after the decimal point.
+
+
+Problem 324
+===========
+
+Let f(n) represent the number of ways one can fill a 3×3×n tower with
+blocks of 2×1×1. You're allowed to rotate the blocks in any way you like;
+however, rotations, reflections etc of the tower itself are counted as
+distinct. For example (with q = 100000007):
+
+f(2) = 229,
+f(4) = 117805,
+f(10) mod q = 96149360,
+f(10^3) mod q = 24806056,
+f(10^6) mod q = 30808124.
+
+Find f(10^10000) mod 100000007.
+
+
+Problem 325
+===========
+
+A game is played with two piles of stones and two players. At her turn, a
+player removes a number of stones from the larger pile. The number of
+stones she removes must be a positive multiple of the number of stones in
+the smaller pile.
+
+E.g., let the ordered pair(6,14) describe a configuration with 6 stones in
+the smaller pile and 14 stones in the larger pile, then the first player
+can remove 6 or 12 stones from the larger pile.
+
+The player taking all the stones from a pile wins the game.
+
+A winning configuration is one where the first player can force a win. For
+example, (1,5), (2,6) and (3,12) are winning configurations because the
+first player can immediately remove all stones in the second pile.
+
+A losing configuration is one where the second player can force a win, no
+matter what the first player does. For example, (2,3) and (3,4) are losing
+configurations: any legal move leaves a winning configuration for the
+second player.
+
+Define S(N) as the sum of (x[i]+y[i]) for all losing configurations
+(x[i],y[i]), 0 < x[i] < y[i] ≤ N. We can verify that S(10) = 211 and
+S(10^4) = 230312207313.
+
+Find S(10^16) mod 7^10.
+
+
+Problem 326
+===========
+
+Let a[n] be a sequence recursively defined by:
+
+[Image: 326_formula1.gif]
+
+So the first 10 elements of a[n] are: 1,1,0,3,0,3,5,4,1,9.
+
+Let f(N,M) represent the number of pairs (p,q) such that:
+
+[Image: 326_formula2.gif]
+
+It can be seen that f(10,10)=4 with the pairs (3,3), (5,5), (7,9) and
+(9,10). You are also given that f(10^4,10^3)=97158.
+
+Find f(10^12,10^6).
+
+
+Problem 327
+===========
+
+A series of three rooms are connected to each other by automatic doors.
+
+[Image: 327_rooms_of_doom.gif]
+
+Each door is operated by a security card. Once you enter a room the door
+automatically closes and that security card cannot be used again. A
+machine at the start will dispense an unlimited number of cards, but each
+room (including the starting room) contains scanners and if they detect
+that you are holding more than three security cards or if they detect an
+unattended security card on the floor, then all the doors will become
+permanently locked. However, each room contains a box where you may safely
+store any number of security cards for use at a later stage.
+
+If you simply tried to travel through the rooms one at a time then as you
+entered room 3 you would have used all three cards and would be trapped in
+that room forever!
+
+However, if you make use of the storage boxes, then escape is possible.
+For example, you could enter room 1 using your first card, place one card
+in the storage box, and use your third card to exit the room back to the
+start. Then after collecting three more cards from the dispensing machine
+you could use one to enter room 1 and collect the card you placed in the
+box a moment ago. You now have three cards again and will be able to
+travel through the remaining three doors. This method allows you to travel
+through all three rooms using six security cards in total.
+
+It is possible to travel through six rooms using a total of 123 security
+cards while carrying a maximum of 3 cards.
+
+Let C be the maximum number of cards which can be carried at any time.
+
+Let R be the number of rooms to travel through.
+
+Let M(C,R) be the minimum number of cards required from the dispensing
+machine to travel through R rooms carrying up to a maximum of C cards at
+any time.
+
+For example, M(3,6)=123 and M(4,6)=23.
+And, ΣM(C,6)=146 for 3 ≤ C ≤ 4.
+
+You are given that ΣM(C,10)=10382 for 3 ≤ C ≤ 10.
+
+Find ΣM(C,30) for 3 ≤ C ≤ 40.
+
+
+Problem 328
+===========
+
+We are trying to find a hidden number selected from the set of integers
+{1, 2, ..., n} by asking questions. Each number (question) we ask, has a
+cost equal to the number asked and we get one of three possible answers:
+
+ • "Your guess is lower than the hidden number", or
+ • "Yes, that's it!", or
+ • "Your guess is higher than the hidden number".
+
+Given the value of n, an optimal strategy minimizes the total cost (i.e.
+the sum of all the questions asked) for the worst possible case. E.g.
+
+If n=3, the best we can do is obviously to ask the number "2". The answer
+will immediately lead us to find the hidden number (at a total cost = 2).
+
+If n=8, we might decide to use a "binary search" type of strategy: Our
+first question would be "4" and if the hidden number is higher than 4 we
+will need one or two additional questions.
+Let our second question be "6". If the hidden number is still higher than
+6, we will need a third question in order to discriminate between 7 and 8.
+Thus, our third question will be "7" and the total cost for this
+worst-case scenario will be 4+6+7=17.
+
+We can improve considerably the worst-case cost for n=8, by asking "5" as
+our first question.
+If we are told that the hidden number is higher than 5, our second
+question will be "7", then we'll know for certain what the hidden number
+is (for a total cost of 5+7=12).
+If we are told that the hidden number is lower than 5, our second question
+will be "3" and if the hidden number is lower than 3 our third question
+will be "1", giving a total cost of 5+3+1=9.
+Since 12>9, the worst-case cost for this strategy is 12. That's better
+than what we achieved previously with the "binary search" strategy; it is
+also better than or equal to any other strategy.
+So, in fact, we have just described an optimal strategy for n=8.
+
+Let C(n) be the worst-case cost achieved by an optimal strategy for n, as
+described above. Thus C(1) = 0, C(2) = 1, C(3) = 2 and C(8) = 12.
+
+Similarly, C(100) = 400 and ΣC(n) for 1 ≤ n ≤ 100 is equal to 17575.
+
+Find ΣC(n) for 1 ≤ n ≤ 200000.
+
+
+Problem 329
+===========
+
+Susan has a prime frog.
+Her frog is jumping around over 500 squares numbered 1 to 500.He can only
+jump one square to the left or to the right, with equal probability, and
+he cannot jump outside the range [1;500].
+(if it lands at either end, it automatically jumps to the only available
+square on the next move.)
+
+When he is on a square with a prime number on it, he croaks 'P' (PRIME)
+with probability 2/3 or 'N' (NOT PRIME) with probability 1/3 just before
+jumping to the next square.
+When he is on a square with a number on it that is not a prime he croaks
+'P' with probability 1/3 or 'N' with probability 2/3 just before jumping
+to the next square.
+
+Given that the frog's starting position is random with the same
+probability for every square, and given that she listens to his first 15
+croaks, what is the probability that she hears the sequence
+PPPPNNPPPNPPNPN?
+
+Give your answer as a fraction p/q in reduced form.
+
+
+Problem 330
+===========
+
+An infinite sequence of real numbers a(n) is defined for all integers n as
+follows:
+
+[Image: 330_formula.gif]
+
+For example,
+
+        1     1     1
+a(0) = --- + --- + --- + ... = e - 1
+        1!    2!    3!
+
+       e − 1    1     1
+a(1) = ----- + --- + --- + ... = 2e - 3
+         1!     2!    3!
+
+       2e − 3   e − 1    1          7
+a(2) = ------ + ----- + --- + ... = - e - 6
+         1!       2!     3!         2
+
+with e = 2.7182818... being Euler's constant.
+
+It can be shown that a(n) is of the form:
+
+A(n) e + B(n)
+-------------
+      n!
+
+for integers A(n) and B(n).
+
+For example:
+
+        328161643e − 652694486
+a(10) = ----------------------
+                  10!
+
+Find A(10^9) + B(10^9) and give your answer mod 77 777 777.
