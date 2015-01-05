@@ -84,11 +84,11 @@ class EulerPyCheat(EulerPyTest):
     def test_cheat_positive(self):
         result = EulerRun('-c', input='Y\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue('The answer to problem 1' in result.output)
+        self.assertIn('The answer to problem 1', result.output)
 
     def test_chest_specific(self):
         result = EulerRun('-c', '2', input='Y\n')
-        self.assertTrue('The answer to problem 2' in result.output)
+        self.assertIn('The answer to problem 2', result.output)
 
     def test_cheat_not_in_solutions(self):
         result = EulerRun('-c', '1000', input='Y\n')
@@ -118,7 +118,7 @@ class EulerPyGenerate(EulerPyTest):
         self.assertEqual(result.exit_code, 0)
 
         with open('001.py') as file:
-            self.assertFalse(file.readlines() == [])
+            self.assertNotEqual(file.read(), '')
 
     def test_generate_overwrite_neutral(self):
         generateFile(1)
@@ -127,7 +127,7 @@ class EulerPyGenerate(EulerPyTest):
         self.assertEqual(result.exit_code, 1)
 
         with open('001.py') as file:
-            self.assertTrue(file.readlines() == [])
+            self.assertEqual(file.read(), '')
 
     def test_generate_overwrite_skipped(self):
         generateFile(1, '001-skipped.py')
@@ -150,19 +150,19 @@ class EulerPyPreview(EulerPyTest):
     def test_preview(self):
         result = EulerRun('-p')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue('Project Euler Problem 1' in result.output)
+        self.assertIn('Project Euler Problem 1', result.output)
 
     def test_preview_specific(self):
         result = EulerRun('-p', '5')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue('Project Euler Problem 5' in result.output)
+        self.assertIn('Project Euler Problem 5', result.output)
 
     def test_preview_next_behaviour(self):
         generateFile(1)
 
         result = EulerRun('-p')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue('Project Euler Problem 2' in result.output)
+        self.assertIn('Project Euler Problem 2', result.output)
 
     def test_preview_nonexistent(self):
         result = EulerRun('-p', '1000')
@@ -192,21 +192,21 @@ class EulerPyVerify(EulerPyTest):
 
         result = EulerRun('-v')
         self.assertEqual(result.exit_code, 1)
-        self.assertTrue('Checking "001.py"' in result.output)
+        self.assertIn('Checking "001.py"', result.output)
 
     def test_verify_specific(self):
         generateFile(5)
 
         result = EulerRun('-v', '5')
         self.assertEqual(result.exit_code, 1)
-        self.assertTrue('Checking "005.py"' in result.output)
+        self.assertIn('Checking "005.py"', result.output)
 
     def test_verify_glob(self):
         generateFile(1, '001-skipped.py')
 
         result = EulerRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
-        self.assertTrue('Checking "001-skipped.py"' in result.output)
+        self.assertIn('Checking "001-skipped.py"', result.output)
 
     def test_verify_sorted_glob(self):
         generateFile(1, '001.py')
@@ -214,8 +214,8 @@ class EulerPyVerify(EulerPyTest):
 
         result = EulerRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
-        self.assertTrue('Checking "001.py"' in result.output)
-        self.assertFalse('Checking "001-skipped.py"' in result.output)
+        self.assertIn('Checking "001.py"', result.output)
+        self.assertNotIn('Checking "001-skipped.py"', result.output)
 
     def test_verify_correct(self):
         generateFile(1, correct=True)
@@ -239,7 +239,7 @@ class EulerPyVerify(EulerPyTest):
             file.write('import sys; sys.exit(1)')
 
         result = EulerRun('-v', '1')
-        self.assertTrue('Error calling "001.py"' in result.output)
+        self.assertIn('Error calling "001.py"', result.output)
         self.assertEqual(result.exit_code, 1)
 
 
@@ -253,7 +253,7 @@ class EulerPyVerifyAll(EulerPyTest):
             file.write('import sys; sys.exit(1)')
 
         result = EulerRun('--verify-all')
-        self.assertTrue('Problems 001-020: C C . I E' in result.output)
+        self.assertIn('Problems 001-020: C C . I E', result.output)
 
         # "002-skipped.py" should have been renamed to "002.py"
         self.assertTrue(os.path.isfile('002.py'))
@@ -272,12 +272,12 @@ class EulerPyMisc(EulerPyTest):
     def test_help_option(self):
         result = EulerRun('--help')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue('--cheat' in result.output)
-        self.assertTrue('--generate' in result.output)
-        self.assertTrue('--preview' in result.output)
-        self.assertTrue('--skip' in result.output)
-        self.assertTrue('--verify' in result.output)
-        self.assertTrue('--verify-all' in result.output)
+        self.assertIn('--cheat', result.output)
+        self.assertIn('--generate', result.output)
+        self.assertIn('--preview', result.output)
+        self.assertIn('--skip', result.output)
+        self.assertIn('--verify', result.output)
+        self.assertIn('--verify-all', result.output)
 
     def test_version_option(self):
         result = EulerRun('--version')
