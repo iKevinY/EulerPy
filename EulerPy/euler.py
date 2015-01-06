@@ -9,7 +9,7 @@ import click
 
 from EulerPy import __version__
 from EulerPy.problem import Problem
-from EulerPy.utils import clock, format_time, problem_glob, rename_file
+from EulerPy.utils import clock, format_time, problem_glob, rename
 
 
 # --cheat / -c
@@ -67,7 +67,7 @@ def skip(p):
     click.echo("Current problem is problem %i." % p.num)
     next_p = Problem(p.num + 1)
     generate(next_p, prompt_default=False)
-    rename_file(p.filename, p.suf_name('skipped'))
+    rename(p.filename, p.suf_name('skipped'))
 
 
 # --verify / -v
@@ -124,7 +124,7 @@ def verify(p, filename=None, exit=True):
 
     # Remove any suffix from the filename if its solution is correct
     if is_correct and filename != p.filename:
-        rename_file(filename, p.filename)
+        rename(filename, p.filename)
 
     # Exit here if answer was incorrect, otherwise return is_correct value
     return sys.exit(1) if exit and not is_correct else is_correct
@@ -160,8 +160,8 @@ def verify_all(current_p):
     for file in files:
         p = Problem(int(file[:3]))
 
-        # Catch KeyboardInterrupt during verification to allow the user
-        # to skip the verification of a problem if it takes too long
+        # Catch KeyboardInterrupt during verification to allow the user to
+        # skip the verification of a specific problem if it takes too long
         try:
             is_correct = verify(p, filename=file, exit=False)
         except KeyboardInterrupt:
@@ -179,7 +179,7 @@ def verify_all(current_p):
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
                 if p.num != current_p.num:
-                    rename_file(file, p.suf_name('skipped'))
+                    rename(file, p.suf_name('skipped'))
 
         # Separate each verification with a newline
         click.echo()

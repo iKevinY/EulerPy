@@ -10,12 +10,12 @@ import math
 import click
 
 
-def problem_glob(extension='py'):
+def problem_glob(extension='.py'):
     """Searches through current directory for valid problem files"""
-    return glob.glob('[0-9][0-9][0-9]*.{ext}'.format(ext=extension))
+    return glob.glob('[0-9][0-9][0-9]*{0}'.format(extension))
 
 
-def rename_file(old, new):
+def rename(old, new):
     if old != new:
         os.rename(old, new)
         click.secho('Renamed "{0}" to "{1}".'.format(old, new), fg='yellow')

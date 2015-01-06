@@ -9,7 +9,7 @@ import shutil
 
 import click
 
-BASE_NAME = '{0:03d}{1}.{ext}'
+BASE_NAME = '{0:03d}{1}{2}'  # problem number | suffix | extension
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
@@ -19,12 +19,12 @@ class Problem(object):
     @property
     def filename(self):
         """Returns filename padded with leading zeros"""
-        return BASE_NAME.format(self.num, '', ext='py')
+        return BASE_NAME.format(self.num, '', '.py')
 
-    def suf_name(self, suffix, extension='py'):
+    def suf_name(self, suffix, extension='.py'):
         """Similar to filename property but takes a suffix argument"""
-        suffix = '-' + suffix
-        return BASE_NAME.format(self.num, suffix, ext=extension)
+        suffix = '-%s' % suffix
+        return BASE_NAME.format(self.num, suffix, extension)
 
     @property
     def glob(self):
