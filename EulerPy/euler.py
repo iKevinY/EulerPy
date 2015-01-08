@@ -212,18 +212,17 @@ def verify_all(current_p):
 
 def euler_options(fn):
     """Decorator to link CLI options with their appropriate functions"""
-    eulerFunctions = cheat, generate, preview, skip, verify, verify_all
+    euler_functions = cheat, generate, preview, skip, verify, verify_all
 
-    # Reversed to decorate functions in correct order (applied inversely)
-    for option in reversed(eulerFunctions):
+    # Reverse functions to print help page options in alphabetical order
+    for option in reversed(euler_functions):
         name, docstring = option.__name__, option.__doc__
-        flags = ['--%s' % name.replace('_', '-')]
-
-        # Add short flag if function name is a single word
-        if '_' not in name:
-            flags.append('-%s' % name[0])
-
         kwargs = {'flag_value': option, 'help': docstring}
+
+        # Apply flag(s) depending on whether or not name is a single word
+        flag = '--%s' % name.replace('_', '-')
+        flags = [flag] if '_' in name else [flag, '-%s' % name[0]]
+
         fn = click.option('option', *flags, **kwargs)(fn)
 
     return fn
