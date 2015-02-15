@@ -55,11 +55,18 @@ class EulerPyNoOption(EulerPyTest):
         self.assertEqual(result.exit_code, 1)
         self.assertFalse(os.path.isfile('001.py'))
 
-    # No option or problem number; should verify and generate next file
-    def test_no_arguments(self):
+    # No option or problem number
+    def test_no_arguments_first_correct(self):
         generateFile(1, correct=True)
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('002.py'))
+
+    def test_no_arguments_first_incorrect(self):
+        generateFile(1)
+        result = EulerRun(input='\n')
+        self.assertEqual(result.exit_code, 1)
+        self.assertFalse(os.path.isfile('002.py'))
 
     # Ambiguous case; infer option from file existence check
     def test_ambiguous_option_generate(self):
