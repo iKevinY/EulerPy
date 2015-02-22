@@ -70,18 +70,13 @@ def human_time(timespan, precision=3):
         return ' '.join(_format_long_time(timespan))
 
     else:
-        # Unfortunately, the Unicode symbol for mu can cause problems.
-        # See bug: https://bugs.launchpad.net/ipython/+bug/348466
-        # Try to prevent crashes by being more secure than it needs to be
-        # (e.g. Eclipse can print mu but has no sys.stdout.encoding set).
-
         units = ['s', 'ms', 'us', 'ns']
 
-        if hasattr(sys.stdout, 'encoding') and sys.stdout.encoding:
+        # Attempt to replace 'us' with 'µs' if UTF-8 encoding has been set
+        if hasattr(sys.stdout, 'encoding') and sys.stdout.encoding == 'UTF-8':
             try:
-                # Attempt to replace 'us' with 'µs' for microsecond unit
                 units[2] = b'\xc2\xb5s'.decode('utf-8')
-            except:
+            except UnicodeEncodeError:
                 pass
 
         scale = [1.0, 1e3, 1e6, 1e9]
