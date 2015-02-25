@@ -13,8 +13,10 @@ from EulerPy.utils import clock, format_time, problem_glob, rename
 
 
 # --cheat / -c
-def cheat(p):
+def cheat(num):
     """View the answer to a problem."""
+    p = Problem(num)
+
     # Define solution before echoing in case solution does not exist
     solution = click.style(p.solution, bold=True)
     click.confirm("View answer to problem %i?" % p.num, abort=True)
@@ -22,8 +24,10 @@ def cheat(p):
 
 
 # --generate / -g
-def generate(p, prompt_default=True):
+def generate(num, prompt_default=True):
     """Generates Python file for a problem."""
+    p = Problem(num)
+
     problem_text = p.text
 
     msg = "Generate file for problem %i?" % p.num
@@ -53,8 +57,10 @@ def generate(p, prompt_default=True):
 
 
 # --preview / -p
-def preview(p):
+def preview(num):
     """Prints the text of a problem."""
+    p = Problem(num)
+
     # Define problem_text before echoing in case problem does not exist
     problem_text = p.text
     click.secho("Project Euler Problem %i" % p.num, bold=True)
@@ -62,17 +68,20 @@ def preview(p):
 
 
 # --skip / -s
-def skip(p):
+def skip(num):
     """Generates Python file for the next problem."""
+    p = Problem(num)
+
     click.echo("Current problem is problem %i." % p.num)
-    next_p = Problem(p.num + 1)
-    generate(next_p, prompt_default=False)
+    generate(p.num + 1, prompt_default=False)
     rename(p.filename, p.suf_name('skipped'))
 
 
 # --verify / -v
-def verify(p, filename=None, exit=True):
+def verify(num, filename=None, exit=True):
     """Verifies the solution to a problem."""
+    p = Problem(num)
+
     filename = filename or p.filename
 
     if not os.path.isfile(filename):
@@ -131,11 +140,13 @@ def verify(p, filename=None, exit=True):
 
 
 # --verify-all
-def verify_all(current_p):
+def verify_all(num):
     """
     Verifies all problem files in the current directory and
     prints an overview of the status of each problem.
     """
+
+    current_p = Problem(num)
 
     # Define various problem statuses
     keys = ('correct', 'incorrect', 'error', 'skipped', 'missing')
@@ -163,7 +174,7 @@ def verify_all(current_p):
         # Catch KeyboardInterrupt during verification to allow the user to
         # skip the verification of a specific problem if it takes too long
         try:
-            is_correct = verify(p, filename=file, exit=False)
+            is_correct = verify(p.num, filename=file, exit=False)
         except KeyboardInterrupt:
             overview[p.num] = status['skipped']
         else:
@@ -258,7 +269,7 @@ def main(option, problem):
         # No option and no problem; generate next file if answer is
         # correct (verify() will exit if the solution is incorrect)
         if option is None:
-            verify(Problem(problem))
+            verify(problem)
             problem += 1
             option = generate
 
@@ -267,5 +278,5 @@ def main(option, problem):
         option = verify if Problem(problem).glob else generate
 
     # Execute function based on option (pass Problem object as argument)
-    option(Problem(problem))
+    option(problem)
     sys.exit(0)
