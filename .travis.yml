@@ -5,9 +5,5 @@ python:
   - "3.3"
   - "3.4"
 sudo: false
-branches:
-  only:
-    - master
 cache: pip
-install: pip install -r requirements.txt
 script: nosetests
