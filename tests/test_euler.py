@@ -32,7 +32,8 @@ def generateFile(problem, filename=None, correct=False):
 class EulerPyTest(unittest.TestCase):
     def setUp(self):
         # Copy problem and solution files to temporary directory
-        os.chdir(tempfile.mkdtemp())
+        self.temp_dir = tempfile.mkdtemp()
+        os.chdir(self.temp_dir)
         eulerDir = os.path.dirname(os.path.dirname(__file__))
         dataDir = os.path.join(eulerDir, 'EulerPy', 'data')
         tempData = os.path.join(os.getcwd(), 'EulerPy', 'data')
@@ -40,7 +41,7 @@ class EulerPyTest(unittest.TestCase):
 
     def tearDown(self):
         # Delete the temporary directory
-        shutil.rmtree(os.getcwd())
+        shutil.rmtree(self.temp_dir)
 
 
 class EulerPyNoOption(EulerPyTest):
