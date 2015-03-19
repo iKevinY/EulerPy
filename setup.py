@@ -13,14 +13,12 @@ def readme():
 
 
 def requirements():
-    install_requires = []
     with open('requirements.txt') as f:
-        for line in f:
-            install_requires.append(line.strip())
+        install_requires = [line.strip() for line in f]
 
     # Terminal colors for Windows
-    if 'win32' in str(sys.platform).lower():
-        install_requires.append('colorama>=0.2.4')
+    if 'win32' in sys.platform.lower():
+        install_requires.append('colorama')
 
     return install_requires
 
