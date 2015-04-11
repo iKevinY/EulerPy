@@ -16,7 +16,7 @@ def EulerRun(*commands, **kwargs):
     return CliRunner().invoke(euler.main, commands, **kwargs)
 
 
-def generateFile(problem, filename=None, correct=False):
+def generateFile(problem, filename=None, content=None, correct=False):
     """
     Uses Problem.solution to generate a problem file. The correct
     argument controls whether the generated file is correct or not.
@@ -24,9 +24,11 @@ def generateFile(problem, filename=None, correct=False):
     p = Problem(problem)
     filename = filename or p.filename
 
-    with open(filename, 'a') as file:
+    with open(filename, 'w') as file:
         if correct:
-            file.write('print({0})\n'.format(p.solution))
+            file.write('print({0})'.format(p.solution))
+        elif content:
+            file.write(content)
 
 
 class EulerPyTest(unittest.TestCase):
@@ -236,15 +238,13 @@ class EulerPyVerify(EulerPyTest):
         self.assertEqual(result.exit_code, 1)
 
     def test_verify_file_with_multiline_output(self):
-        with open('001.py', 'a') as file:
-            file.write('print(1); print(2)')
+        generateFile(1, content='print(1); print(2)')
 
         result = EulerRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
 
     def test_verify_error_file(self):
-        with open('001.py', 'a') as file:
-            file.write('import sys; sys.exit(1)')
+        generateFile(1, content='import sys; sys.exit(1)')
 
         result = EulerRun('-v', '1')
         self.assertIn('Error calling "001.py"', result.output)
@@ -254,11 +254,9 @@ class EulerPyVerify(EulerPyTest):
 class EulerPyVerifyAll(EulerPyTest):
     def test_verify_all(self):
         generateFile(1, correct=True)
-        generateFile(2, filename='002-skipped.py', correct=True)
+        generateFile(2, '002-skipped.py', correct=True)
         generateFile(4)
-
-        with open('005.py', 'a') as file:
-            file.write('import sys; sys.exit(1)')
+        generateFile(5, content='import sys; sys.exit(1)')
 
         result = EulerRun('--verify-all')
         self.assertIn('Problems 001-020: C C . I E', result.output)
