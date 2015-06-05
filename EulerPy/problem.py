@@ -9,7 +9,7 @@ import shutil
 
 import click
 
-BASE_NAME = '{0:03d}{1}{2}'  # problem number | suffix | extension
+BASE_NAME = 'euler{0:03d}{1}{2}'  # problem number | suffix | extension
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
@@ -29,7 +29,7 @@ class Problem(object):
     @property
     def glob(self):
         """Returns a sorted glob of files belonging to a given problem"""
-        file_glob = glob.glob('{0:03d}*.*'.format(self.num))
+        file_glob = glob.glob('euler{0:03d}*.*'.format(self.num))
 
         # Sort globbed files by tuple (filename, extension)
         return sorted(file_glob, key=lambda f: os.path.splitext(f))

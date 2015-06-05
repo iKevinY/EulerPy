@@ -169,7 +169,8 @@ def verify_all(num):
         sys.exit(1)
 
     for file in files:
-        p = Problem(int(file[:3]))
+        # TODO use regular expression and/or BASE_NAME to find the number
+        p = Problem(int(file[5:8]))
 
         # Catch KeyboardInterrupt during verification to allow the user to
         # skip the verification of a specific problem if it takes too long
@@ -249,7 +250,8 @@ def main(option, problem):
     if problem == 0 or option in {skip, verify_all}:
         # Determine the highest problem number in the current directory
         files = problem_glob()
-        problem = max(int(file[:3]) for file in files) if files else 0
+        # TODO use regular expression and/or BASE_NAME to find the number
+        problem = max(int(file[5:8]) for file in files) if files else 0
 
         # No Project Euler files in current directory (no glob results)
         if problem == 0:

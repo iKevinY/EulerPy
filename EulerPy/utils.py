@@ -12,7 +12,7 @@ import click
 
 def problem_glob(extension='.py'):
     """Searches through current directory for valid problem files"""
-    return glob.glob('[0-9][0-9][0-9]*{0}'.format(extension))
+    return glob.glob('euler[0-9][0-9][0-9]*{0}'.format(extension))
 
 
 def rename(old, new):
