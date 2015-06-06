@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 import glob
 import json
@@ -11,16 +12,27 @@ import click
 
 BASE_NAME = 'euler{0:03d}{1}{2}'  # problem number | suffix | extension
 BASE_GLOB = 'euler[0-9][0-9][0-9]{0}{1}'
+BASE_RE = 'euler([0-9]{3})(.*)(\..*)'
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
     def __init__(self, problem_number):
         self.num = problem_number
 
+    @staticmethod
+    def from_filename(filename):
+        number = Problem.number_from_filename(filename)
+        return Problem(number)
+
     @property
     def filename(self):
         """Returns filename padded with leading zeros"""
         return BASE_NAME.format(self.num, '', '.py')
+
+    @staticmethod
+    def number_from_filename(filename):
+        """Extract the problem number from a filename."""
+        return int(re.match(BASE_RE, filename).groups()[0])
 
     def suf_name(self, suffix, extension='.py'):
         """Similar to filename property but takes a suffix argument"""
