@@ -10,6 +10,8 @@ import shutil
 import click
 
 BASE_NAME = '{0:03d}{1}{2}'  # problem number | suffix | extension
+BASE_GLOB = '*[0-9][0-9][0-9]*{0}'
+
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
