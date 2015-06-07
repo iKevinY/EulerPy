@@ -9,10 +9,11 @@ import math
 
 import click
 
+from EulerPy.problem import BASE_GLOB
 
 def problem_glob(extension='.py'):
     """Searches through current directory for valid problem files"""
-    return glob.glob('[0-9][0-9][0-9]*{0}'.format(extension))
+    return glob.glob(BASE_GLOB.format('*', extension))
 
 
 def rename(old, new):

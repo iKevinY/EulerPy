@@ -48,7 +48,7 @@ are being stored.
 
 
 At this point, you'll probably want to run the ``euler`` command, which will
-prompt to create ``001.py``, a file containing the text to Project Euler problem
+prompt to create ``euler001.py``, a file containing the text to Project Euler problem
 #1 as its docstring.
 
 .. code-block:: bash
@@ -56,9 +56,9 @@ prompt to create ``001.py``, a file containing the text to Project Euler problem
     $ euler
     No Project Euler files found in the current directory.
     Generate file for problem 1? [Y/n]: Y
-    Successfully created "001.py".
+    Successfully created "euler001.py".
 
-    $ cat 001.py
+    $ cat euler001.py
     """
     Project Euler Problem 1
     =======================
@@ -80,13 +80,13 @@ time elapsed during the solution-checking process will also be printed.
 .. code-block:: bash
 
     $ euler
-    Checking "001.py" against solution: [no output] # (output in red)
+    Checking "euler001.py" against solution: [no output] # (output in red)
 
-    $ echo print 42 >> 001.py
+    $ echo print 42 >> euler001.py
     $ euler
-    Checking "001.py" against solution: 42 # (output in green)
+    Checking "euler001.py" against solution: 42 # (output in green)
     Generate file for problem 2? [Y/n]: Y
-    Successfully created "002.py".
+    Successfully created "euler002.py".
 
 
 EulerPy also has a few command line options that act as different commands
@@ -123,8 +123,8 @@ the user).
 
     $ euler --generate
     Generate file for problem 2? [Y/n]: Y
-    "002.py" already exists. Overwrite? [y/N]:
-    Successfully created "002.py".
+    "euler002.py" already exists. Overwrite? [y/N]:
+    Successfully created "euler002.py".
 
     $ euler --generate 5
     Generate file for problem 5? [Y/n]: n
@@ -135,8 +135,8 @@ the user).
 
 .. code-block:: bash
 
-    $ cat 005.py
-    cat: 005.py: No such file or directory
+    $ cat euler005.py
+    cat: euler005.py: No such file or directory
 
     $ euler 5
     Generate file for problem 5? [Y/n]: n
@@ -149,7 +149,7 @@ resource files to a ``resources`` subdirectory.
 
     $ euler 22
     Generate file for problem 22? [Y/n]: Y
-    Successfully created "022.py".
+    Successfully created "euler022.py".
     Copied "names.txt" to project-euler/resources.
 
 
@@ -188,8 +188,8 @@ file.
     $ euler --skip
     Current problem is problem 2.
     Generate file for problem 3? [y/N]: Y
-    Successfully created "003.py".
-    Renamed "002.py" to "002-skipped.py".
+    Successfully created "euler003.py".
+    Renamed "euler002.py" to "euler002-skipped.py".
 
 
 ``--verify / -v``
@@ -202,10 +202,10 @@ check the current problem.
 .. code-block:: bash
 
     $ euler --verify
-    Checking "003.py" against solution: [no output] # (output in red)
+    Checking "euler003.py" against solution: [no output] # (output in red)
 
     $ euler --verify 1
-    Checking "001.py" against solution: <redacted> # (output in green)
+    Checking "euler001.py" against solution: <redacted> # (output in green)
 
 As of EulerPy v1.1, verifying a skipped problem file will remove the "skipped"
 suffix from its filename.
@@ -213,15 +213,15 @@ suffix from its filename.
 .. code-block:: bash
 
     $ euler --verify 1
-    Checking "001-skipped.py" against solution: <redcated>
-    Renamed "001-skipped.py" to "001.py".
+    Checking "euler001-skipped.py" against solution: <redcated>
+    Renamed "euler001-skipped.py" to "euler001.py".
 
 ``euler <problem>`` is equivalent to ``euler --verify <problem>`` if the file
 **does** exist.
 
 .. code-block:: bash
 
-    $ cat 001.py
+    $ cat euler001.py
     """
     Project Euler Problem 1
     =======================
@@ -234,7 +234,7 @@ suffix from its filename.
 
 
     $ euler 1
-    Checking "001.py" against solution: <redacted>
+    Checking "euler001.py" against solution: <redacted>
 
 
 ``--verify-all``
@@ -251,9 +251,9 @@ taking too long to compute.
 .. code-block:: bash
 
     $ euler --verify-all
-    Checking "001.py" against solution: <redacted>
+    Checking "euler001.py" against solution: <redacted>
 
-    Checking "002.py" against solution: [no output]
+    Checking "euler002.py" against solution: [no output]
 
     ---------------------------------------------------------------
     C = correct, I = incorrect, E = error, S = skipped, . = missing

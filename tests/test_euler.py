@@ -51,25 +51,25 @@ class EulerPyNoOption(EulerPyTest):
     def test_empty_directory_install_neutral(self):
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('001.py'))
+        self.assertTrue(os.path.isfile('euler001.py'))
 
     def test_empty_directory_negative(self):
         result = EulerRun(input='N\n')
         self.assertEqual(result.exit_code, 1)
-        self.assertFalse(os.path.isfile('001.py'))
+        self.assertFalse(os.path.isfile('euler001.py'))
 
     # No option or problem number
     def test_no_arguments_first_correct(self):
         generateFile(1, correct=True)
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('002.py'))
+        self.assertTrue(os.path.isfile('euler002.py'))
 
     def test_no_arguments_first_incorrect(self):
         generateFile(1)
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 1)
-        self.assertFalse(os.path.isfile('002.py'))
+        self.assertFalse(os.path.isfile('euler002.py'))
 
     # Ambiguous case; infer option from file existence check
     def test_ambiguous_option_generate(self):
@@ -109,17 +109,17 @@ class EulerPyGenerate(EulerPyTest):
     def test_generate_neutral(self):
         result = EulerRun('-g', input='\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('001.py'))
+        self.assertTrue(os.path.isfile('euler001.py'))
 
     def test_generate_negative(self):
         result = EulerRun('-g', input='N\n')
         self.assertEqual(result.exit_code, 1)
-        self.assertFalse(os.path.isfile('001.py'))
+        self.assertFalse(os.path.isfile('euler001.py'))
 
     def test_generate_specific(self):
         result = EulerRun('-g', '5', input='\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('005.py'))
+        self.assertTrue(os.path.isfile('euler005.py'))
 
     def test_generate_overwrite_positive(self):
         generateFile(1)
@@ -127,7 +127,7 @@ class EulerPyGenerate(EulerPyTest):
         result = EulerRun('-g', '1', input='\nY\n')
         self.assertEqual(result.exit_code, 0)
 
-        with open('001.py') as file:
+        with open('euler001.py') as file:
             self.assertNotEqual(file.read(), '')
 
     def test_generate_overwrite_neutral(self):
@@ -136,21 +136,21 @@ class EulerPyGenerate(EulerPyTest):
         result = EulerRun('-g', '1', input='\n\n')
         self.assertEqual(result.exit_code, 1)
 
-        with open('001.py') as file:
+        with open('euler001.py') as file:
             self.assertEqual(file.read(), '')
 
     def test_generate_overwrite_skipped(self):
-        generateFile(1, '001-skipped.py')
+        generateFile(1, 'euler001-skipped.py')
 
         result = EulerRun('-g', '1', input='\nY\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('001-skipped.py'))
-        self.assertFalse(os.path.isfile('001.py'))
+        self.assertTrue(os.path.isfile('euler001-skipped.py'))
+        self.assertFalse(os.path.isfile('euler001.py'))
 
     def test_generate_copy_resources(self):
         result = EulerRun('-g', '22', input='\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertTrue(os.path.isfile('022.py'))
+        self.assertTrue(os.path.isfile('euler022.py'))
 
         resource = os.path.join('resources', 'names.txt')
         self.assertTrue(os.path.isfile(resource))
@@ -185,15 +185,15 @@ class EulerPySkip(EulerPyTest):
 
         result = EulerRun('-s', input='\n')
         self.assertEqual(result.exit_code, 1)
-        self.assertTrue(os.path.isfile('001.py'))
+        self.assertTrue(os.path.isfile('euler001.py'))
 
     def test_skip_positive(self):
         generateFile(1)
 
         result = EulerRun('-s', input='Y\n')
         self.assertEqual(result.exit_code, 0)
-        self.assertFalse(os.path.isfile('001.py'))
-        self.assertTrue(os.path.isfile('001-skipped.py'))
+        self.assertFalse(os.path.isfile('euler001.py'))
+        self.assertTrue(os.path.isfile('euler001-skipped.py'))
 
 
 class EulerPyVerify(EulerPyTest):
@@ -202,30 +202,30 @@ class EulerPyVerify(EulerPyTest):
 
         result = EulerRun('-v')
         self.assertEqual(result.exit_code, 1)
-        self.assertIn('Checking "001.py"', result.output)
+        self.assertIn('Checking "euler001.py"', result.output)
 
     def test_verify_specific(self):
         generateFile(5)
 
         result = EulerRun('-v', '5')
         self.assertEqual(result.exit_code, 1)
-        self.assertIn('Checking "005.py"', result.output)
+        self.assertIn('Checking "euler005.py"', result.output)
 
     def test_verify_glob(self):
-        generateFile(1, '001-skipped.py')
+        generateFile(1, 'euler001-skipped.py')
 
         result = EulerRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
-        self.assertIn('Checking "001-skipped.py"', result.output)
+        self.assertIn('Checking "euler001-skipped.py"', result.output)
 
     def test_verify_sorted_glob(self):
-        generateFile(1, '001.py')
-        generateFile(1, '001-skipped.py')
+        generateFile(1, 'euler001.py')
+        generateFile(1, 'euler001-skipped.py')
 
         result = EulerRun('-v', '1')
         self.assertEqual(result.exit_code, 1)
-        self.assertIn('Checking "001.py"', result.output)
-        self.assertNotIn('Checking "001-skipped.py"', result.output)
+        self.assertIn('Checking "euler001.py"', result.output)
+        self.assertNotIn('Checking "euler001-skipped.py"', result.output)
 
     def test_verify_correct(self):
         generateFile(1, correct=True)
@@ -247,27 +247,27 @@ class EulerPyVerify(EulerPyTest):
         generateFile(1, content='import sys; sys.exit(1)')
 
         result = EulerRun('-v', '1')
-        self.assertIn('Error calling "001.py"', result.output)
+        self.assertIn('Error calling "euler001.py"', result.output)
         self.assertEqual(result.exit_code, 1)
 
 
 class EulerPyVerifyAll(EulerPyTest):
     def test_verify_all(self):
         generateFile(1, correct=True)
-        generateFile(2, '002-skipped.py', correct=True)
+        generateFile(2, 'euler002-skipped.py', correct=True)
         generateFile(4)
         generateFile(5, content='import sys; sys.exit(1)')
 
         result = EulerRun('--verify-all')
         self.assertIn('Problems 001-020: C C . I E', result.output)
 
-        # "002-skipped.py" should have been renamed to "002.py"
-        self.assertTrue(os.path.isfile('002.py'))
-        self.assertFalse(os.path.isfile('002-skipped.py'))
+        # "euler002-skipped.py" should have been renamed to "euler002.py"
+        self.assertTrue(os.path.isfile('euler002.py'))
+        self.assertFalse(os.path.isfile('euler002-skipped.py'))
 
-        # "004.py" should have been renamed to "004-skipped.py"
-        self.assertFalse(os.path.isfile('004.py'))
-        self.assertTrue(os.path.isfile('004-skipped.py'))
+        # "euler004.py" should have been renamed to "euler004-skipped.py"
+        self.assertFalse(os.path.isfile('euler004.py'))
+        self.assertTrue(os.path.isfile('euler004-skipped.py'))
 
     def test_verify_all_no_files(self):
         result = EulerRun('--verify-all')
