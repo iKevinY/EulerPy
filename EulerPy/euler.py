@@ -39,7 +39,7 @@ def generate(num, prompt_default=True):
         msg = '"{0}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
     else:
-        filename = p.filename
+        filename = p.filename()
 
     header = 'Project Euler Problem %i' % p.num
     divider = '=' * len(header)
@@ -74,7 +74,7 @@ def skip(num):
 
     click.echo("Current problem is problem %i." % p.num)
     generate(p.num + 1, prompt_default=False)
-    rename(p.filename, p.suf_name('skipped'))
+    rename(p.filename(), p.filename(suffix='-skipped'))
 
 
 # --verify / -v
@@ -82,7 +82,7 @@ def verify(num, filename=None, exit=True):
     """Verifies the solution to a problem."""
     p = Problem(num)
 
-    filename = filename or p.filename
+    filename = filename or p.filename()
 
     if not os.path.isfile(filename):
         # Attempt to verify the first problem file matched by glob
@@ -132,8 +132,8 @@ def verify(num, filename=None, exit=True):
     click.secho(time_info, fg='cyan')
 
     # Remove any suffix from the filename if its solution is correct
-    if is_correct and filename != p.filename:
-        rename(filename, p.filename)
+    if is_correct and filename != p.filename():
+        rename(filename, p.filename())
 
     # Exit here if answer was incorrect, otherwise return is_correct value
     return sys.exit(1) if exit and not is_correct else is_correct
@@ -190,7 +190,7 @@ def verify_all(num):
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
                 if p.num != current_p.num:
-                    rename(file, p.suf_name('skipped'))
+                    rename(file, p.filename(suffix='-skipped'))
 
         # Separate each verification with a newline
         click.echo()

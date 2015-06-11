@@ -52,9 +52,9 @@ class EulerPyUtils(unittest.TestCase):
 
     def test_filename_format(self):
         """Check that filenames are being formatted correctly"""
-        self.assertEqual(Problem(1).filename, "001.py")
-        self.assertEqual(Problem(10).filename, "010.py")
-        self.assertEqual(Problem(100).filename, "100.py")
+        self.assertEqual(Problem(1).filename(), "001.py")
+        self.assertEqual(Problem(10).filename(), "010.py")
+        self.assertEqual(Problem(100).filename(), "100.py")
 
     def test_time_format(self):
         self.assertEqual(human_time(100000), '1d 3h 46m 40s')

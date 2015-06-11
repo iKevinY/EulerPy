@@ -22,7 +22,7 @@ def generateFile(problem, filename=None, content=None, correct=False):
     argument controls whether the generated file is correct or not.
     """
     p = Problem(problem)
-    filename = filename or p.filename
+    filename = filename or p.filename()
 
     with open(filename, 'w') as file:
         if correct:

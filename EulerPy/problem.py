@@ -18,15 +18,9 @@ class Problem(object):
     def __init__(self, problem_number):
         self.num = problem_number
 
-    @property
-    def filename(self):
+    def filename(self, prefix='', suffix='', extension='.py'):
         """Returns filename padded with leading zeros"""
-        return BASE_NAME.format('', self.num, '', '.py')
-
-    def suf_name(self, suffix, extension='.py'):
-        """Similar to filename property but takes a suffix argument"""
-        suffix = '-%s' % suffix
-        return BASE_NAME.format('', self.num, suffix, extension)
+        return BASE_NAME.format(prefix, self.num, suffix, extension)
 
     @property
     def glob(self):
