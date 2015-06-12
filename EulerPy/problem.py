@@ -25,7 +25,7 @@ class Problem(object):
     @property
     def glob(self):
         """Returns a sorted glob of files belonging to a given problem"""
-        file_glob = glob.glob(BASE_NAME.format('', self.num, '*', '.*'))
+        file_glob = glob.glob(BASE_NAME.format('*', self.num, '*', '.*'))
 
         # Sort globbed files by tuple (filename, extension)
         return sorted(file_glob, key=lambda f: os.path.splitext(f))
