@@ -146,8 +146,6 @@ def verify_all(num):
     prints an overview of the status of each problem.
     """
 
-    current_p = Problem(num)
-
     # Define various problem statuses
     keys = ('correct', 'incorrect', 'error', 'skipped', 'missing')
     symbols = ('C', 'I', 'E', 'S', '.')
@@ -189,7 +187,7 @@ def verify_all(num):
                 # problem file is not the current problem. This is useful
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
-                if p.num != current_p.num:
+                if p.num != num:
                     rename(file, p.filename(suffix='-skipped'))
 
         # Separate each verification with a newline
@@ -202,7 +200,7 @@ def verify_all(num):
     click.echo(legend + '\n')
 
     # Rows needed for overview is based on the current problem number
-    num_of_rows = (current_p.num + 19) // 20
+    num_of_rows = (num + 19) // 20
 
     for row in range(1, num_of_rows + 1):
         low, high = (row * 20) - 19, (row * 20)
