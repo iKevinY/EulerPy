@@ -15,12 +15,10 @@ from EulerPy.utils import clock, format_time, problem_glob, rename
 # --cheat / -c
 def cheat(num):
     """View the answer to a problem."""
-    p = Problem(num)
-
     # Define solution before echoing in case solution does not exist
-    solution = click.style(p.solution, bold=True)
-    click.confirm("View answer to problem %i?" % p.num, abort=True)
-    click.echo("The answer to problem %i is {0}.".format(solution) % p.num)
+    solution = click.style(Problem(num).solution, bold=True)
+    click.confirm("View answer to problem %i?" % num, abort=True)
+    click.echo("The answer to problem %i is {0}.".format(solution) % num)
 
 
 # --generate / -g
@@ -30,7 +28,7 @@ def generate(num, prompt_default=True):
 
     problem_text = p.text
 
-    msg = "Generate file for problem %i?" % p.num
+    msg = "Generate file for problem %i?" % num
     click.confirm(msg, default=prompt_default, abort=True)
 
     # Allow skipped problem files to be recreated
@@ -41,7 +39,7 @@ def generate(num, prompt_default=True):
     else:
         filename = p.filename()
 
-    header = 'Project Euler Problem %i' % p.num
+    header = 'Project Euler Problem %i' % num
     divider = '=' * len(header)
     text = '\n'.join([header, divider, '', problem_text])
     content = '\n'.join(['"""', text, '"""'])
@@ -59,11 +57,9 @@ def generate(num, prompt_default=True):
 # --preview / -p
 def preview(num):
     """Prints the text of a problem."""
-    p = Problem(num)
-
     # Define problem_text before echoing in case problem does not exist
-    problem_text = p.text
-    click.secho("Project Euler Problem %i" % p.num, bold=True)
+    problem_text = Problem(num).text
+    click.secho("Project Euler Problem %i" % num, bold=True)
     click.echo(problem_text)
 
 
@@ -72,8 +68,8 @@ def skip(num):
     """Generates Python file for the next problem."""
     p = Problem(num)
 
-    click.echo("Current problem is problem %i." % p.num)
-    generate(p.num + 1, prompt_default=False)
+    click.echo("Current problem is problem %i." % num)
+    generate(num + 1, prompt_default=False)
     rename(p.filename(), p.filename(suffix='-skipped'))
 
 
