@@ -275,6 +275,6 @@ def main(option, problem):
     elif option is None:
         option = verify if Problem(problem).glob else generate
 
-    # Execute function based on option (pass Problem object as argument)
+    # Execute function based on option
     option(problem)
     sys.exit(0)
