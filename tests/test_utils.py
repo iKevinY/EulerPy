@@ -32,7 +32,7 @@ class EulerPyUtils(unittest.TestCase):
         for problem in range(1, largest_problem + 1):
             problemText = Problem(problem).text
 
-            msg = "Error encountered when parsing problem {0}.".format(problem)
+            msg = "Error encountered when parsing problem {}.".format(problem)
 
             self.assertFalse('========='in problemText, msg=msg)
             self.assertFalse('\n\n\n' in problemText, msg=msg)

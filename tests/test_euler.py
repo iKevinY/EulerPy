@@ -26,7 +26,7 @@ def generateFile(problem, filename=None, content=None, correct=False):
 
     with open(filename, 'w') as file:
         if correct:
-            file.write('print({0})'.format(p.solution))
+            file.write('print({})'.format(p.solution))
         elif content:
             file.write(content)
 

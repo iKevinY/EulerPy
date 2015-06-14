@@ -18,7 +18,7 @@ def cheat(num):
     # Define solution before echoing in case solution does not exist
     solution = click.style(Problem(num).solution, bold=True)
     click.confirm("View answer to problem %i?" % num, abort=True)
-    click.echo("The answer to problem %i is {0}.".format(solution) % num)
+    click.echo("The answer to problem {} is {}.".format(num, solution))
 
 
 # --generate / -g
@@ -34,7 +34,7 @@ def generate(num, prompt_default=True):
     # Allow skipped problem files to be recreated
     if p.glob:
         filename = p.glob[0]
-        msg = '"{0}" already exists. Overwrite?'.format(filename)
+        msg = '"{}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
     else:
         filename = p.filename()
@@ -47,7 +47,7 @@ def generate(num, prompt_default=True):
     with open(filename, 'w') as file:
         file.write(content + '\n\n\n')
 
-    click.secho('Successfully created "{0}".'.format(filename), fg='green')
+    click.secho('Successfully created "{}".'.format(filename), fg='green')
 
     # Copy over problem resources if required
     if p.resources:
@@ -89,7 +89,7 @@ def verify(num, filename=None, exit=True):
             sys.exit(1)
 
     solution = p.solution
-    click.echo('Checking "{0}" against solution: '.format(filename), nl=False)
+    click.echo('Checking "{}" against solution: '.format(filename), nl=False)
 
     cmd = (sys.executable or 'python', filename)
     start = clock()
@@ -100,7 +100,7 @@ def verify(num, filename=None, exit=True):
 
     # Return value of anything other than 0 indicates an error
     if proc.poll() != 0:
-        click.secho('Error calling "{0}".'.format(filename), fg='red')
+        click.secho('Error calling "{}".'.format(filename), fg='red')
         click.secho(time_info, fg='cyan')
 
         # Return None if option is not --verify-all, otherwise exit
@@ -190,7 +190,7 @@ def verify_all(num):
         click.echo()
 
     # Print overview of the status of each problem
-    legend = ', '.join('{0} = {1}'.format(v, k) for k, v in status.items())
+    legend = ', '.join('{} = {}'.format(v, k) for k, v in status.items())
 
     click.echo('-' * 63)
     click.echo(legend + '\n')
@@ -200,7 +200,7 @@ def verify_all(num):
 
     for row in range(1, num_of_rows + 1):
         low, high = (row * 20) - 19, (row * 20)
-        click.echo("Problems {0:03d}-{1:03d}: ".format(low, high), nl=False)
+        click.echo("Problems {:03d}-{:03d}: ".format(low, high), nl=False)
 
         for problem in range(low, high + 1):
             # Add missing status to problems with no corresponding file

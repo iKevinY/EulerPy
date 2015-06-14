@@ -19,7 +19,7 @@ def problem_glob(extension='.py'):
 def rename(old, new):
     if old != new:
         os.rename(old, new)
-        click.secho('Renamed "{0}" to "{1}".'.format(old, new), fg='yellow')
+        click.secho('Renamed "{}" to "{}".'.format(old, new), fg='yellow')
 
     return old != new
 
@@ -99,8 +99,8 @@ def format_time(start, end):
 
     except TypeError:
         # `clock()[1] == None` so subtraction results in a TypeError
-        return 'Time elapsed: {0}'.format(human_time(cpu_usr))
+        return 'Time elapsed: {}'.format(human_time(cpu_usr))
 
     else:
         times = (human_time(x) for x in (cpu_usr, cpu_sys, cpu_usr + cpu_sys))
-        return 'Time elapsed: user: {0}, sys: {1}, total: {2}'.format(*times)
+        return 'Time elapsed: user: {}, sys: {}, total: {}'.format(*times)

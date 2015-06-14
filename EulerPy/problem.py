@@ -9,8 +9,8 @@ import shutil
 
 import click
 
-BASE_NAME = '{0}{1:03d}{2}{3}'  # prefix, number, suffix, extension
-BASE_GLOB = '*[0-9][0-9][0-9]*{0}'
+BASE_NAME = '{}{:03d}{}{}'  # prefix, number, suffix, extension
+BASE_GLOB = '*[0-9][0-9][0-9]*{}'
 
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
@@ -63,7 +63,7 @@ class Problem(object):
         if copied_resources:
             copied = ', '.join(copied_resources)
             path = os.path.relpath(resource_dir, os.pardir)
-            msg = "Copied {0} to {1}.".format(copied, path)
+            msg = "Copied {} to {}.".format(copied, path)
 
             click.secho(msg, fg='green')
 
