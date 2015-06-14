@@ -61,12 +61,14 @@ class EulerPyNoOption(EulerPyTest):
     # No option or problem number
     def test_no_arguments_first_correct(self):
         generateFile(1, correct=True)
+
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 0)
         self.assertTrue(os.path.isfile('002.py'))
 
     def test_no_arguments_first_incorrect(self):
         generateFile(1)
+
         result = EulerRun(input='\n')
         self.assertEqual(result.exit_code, 1)
         self.assertFalse(os.path.isfile('002.py'))
@@ -75,11 +77,14 @@ class EulerPyNoOption(EulerPyTest):
     def test_ambiguous_option_generate(self):
         result = EulerRun('1')
         self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('001.py'))
 
     def test_ambiguous_option_verify(self):
         generateFile(1, correct=True)
+
         result = EulerRun('1')
         self.assertEqual(result.exit_code, 0)
+        self.assertFalse(os.path.isfile('002.py'))
 
 
 class EulerPyCheat(EulerPyTest):
@@ -153,6 +158,7 @@ class EulerPyGenerate(EulerPyTest):
         self.assertTrue(os.path.isfile('022.py'))
 
         resource = os.path.join('resources', 'names.txt')
+        self.assertIn('Copied names.txt', result.output)
         self.assertTrue(os.path.isfile(resource))
 
 
