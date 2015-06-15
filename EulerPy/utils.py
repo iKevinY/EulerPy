@@ -2,27 +2,17 @@
 
 from __future__ import unicode_literals
 
-import os
 import sys
 import glob
 import math
 
-import click
+from EulerPy.problem import ProblemFile
 
-from EulerPy.problem import BASE_GLOB
 
 def problem_glob(extension='.py'):
-    """Searches through current directory for valid problem files"""
-    return glob.glob(BASE_GLOB.format(extension))
-
-
-def rename(old, new):
-    if old != new:
-        os.rename(old, new)
-        click.secho('Renamed "{}" to "{}".'.format(old, new), fg='yellow')
-
-    return old != new
-
+    """Returns ProblemFile objects for all valid problem files"""
+    filenames = glob.glob('*[0-9][0-9][0-9]*{}'.format(extension))
+    return [ProblemFile(file) for file in filenames]
 
 # Use the resource module instead of time.clock() if possible (on Unix)
 try:

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 import glob
 import json
@@ -9,12 +10,15 @@ import shutil
 
 import click
 
-BASE_NAME = '{}{:03d}{}{}'  # prefix, number, suffix, extension
-BASE_GLOB = '*[0-9][0-9][0-9]*{}'
+
+# Filenames follow the format (prefix, number, suffix, extension)
+BASE_NAME = '{}{:03d}{}{}'
+FILE_RE = re.compile(r'(.*)(\d{3})(.*)(\.\w+)')
 
 EULER_DATA = os.path.join(os.path.dirname(__file__), 'data')
 
 class Problem(object):
+    """Represents a Project Euler problem of a given problem number"""
     def __init__(self, problem_number):
         self.num = problem_number
 
@@ -29,6 +33,11 @@ class Problem(object):
 
         # Sort globbed files by tuple (filename, extension)
         return sorted(file_glob, key=lambda f: os.path.splitext(f))
+
+    @property
+    def file(self):
+        """Returns a ProblemFile instance of the first matching file"""
+        return ProblemFile(self.glob[0]) if self.glob else None
 
     @property
     def resources(self):
@@ -123,3 +132,50 @@ class Problem(object):
             click.echo('If this problem exists on Project Euler, consider '
                        'submitting a pull request to EulerPy on GitHub.')
             sys.exit(1)
+
+
+class ProblemFile(object):
+    """Represents a file that belongs to a given Project Euler problem"""
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __str__(self):
+        return self.filename
+
+    @property
+    def _filename_parts(self):
+        """Returns (prefix, number, suffix, extension)"""
+        return FILE_RE.search(self.filename).groups()
+
+    @property
+    def prefix(self):
+        return self._filename_parts[0]
+
+    @property
+    def str_num(self):
+        return self._filename_parts[1]
+
+    @property
+    def suffix(self):
+        return self._filename_parts[2]
+
+    @property
+    def extension(self):
+        return self._filename_parts[3]
+
+    @property
+    def num(self):
+        return int(self.str_num)
+
+    def change_suffix(self, suffix):
+        if suffix == self.suffix:
+            return False
+
+        new_name = self.prefix + self.str_num + suffix + self.extension
+        os.rename(self.filename, new_name)
+
+        msg = 'Renamed "{}" to "{}".'.format(self.filename, new_name)
+        click.secho(msg, fg='yellow')
+        self.filename = new_name
+
+        return True

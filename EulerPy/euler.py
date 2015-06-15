@@ -9,7 +9,7 @@ import click
 
 from EulerPy import __version__
 from EulerPy.problem import Problem
-from EulerPy.utils import clock, format_time, problem_glob, rename
+from EulerPy.utils import clock, format_time, problem_glob
 
 
 # --cheat / -c
@@ -33,7 +33,7 @@ def generate(num, prompt_default=True):
 
     # Allow skipped problem files to be recreated
     if p.glob:
-        filename = p.glob[0]
+        filename = str(p.file)
         msg = '"{}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
     else:
@@ -66,11 +66,9 @@ def preview(num):
 # --skip / -s
 def skip(num):
     """Generates Python file for the next problem."""
-    p = Problem(num)
-
     click.echo("Current problem is problem %i." % num)
     generate(num + 1, prompt_default=False)
-    rename(p.filename(), p.filename(suffix='-skipped'))
+    Problem(num).file.change_suffix('-skipped')
 
 
 # --verify / -v
@@ -83,7 +81,7 @@ def verify(num, filename=None, exit=True):
     if not os.path.isfile(filename):
         # Attempt to verify the first problem file matched by glob
         if p.glob:
-            filename = p.glob[0]
+            filename = str(p.file)
         else:
             click.secho('No file found for problem %i.' % p.num, fg='red')
             sys.exit(1)
@@ -128,8 +126,8 @@ def verify(num, filename=None, exit=True):
     click.secho(time_info, fg='cyan')
 
     # Remove any suffix from the filename if its solution is correct
-    if is_correct and filename != p.filename():
-        rename(filename, p.filename())
+    if is_correct:
+        p.file.change_suffix('')
 
     # Exit here if answer was incorrect, otherwise return is_correct value
     return sys.exit(1) if exit and not is_correct else is_correct
@@ -163,28 +161,26 @@ def verify_all(num):
         sys.exit(1)
 
     for file in files:
-        p = Problem(int(file[:3]))
-
         # Catch KeyboardInterrupt during verification to allow the user to
         # skip the verification of a specific problem if it takes too long
         try:
-            is_correct = verify(p.num, filename=file, exit=False)
+            is_correct = verify(file.num, filename=str(file), exit=False)
         except KeyboardInterrupt:
-            overview[p.num] = status['skipped']
+            overview[file.num] = status['skipped']
         else:
             if is_correct is None:  # error was returned by problem file
-                overview[p.num] = status['error']
+                overview[file.num] = status['error']
             elif is_correct:
-                overview[p.num] = status['correct']
+                overview[file.num] = status['correct']
             elif not is_correct:
-                overview[p.num] = status['incorrect']
+                overview[file.num] = status['incorrect']
 
                 # Attempt to add "skipped" suffix to the filename if the
                 # problem file is not the current problem. This is useful
                 # when the --verify-all is used in a directory containing
                 # files generated pre-v1.1 (before files with suffixes)
-                if p.num != num:
-                    rename(file, p.filename(suffix='-skipped'))
+                if file.num != num:
+                    file.change_suffix('-skipped')
 
         # Separate each verification with a newline
         click.echo()
@@ -243,7 +239,7 @@ def main(option, problem):
     if problem == 0 or option in {skip, verify_all}:
         # Determine the highest problem number in the current directory
         files = problem_glob()
-        problem = max(int(file[:3]) for file in files) if files else 0
+        problem = max(file.num for file in files) if files else 0
 
         # No Project Euler files in current directory (no glob results)
         if problem == 0:
