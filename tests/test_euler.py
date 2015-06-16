@@ -73,6 +73,14 @@ class EulerPyNoOption(EulerPyTest):
         self.assertEqual(result.exit_code, 1)
         self.assertFalse(os.path.isfile('002.py'))
 
+    def test_no_arguments_keep_prefix(self):
+        generateFile(1, 'euler001.py', correct=True)
+
+        EulerRun(input='\n')
+        self.assertTrue(os.path.isfile('euler001.py'))
+        self.assertTrue(os.path.isfile('euler002.py'))
+        self.assertFalse(os.path.isfile('002.py'))
+
     # Ambiguous case; infer option from file existence check
     def test_ambiguous_option_generate(self):
         result = EulerRun('1')
@@ -201,6 +209,14 @@ class EulerPySkip(EulerPyTest):
         self.assertFalse(os.path.isfile('001.py'))
         self.assertTrue(os.path.isfile('001-skipped.py'))
 
+    def test_skip_prefixed_file(self):
+        generateFile(1, 'euler001.py')
+
+        result = EulerRun('-s', input='Y\n')
+        self.assertEqual(result.exit_code, 0)
+        self.assertFalse(os.path.isfile('euler001.py'))
+        self.assertTrue(os.path.isfile('euler001-skipped.py'))
+
 
 class EulerPyVerify(EulerPyTest):
     def test_verify(self):
@@ -255,6 +271,20 @@ class EulerPyVerify(EulerPyTest):
         result = EulerRun('-v', '1')
         self.assertIn('Error calling "001.py"', result.output)
         self.assertEqual(result.exit_code, 1)
+
+    def test_verify_prefixed_file(self):
+        generateFile(1, 'euler001.py', correct=True)
+
+        result = EulerRun('-v', '1')
+        self.assertEqual(result.exit_code, 0)
+
+    def test_verify_prefixed_unskip(self):
+        generateFile(1, 'euler001-skipped.py', correct=True)
+
+        result = EulerRun('-v', '1')
+        self.assertEqual(result.exit_code, 0)
+        self.assertTrue(os.path.isfile('euler001.py'))
+        self.assertFalse(os.path.isfile('euler001-skipped.py'))
 
 
 class EulerPyVerifyAll(EulerPyTest):

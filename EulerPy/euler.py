@@ -37,7 +37,10 @@ def generate(num, prompt_default=True):
         msg = '"{}" already exists. Overwrite?'.format(filename)
         click.confirm(click.style(msg, fg='red'), abort=True)
     else:
-        filename = p.filename()
+        # Try to keep prefix consistent with existing files
+        previous_file = Problem(num - 1).file
+        prefix = previous_file.prefix if previous_file else ''
+        filename = p.filename(prefix=prefix)
 
     header = 'Project Euler Problem %i' % num
     divider = '=' * len(header)
