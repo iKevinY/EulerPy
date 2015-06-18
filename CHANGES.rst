@@ -2,8 +2,8 @@
 Changelog
 =========
 
-v1.2.3
-------
+v1.2.3 (2014-09-02)
+-------------------
 
 - Added problems 267-300
 - Fixed bug with regenerating skipped files
