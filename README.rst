@@ -282,7 +282,7 @@ from the `projecteuler-solutions wiki`_.
 
 See `this blog post`_ for insight into the development process.
 
-EulerPy uses `click`_ as a dependency for its CLI functionality.
+EulerPy uses `Click`_ as a dependency for its CLI functionality.
 
 
 =======
@@ -310,4 +310,3 @@ EulerPy is licensed under the `MIT License`_.
 .. _this blog post: http://kevinyap.ca/2014/06/eulerpy-streamlining-project-euler/
 .. _click: https://github.com/mitsuhiko/click
 .. _MIT License: https://github.com/iKevinY/EulerPy/blob/master/LICENSE
-
