@@ -2,6 +2,15 @@
 Changelog
 =========
 
+v1.3.0
+------
+
+- Added problems 301-330
+- Added --version flag to CLI
+- Added support for prefixed problem files
+- Updated to Click 4.0
+
+
 v1.2.3 (2014-09-02)
 -------------------
 
