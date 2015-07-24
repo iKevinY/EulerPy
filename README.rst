@@ -212,9 +212,9 @@ suffix from its filename.
 
 .. code-block:: bash
 
-    $ euler --verify 1
-    Checking "001-skipped.py" against solution: <redcated>
-    Renamed "001-skipped.py" to "001.py".
+    $ euler --verify 2
+    Checking "002-skipped.py" against solution: <redacted>
+    Renamed "002-skipped.py" to "002.py".
 
 ``euler <problem>`` is equivalent to ``euler --verify <problem>`` if the file
 **does** exist.
@@ -253,12 +253,14 @@ taking too long to compute.
     $ euler --verify-all
     Checking "001.py" against solution: <redacted>
 
-    Checking "002.py" against solution: [no output]
+    Checking "002.py" against solution: ^C
+
+    Checking "003.py" against solution: [no output]
 
     ---------------------------------------------------------------
     C = correct, I = incorrect, E = error, S = skipped, . = missing
 
-    Problems 001-020: C I . . .   . . . . .   . . . . .   . . . . .
+    Problems 001-020: C S I . .   . . . . .   . . . . .   . . . . .
 
 This option should be run after upgrading to v1.1 from EulerPy v1.0, as it will
 automatically rename any problems that have been skipped using ``--skip``,
