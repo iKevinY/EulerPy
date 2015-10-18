@@ -21,15 +21,12 @@ class EulerPyUtils(unittest.TestCase):
 
         # Determine largest problem in problems.txt
         problems_file = os.path.join(EULER_DATA, 'problems.txt')
-        with open(problems_file) as file:
-            largest = ''
-            for line in file:
-                if line.startswith('Problem'):
-                    largest = line.strip()
+        with open(problems_file) as f:
+            for line in f:
+                if line.startswith('Problem '):
+                    largest_problem = line.split(' ')[1]
 
-            largest_problem = int(largest.split(' ')[1])
-
-        for problem in range(1, largest_problem + 1):
+        for problem in range(1, int(largest_problem) + 1):
             problemText = Problem(problem).text
 
             msg = "Error encountered when parsing problem {}.".format(problem)

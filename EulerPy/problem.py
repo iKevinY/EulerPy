@@ -104,11 +104,11 @@ class Problem(object):
         def _problem_iter(problem_num):
             problem_file = os.path.join(EULER_DATA, 'problems.txt')
 
-            with open(problem_file) as file:
+            with open(problem_file) as f:
                 is_problem = False
                 last_line = ''
 
-                for line in file:
+                for line in f:
                     if line.strip() == 'Problem %i' % problem_num:
                         is_problem = True
 

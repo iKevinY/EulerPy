@@ -24,11 +24,11 @@ def generateFile(problem, filename=None, content=None, correct=False):
     p = Problem(problem)
     filename = filename or p.filename()
 
-    with open(filename, 'w') as file:
+    with open(filename, 'w') as f:
         if correct:
-            file.write('print({})'.format(p.solution))
+            f.write('print({})'.format(p.solution))
         elif content:
-            file.write(content)
+            f.write(content)
 
 
 class EulerPyTest(unittest.TestCase):
@@ -140,8 +140,8 @@ class EulerPyGenerate(EulerPyTest):
         result = EulerRun('-g', '1', input='\nY\n')
         self.assertEqual(result.exit_code, 0)
 
-        with open('001.py') as file:
-            self.assertNotEqual(file.read(), '')
+        with open('001.py') as f:
+            self.assertNotEqual(f.read(), '')
 
     def test_generate_overwrite_neutral(self):
         generateFile(1)
@@ -149,8 +149,8 @@ class EulerPyGenerate(EulerPyTest):
         result = EulerRun('-g', '1', input='\n\n')
         self.assertEqual(result.exit_code, 1)
 
-        with open('001.py') as file:
-            self.assertEqual(file.read(), '')
+        with open('001.py') as f:
+            self.assertEqual(f.read(), '')
 
     def test_generate_overwrite_skipped(self):
         generateFile(1, '001-skipped.py')
