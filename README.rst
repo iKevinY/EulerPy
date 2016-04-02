@@ -267,6 +267,25 @@ automatically rename any problems that have been skipped using ``--skip``,
 making them easy to distinguish from those that have been correctly solved.
 
 
+File Prefixes
+-------------
+
+As of v1.3.0, EulerPy will attempt to keep the prefix of problem files
+consistent. The motivation behind this is that ``import 001`` results in a
+syntax error whereas ``import euler001`` is valid. By using the latter
+naming scheme, it is possible to reuse code written in previous files.
+
+.. code-block:: bash
+
+    $ mv 003.py euler003.py
+
+    $ euler --skip
+    Current problem is problem 3.
+    Generate file for problem 4? [y/N]: Y
+    Successfully created "euler004.py".
+    Renamed "euler003.py" to "euler003-skipped.py".
+
+
 ============
 Contributing
 ============
