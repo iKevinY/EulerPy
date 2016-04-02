@@ -216,6 +216,7 @@ class EulerPySkip(EulerPyTest):
         self.assertEqual(result.exit_code, 0)
         self.assertFalse(os.path.isfile('euler001.py'))
         self.assertTrue(os.path.isfile('euler001-skipped.py'))
+        self.assertTrue(os.path.isfile('euler002.py'))
 
 
 class EulerPyVerify(EulerPyTest):
