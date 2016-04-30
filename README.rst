@@ -1,6 +1,6 @@
-***********************
-EulerPy |Travis| |PyPI|
-***********************
+**********************************
+EulerPy |Travis| |PyPI| |Homebrew|
+**********************************
 
 EulerPy is a command line tool designed to streamline the process of solving
 Project Euler problems using Python. The package focuses on two main tasks:
@@ -313,13 +313,17 @@ License
 EulerPy is licensed under the `MIT License`_.
 
 
-.. |Travis| image:: http://img.shields.io/travis/iKevinY/EulerPy/master.svg?style=flat
+.. |Travis| image:: https://img.shields.io/travis/iKevinY/EulerPy/master.svg
             :alt: Build Status
             :target: http://travis-ci.org/iKevinY/EulerPy
 
-.. |PyPI| image:: http://img.shields.io/pypi/v/EulerPy.svg?style=flat
+.. |PyPI| image:: https://img.shields.io/pypi/v/EulerPy.svg
           :alt: PyPI Version
           :target: https://pypi.python.org/pypi/EulerPy/
+          
+.. |Homebrew| image:: https://img.shields.io/homebrew/v/euler-py.svg
+              :alt: Homebrew Version
+              :target: https://github.com/Homebrew/homebrew-core/blob/master/Formula/euler-py.rb
 
 .. _pip: http://www.pip-installer.org/en/latest/index.html
 .. _Homebrew: http://brew.sh
