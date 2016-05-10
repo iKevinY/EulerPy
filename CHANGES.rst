@@ -2,8 +2,8 @@
 Changelog
 =========
 
-v1.3.0
-------
+v1.3.0 (2016-05-09)
+-------------------
 
 - Added problems 301-330
 - Added --version flag to CLI
