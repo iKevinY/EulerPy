@@ -299,7 +299,7 @@ Miscellaneous
 
 The text for the problems in `problems.txt`_ were derived from Kyle Keen's
 `Local Euler`_ project, and the solutions in `solutions.txt`_ were derived
-from the `projecteuler-solutions wiki`_.
+from Bai Li's `projecteuler-solutions`_ repository.
 
 See `this blog post`_ for insight into the development process.
 
@@ -320,7 +320,7 @@ EulerPy is licensed under the `MIT License`_.
 .. |PyPI| image:: https://img.shields.io/pypi/v/EulerPy.svg
           :alt: PyPI Version
           :target: https://pypi.python.org/pypi/EulerPy/
-          
+
 .. |Homebrew| image:: https://img.shields.io/homebrew/v/euler-py.svg
               :alt: Homebrew Version
               :target: https://github.com/Homebrew/homebrew-core/blob/master/Formula/euler-py.rb
@@ -331,7 +331,7 @@ EulerPy is licensed under the `MIT License`_.
 .. _Local Euler: http://kmkeen.com/local-euler/
 .. _problems.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/problems.txt
 .. _solutions.txt: https://github.com/iKevinY/EulerPy/blob/master/EulerPy/data/solutions.txt
-.. _projecteuler-solutions wiki: https://code.google.com/p/projecteuler-solutions/
+.. _projecteuler-solutions: https://github.com/luckytoilet/projecteuler-solutions
 .. _this blog post: http://kevinyap.ca/2014/06/eulerpy-streamlining-project-euler/
 .. _click: https://github.com/mitsuhiko/click
 .. _MIT License: https://github.com/iKevinY/EulerPy/blob/master/LICENSE
