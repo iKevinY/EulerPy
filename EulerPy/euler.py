@@ -47,8 +47,15 @@ def generate(num, prompt_default=True):
     text = '\n'.join([header, divider, '', problem_text])
     content = '\n'.join(['"""', text, '"""'])
 
+    bootstrap = 'def problem():\n'\
+                '   pass\n\n\n'\
+                'if __name__ == \'__main__\':\n'\
+                '   print(problem())\n'
+
+    body_file = content + '\n\n' + bootstrap
+
     with open(filename, 'w') as f:
-        f.write(content + '\n\n\n')
+        f.write(body_file)
 
     click.secho('Successfully created "{}".'.format(filename), fg='green')
 
