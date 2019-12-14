@@ -1,11 +1,9 @@
 language: python
 python:
   - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
   - "3.5"
   - "3.6"
-sudo: false
+  - "3.7"
+  - "3.8"
 cache: pip
 script: nosetests

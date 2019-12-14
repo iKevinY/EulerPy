@@ -23,10 +23,14 @@ except ImportError:
 
     def clock():
         """
-        Under Windows, system CPU time can't be measured. Return time.clock()
-        as user time and None as system time.
+        Under Windows, system CPU time can't be measured. Return
+        time.process_time() as user time and None as system time.
         """
-        return time.clock(), None
+        # Legacy support for Python 3.2 and earlier.
+        if sys.version_info < (3, 3, 0):
+            return time.clock(), None
+
+        return time.process_time(), None
 
 else:
     def clock():
