@@ -2,6 +2,13 @@
 Changelog
 =========
 
+v1.4.0 (2019-12-13)
+------------------
+
+- Added Python 3.8 support
+- Updated problem 59 to newer variant
+
+
 v1.3.0 (2016-05-09)
 -------------------
 
