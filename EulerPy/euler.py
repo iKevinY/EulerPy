@@ -89,51 +89,57 @@ def verify(num, filename=None, exit=True):
             click.secho('No file found for problem %i.' % p.num, fg='red')
             sys.exit(1)
 
-    solution = p.solution
-    click.echo('Checking "{}" against solution: '.format(filename), nl=False)
+    click.echo(f'The problem number {num} already exists.\nDo you want to verify the solution for it ? [Y/n] :  ' , nl = False);
+    yesno = str(input())
+    while (yesno.lower()!='y' and  yesno.lower()!='n'):
+        click.echo('Enter properly. [Y/n] : ', nl = False)
+        yesno = input()
+    if (yesno.lower()=='y'):
+        solution = p.solution
+        click.echo('Checking "{}" against solution: '.format(filename), nl=False)
 
-    cmd = (sys.executable or 'python', filename)
-    start = clock()
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-    stdout = proc.communicate()[0]
-    end = clock()
-    time_info = format_time(start, end)
+        cmd = (sys.executable or 'python', filename)
+        start = clock()
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        stdout = proc.communicate()[0]
+        end = clock()
+        time_info = format_time(start, end)
 
-    # Return value of anything other than 0 indicates an error
-    if proc.poll() != 0:
-        click.secho('Error calling "{}".'.format(filename), fg='red')
+        # Return value of anything other than 0 indicates an error
+        if proc.poll() != 0:
+            click.secho('Error calling "{}".'.format(filename), fg='red')
+            click.secho(time_info, fg='cyan')
+
+            # Return None if option is not --verify-all, otherwise exit
+            return sys.exit(1) if exit else None
+
+        # Decode output if returned as bytes (Python 3)
+        if isinstance(stdout, bytes):
+            output = stdout.decode('ascii')
+
+        # Split output lines into array; make empty output more readable
+        output_lines = output.splitlines() if output else ['[no output]']
+
+        # If output is multi-lined, print the first line of the output on a
+        # separate line from the "checking against solution" message, and
+        # skip the solution check (multi-line solution won't be correct)
+        if len(output_lines) > 1:
+            is_correct = False
+            click.echo()  # force output to start on next line
+            click.secho('\n'.join(output_lines), bold=True, fg='red')
+        else:
+            is_correct = output_lines[0] == solution
+            fg_colour = 'green' if is_correct else 'red'
+            click.secho(output_lines[0], bold=True, fg=fg_colour)
+
         click.secho(time_info, fg='cyan')
 
-        # Return None if option is not --verify-all, otherwise exit
-        return sys.exit(1) if exit else None
+        # Remove any suffix from the filename if its solution is correct
+        if is_correct:
+            p.file.change_suffix('')
 
-    # Decode output if returned as bytes (Python 3)
-    if isinstance(stdout, bytes):
-        output = stdout.decode('ascii')
-
-    # Split output lines into array; make empty output more readable
-    output_lines = output.splitlines() if output else ['[no output]']
-
-    # If output is multi-lined, print the first line of the output on a
-    # separate line from the "checking against solution" message, and
-    # skip the solution check (multi-line solution won't be correct)
-    if len(output_lines) > 1:
-        is_correct = False
-        click.echo()  # force output to start on next line
-        click.secho('\n'.join(output_lines), bold=True, fg='red')
-    else:
-        is_correct = output_lines[0] == solution
-        fg_colour = 'green' if is_correct else 'red'
-        click.secho(output_lines[0], bold=True, fg=fg_colour)
-
-    click.secho(time_info, fg='cyan')
-
-    # Remove any suffix from the filename if its solution is correct
-    if is_correct:
-        p.file.change_suffix('')
-
-    # Exit here if answer was incorrect, otherwise return is_correct value
-    return sys.exit(1) if exit and not is_correct else is_correct
+        # Exit here if answer was incorrect, otherwise return is_correct value
+        return sys.exit(1) if exit and not is_correct else is_correct
 
 
 # --verify-all
