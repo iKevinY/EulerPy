@@ -3,6 +3,28 @@
 import os
 import sys
 import subprocess
+
+from EulerPy import linked_list
+
+solved_fll = linked_list.fll() # forward linked list initialization
+
+# solved boolean list
+solved_bl = [False for i in range(0, 1000)] # need to write code  to get total problems present.
+
+with open(os.path.dirname(__file__)+"/data/problems.txt") as f:
+    total_problems = int((f.readline()).strip("\n"))
+
+solved = 0
+
+with open("solved_list.txt", "r") as f:
+    number_strings = (f.read().split("\n"))
+    for each in number_strings:
+        if(each.isdigit()):
+            solved +=1
+            solved_fll.push(int(each))
+            solved_bl[int(each)+1] = True
+
+
 from collections import OrderedDict
 
 import click
@@ -12,6 +34,10 @@ from EulerPy.problem import Problem
 from EulerPy.utils import clock, format_time, problem_glob
 
 
+
+
+
+
 # --cheat / -c
 def cheat(num):
     """View the answer to a problem."""
@@ -19,6 +45,33 @@ def cheat(num):
     solution = click.style(Problem(num).solution, bold=True)
     click.confirm("View answer to problem %i?" % num, abort=True)
     click.echo("The answer to problem {} is {}.".format(num, solution))
+
+
+
+
+# dashboard to show the progress
+# --dashb / -d
+def dashb():
+    """ To show the progress of the number of problems solved. """
+    click.echo(f'\nprogress : {solved}/{total_problems}')
+    click.echo('\nSolved problems list : ')
+
+    # Forward linked list for to store solved problem numbers.
+       # time efficient for collecting all solved problems.
+       # time efficient for adding new solved problem but not for updating the  list.
+       # space efficient by only storing solved problems.
+       # but bad for single query like , check the given problem is solved or not.
+          # We use boolean array with len = total_problems, to address these type of queries.
+    # print all the problem_numbers in the linked list by travesal. print even problem titles as well.
+    start = solved_fll.head
+    if (start == None):
+        click.echo('No progress ... ')
+
+    while(start):
+        q = ((Problem(start.data).text).split("\n\n"))[-1].replace("\n", " ")
+        click.echo(f'({start.data}) : {q}')
+        start = start.next
+
 
 
 # --generate / -g
@@ -64,6 +117,38 @@ def preview(num):
     problem_text = Problem(num).text
     click.secho("Project Euler Problem %i" % num, bold=True)
     click.echo(problem_text)
+
+
+
+
+# --run / -r
+def run():
+    """ command to run EulerPy till "exit" is supplied."""
+    click.echo('\nEulerPy starts :) ')
+
+    a = str( input("\n(EulerPy) >>> ") ).strip(" ")
+    p = a.split(" ")
+
+    while(p[0] not in {"euler" , "exit" } or a in {"euler -r", "euler --run"}):
+        if p[0]!="" : print("\nEnter the Proper command ;) \n");
+        a = str( input("(EulerPy) >>> ") ).strip(" ")
+        p = a.split(" ")
+
+
+    while(p[0]=="euler" and (len(p)-1 and (p[1] not in {"-r", "--run"}))):
+        out1 = subprocess.run(a.split(" "), text = True, capture_output = True)
+        subprocess.run("cat", text = True, input = out1.stdout)
+        a = str( input("\n(EulerPy) >>> ") ).strip(" ")
+        p = a.split(" ")
+
+        while(p[0] not in {"euler" , "exit" } or a in {"euler -r", "euler --run"}):
+            if p[0]!="" : print("\nEnter the Proper command ;) \n");
+            a = str( input("(EulerPy) >>> ") ).strip(" ")
+            p = a.split(" ")
+
+    if a=="exit" :  print("\nEulerPy exits. :) \n"); return;
+    #elif a in {"euler -r", "euler --run"} : print("\n(euler -r) or (euler --run) cannot be used here. :) \n"); return;
+    else : print("\nUnexpected exit due to unknown command. :) \n"); return;
 
 
 # --skip / -s
@@ -123,10 +208,19 @@ def verify(num, filename=None, exit=True):
         click.secho('\n'.join(output_lines), bold=True, fg='red')
     else:
         is_correct = output_lines[0] == solution
+        if is_correct:
+            if (solved_bl[num+1]==False):
+                with open("solved_list.txt", "a") as f:
+                    f.write(str(num) + "\n")
+                solved +=1
+                solved_fll.push(num)
+                solved_bl[num+1] = True
+
         fg_colour = 'green' if is_correct else 'red'
         click.secho(output_lines[0], bold=True, fg=fg_colour)
+        click.echo(f'\nOutput is Correct.\nProblem {num} is solved. :) \n') if is_correct else click.echo(f'\nProblem {num} output is wrong. Try again. \n')
 
-    click.secho(time_info, fg='cyan')
+    click.secho(time_info + "\n", fg='cyan')
 
     # Remove any suffix from the filename if its solution is correct
     if is_correct:
@@ -216,7 +310,7 @@ def verify_all(num):
 
 def euler_options(fn):
     """Decorator to link CLI options with their appropriate functions"""
-    euler_functions = cheat, generate, preview, skip, verify, verify_all
+    euler_functions = cheat, dashb, generate, preview, run, skip, verify, verify_all
 
     # Reverse functions to print help page options in alphabetical order
     for option in reversed(euler_functions):
@@ -238,6 +332,7 @@ def euler_options(fn):
 @click.version_option(version=__version__, message="EulerPy %(version)s")
 def main(option, problem):
     """Python-based Project Euler command line tool."""
+
     # No problem given (or given option ignores the problem argument)
     if problem == 0 or option in {skip, verify_all}:
         # Determine the highest problem number in the current directory
@@ -247,7 +342,7 @@ def main(option, problem):
         # No Project Euler files in current directory (no glob results)
         if problem == 0:
             # Generate the first problem file if option is appropriate
-            if option not in {cheat, preview, verify_all}:
+            if option not in {cheat, preview, verify_all, dashb, run}:
                 msg = "No Project Euler files found in the current directory."
                 click.echo(msg)
                 option = generate
@@ -271,5 +366,10 @@ def main(option, problem):
         option = verify if Problem(problem).glob else generate
 
     # Execute function based on option
-    option(problem)
+    if option not in {dashb, run}:
+        option(problem)
+    else:
+        option()
+
     sys.exit(0)
+
