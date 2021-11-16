@@ -11,10 +11,16 @@ solved_fll = linked_list.fll() # forward linked list initialization
 # solved boolean list
 solved_bl = [False for i in range(0, 1000)] # need to write code  to get total problems present.
 
+with open(os.path.dirname(__file__)+"/data/problems.txt") as f:
+    total_problems = int((f.readline()).strip("\n"))
+
+solved = 0
+
 with open("solved_list.txt", "r") as f:
     number_strings = (f.read().split("\n"))
     for each in number_strings:
         if(each.isdigit()):
+            solved +=1
             solved_fll.push(int(each))
             solved_bl[int(each)+1] = True
 
@@ -39,6 +45,33 @@ def cheat(num):
     solution = click.style(Problem(num).solution, bold=True)
     click.confirm("View answer to problem %i?" % num, abort=True)
     click.echo("The answer to problem {} is {}.".format(num, solution))
+
+
+
+
+# dashboard to show the progress
+# --dashb / -d
+def dashb():
+    """ To show the progress of the number of problems solved. """
+    click.echo(f'\nprogress : {solved}/{total_problems}')
+    click.echo('\nSolved problems list : ')
+
+    # Forward linked list for to store solved problem numbers.
+       # time efficient for collecting all solved problems.
+       # time efficient for adding new solved problem but not for updating the  list.
+       # space efficient by only storing solved problems.
+       # but bad for single query like , check the given problem is solved or not.
+          # We use boolean array with len = total_problems, to address these type of queries.
+    # print all the problem_numbers in the linked list by travesal. print even problem titles as well.
+    start = solved_fll.head
+    if (start == None):
+        click.echo('No progress ... ')
+
+    while(start):
+        q = ((Problem(start.data).text).split("\n\n"))[-1].replace("\n", " ")
+        click.echo(f'({start.data}) : {q}')
+        start = start.next
+
 
 
 # --generate / -g
@@ -86,33 +119,11 @@ def preview(num):
     click.echo(problem_text)
 
 
-# dashboard to show the progress
-# --dashb / -d
-def dashb():
-    """ To get progress of the user problem solving for project euler problems. """
-    #click.echo(f'progress : {solved}/{Total}')
-    click.echo('Solved problems list : ')
 
-    # sorted linked list for to store solved problem numbers.
-       # time efficient for collecting all solved problems.
-       # time efficient for adding new solved problem or for updating the  list.
-       # space efficient by only solving solved problems.
-       # but bad for single query like , check the given problem is solved or not.
-          # We use boolean array with len = total_problems, to address these type of queries.
-          # space is comprimized over time here.
-    # print all the problem_numbers in the linked list by travesal. print even problem titles as well.
-    start = solved_fll.head;
-    if (start == None):
-        click.echo('No progress ... ')
-
-    while(start):
-        q = ((Problem(start.data).text).split("\n\n"))[-1]
-        click.echo(f'Solved : ({start.data}) {q}')
-        start = start.next
 
 # --run / -r
 def run():
-    """ command to run EulerPy till "end" is supplied."""
+    """ command to run EulerPy till "exit" is supplied."""
     click.echo('\nEulerPy starts :) ')
 
     a = str( input("\n(EulerPy) >>> ") ).strip(" ")
@@ -125,9 +136,7 @@ def run():
 
 
     while(p[0]=="euler" and (len(p)-1 and (p[1] not in {"-r", "--run"}))):
-        print("\n")
         out1 = subprocess.run(a.split(" "), text = True, capture_output = True)
-        #click.echo(out1.stdout)
         subprocess.run("cat", text = True, input = out1.stdout)
         a = str( input("\n(EulerPy) >>> ") ).strip(" ")
         p = a.split(" ")
@@ -203,6 +212,7 @@ def verify(num, filename=None, exit=True):
             if (solved_bl[num+1]==False):
                 with open("solved_list.txt", "a") as f:
                     f.write(str(num) + "\n")
+                solved +=1
                 solved_fll.push(num)
                 solved_bl[num+1] = True
 
