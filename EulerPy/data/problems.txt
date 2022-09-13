@@ -1561,7 +1561,7 @@ different right angle triangles.
 
 120 cm: (30,40,50), (20,48,52), (24,45,51)
 
-Given that L is the length of the wire, for how many values of L 2,000,000
+Given that L is the length of the wire, for how many values of L <= 1,500,000
 can exactly one right angle triangle be formed?
 
 
